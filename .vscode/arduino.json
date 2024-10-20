@@ -1,6 +1,0 @@
-{
-    "configuration": "BuildOption=normal",
-    "board": "TinyCircuits:samd:tinyzero",
-    "sketch": "Tiny Circuit.ino",
-    "port": "COM5"
-}
