@@ -9,6 +9,7 @@ load_dotenv()
 # Get the MAC address from the environment variable
 BLE_DEVICE_MAC_ADDRESS = os.getenv("BLE_DEVICE_MAC_ADDRESS")
 
+
 async def print_services_and_characteristics():
     max_retries = 3
     for attempt in range(max_retries):
@@ -24,10 +25,13 @@ async def print_services_and_characteristics():
                         print(f"  Characteristic: {characteristic.uuid}")
                 return  # Exit the function if successful
         except asyncio.TimeoutError:
-            print("Connection to the Bluetooth device timed out. Please ensure the device is on and in range.")
+            print(
+                "Connection to the Bluetooth device timed out. Please ensure the device is on and in range."
+            )
         except Exception as e:
             print(f"An error occurred: {e}")
         print("Retrying...\n")
     print("Failed to connect after multiple attempts.")
+
 
 asyncio.run(print_services_and_characteristics())

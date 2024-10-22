@@ -11,6 +11,7 @@ The Care Link Project aims to develop a portable and wearable device to assist i
 - **TinyShield BT**: Model ASD2116-R
 
 ## Features
+
 - Fall Detection
 - Ambient Temperature Detection
 
