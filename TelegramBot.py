@@ -25,10 +25,17 @@ logger = logging.getLogger(__name__)
 
 # Get the API key, chat ID, and BLE configuration from environment variables
 TELEGRAM_BOT_API_KEY = os.getenv("TELEGRAM_BOT_API_KEY")
-YOUR_CHAT_ID = int(os.getenv("TELEGRAM_CHAT_ID"))
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 BLE_DEVICE_MAC_ADDRESS = os.getenv("BLE_DEVICE_MAC_ADDRESS")
 ALERT_SERVICE_UUID = os.getenv("ALERT_SERVICE_UUID")
 ALERT_CHARACTERISTIC_UUID = os.getenv("ALERT_CHARACTERISTIC_UUID")
+
+# Validate TELEGRAM_CHAT_ID
+if TELEGRAM_CHAT_ID is None or not TELEGRAM_CHAT_ID.isdigit():
+    logger.error("Invalid TELEGRAM_CHAT_ID. Please check your environment variables.")
+    exit(1)
+
+YOUR_CHAT_ID = int(TELEGRAM_CHAT_ID)
 
 # Store user's location
 user_location = None
