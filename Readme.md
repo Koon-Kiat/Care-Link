@@ -1,4 +1,4 @@
-# Care Link Project
+# Care Link
 
 ## Overview
 
