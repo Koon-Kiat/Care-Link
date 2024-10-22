@@ -244,23 +244,25 @@ void handleSerialInput()
     }
 }
 
-
-void sendToBluetooth(const char *data) {
-    if (ble_connection_state) {
+void sendToBluetooth(const char *data)
+{
+    if (ble_connection_state)
+    {
         // Set the ignore variable appropriately (use 0 as a placeholder)
-        uint8_t ignore = 0; 
+        uint8_t ignore = 0;
 
         // Ensure the data fits in the buffer
         uint8_t sendLength = strlen(data);
-        uint8_t sendBuffer[MAX_RECEIVED_MESSAGE_SIZE]; 
+        uint8_t sendBuffer[MAX_RECEIVED_MESSAGE_SIZE];
 
         // Check if the message is too long
-        if (sendLength > sizeof(sendBuffer)) {
+        if (sendLength > sizeof(sendBuffer))
+        {
             SerialMonitorInterface.println("Error: Message too long!");
             return;
         }
 
-        strncpy((char*)sendBuffer, data, sizeof(sendBuffer));
+        strncpy((char *)sendBuffer, data, sizeof(sendBuffer));
 
         // Log the data being sent
         SerialMonitorInterface.print("Sending data over BLE: ");
@@ -268,27 +270,36 @@ void sendToBluetooth(const char *data) {
 
         // Send the data
         uint8_t result = lib_aci_send_data(ignore, sendBuffer, sendLength);
-        if (result != 0) {  // Assuming 0 is the success code
+        if (result != 0)
+        { // Assuming 0 is the success code
             SerialMonitorInterface.print("Failed to send data over BLE, error code: ");
             SerialMonitorInterface.println(result);
         }
-    } else {
+    }
+    else
+    {
         SerialMonitorInterface.println("BLE connection is not established.");
     }
 }
 
-
-
-void sendFallStatus(const char* status) {
+void sendFallStatus(const char *status)
+{
     String message;
 
-    if (strcmp(status, "SAFE\n") == 0) {
+    if (strcmp(status, "SAFE\n") == 0)
+    {
         message = "FALL: S"; // SAFE
-    } else if (strcmp(status, "SEVERE FALL DETECTED\n") == 0) {
+    }
+    else if (strcmp(status, "SEVERE FALL DETECTED\n") == 0)
+    {
         message = "FALL: SV"; // Severe Fall
-    } else if (strcmp(status, "MODERATE FALL DETECTED\n") == 0) {
+    }
+    else if (strcmp(status, "MODERATE FALL DETECTED\n") == 0)
+    {
         message = "FALL: M"; // Moderate Fall
-    } else if (strcmp(status, "MINOR FALL DETECTED\n") == 0) {
+    }
+    else if (strcmp(status, "MINOR FALL DETECTED\n") == 0)
+    {
         message = "FALL: MI"; // Minor Fall
     }
 
@@ -297,22 +308,26 @@ void sendFallStatus(const char* status) {
     sendToBluetooth(message.c_str());
 }
 
-void sendTemperatureStatus(double temperature) {
+void sendTemperatureStatus(double temperature)
+{
     String message = "TEMP: ";
 
     // Categorize the temperature into short codes
-    if (temperature < 28) {
+    if (temperature < 28)
+    {
         message += "C"; // COOL
-    } else if (temperature >= 28 && temperature <= 33) {
+    }
+    else if (temperature >= 28 && temperature <= 33)
+    {
         message += "N"; // NORMAL
-    } else {
+    }
+    else
+    {
         message += "H"; // HOT
     }
 
     sendToBluetooth(message.c_str());
 }
-
-
 
 void showSerial()
 {
