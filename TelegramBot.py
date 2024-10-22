@@ -36,8 +36,9 @@ location_shared = False
 last_temperature_alert_time = 0  # Variable to store last alert time
 temperature_alert_cooldown = 30 * 60  # Cooldown period in seconds
 last_alert_type = None  # To keep track of the last alert type
-last_temperature_status = None  
+last_temperature_status = None
 startup = True
+
 
 # Function to handle notifications from BLE characteristic
 async def notification_handler(sender, data):
@@ -53,7 +54,7 @@ async def notification_handler(sender, data):
 
     # Check the type of message and log accordingly
     if message.startswith("FALL:"):
-        fall_status = message[len("FALL:"):].strip()
+        fall_status = message[len("FALL:") :].strip()
         logger.info(f"Fall status: {fall_status}")
 
         # Handle the shortened fall status messages
@@ -70,7 +71,7 @@ async def notification_handler(sender, data):
 
     elif message.startswith("TEMP:"):
         logger.info("Temperature alert received.")  # Log receipt of temperature alert
-        
+
         # Avoid sending alerts immediately after startup
         if startup:
             logger.info("Startup in progress, skipping immediate temperature alert.")
@@ -81,7 +82,6 @@ async def notification_handler(sender, data):
 
     else:
         logger.warning(f"Received unrecognized message: {message}")
-
 
 
 async def send_alert_message(message):
@@ -118,8 +118,6 @@ async def send_alert_message(message):
     logger.info("Alert message and location sent.")
 
 
-
-
 async def send_temperature_alert(message):
     global last_temperature_alert_time, location_shared, last_alert_type, last_temperature_status, startup  # Include startup
 
@@ -153,12 +151,18 @@ async def send_temperature_alert(message):
         temp_message = "Temperature is HIGH. Seek shelter; there is a possible risk of heat injury!"
         logger.info(f"Detected temperature category: HIGH")
     else:
-        logger.warning(f"Received unrecognized temperature status: {temperature_status}")
+        logger.warning(
+            f"Received unrecognized temperature status: {temperature_status}"
+        )
         return
 
     # Check if the cooldown period has elapsed or if the temperature status has changed
     current_time = time.time()
-    if (current_time - last_temperature_alert_time >= temperature_alert_cooldown) or (last_alert_type != "TEMP") or (last_temperature_status != temperature_status):
+    if (
+        (current_time - last_temperature_alert_time >= temperature_alert_cooldown)
+        or (last_alert_type != "TEMP")
+        or (last_temperature_status != temperature_status)
+    ):
         async with Application.builder().token(TELEGRAM_BOT_API_KEY).build() as app:
             await app.bot.send_message(chat_id=YOUR_CHAT_ID, text=temp_message)
 
@@ -168,9 +172,9 @@ async def send_temperature_alert(message):
         last_temperature_status = temperature_status  # Update last_temperature_status
         logger.info("Temperature alert sent.")
     else:
-        logger.info("Cooldown period has not elapsed or status has not changed. Temperature alert not sent.")
-
-
+        logger.info(
+            "Cooldown period has not elapsed or status has not changed. Temperature alert not sent."
+        )
 
 
 async def start(update: Update, context: CallbackContext):
@@ -189,7 +193,6 @@ async def start(update: Update, context: CallbackContext):
             resize_keyboard=True,
         ),
     )
-
 
 
 async def start(update: Update, context: CallbackContext):
@@ -229,12 +232,11 @@ async def location_handler(update: Update, context: CallbackContext):
         logger.warning("No location found in the update message.")
 
 
-
 async def connect_ble_device():
     try:
         async with BleakClient(BLE_DEVICE_MAC_ADDRESS) as client:
             logger.info(f"Connected to BLE device: {BLE_DEVICE_MAC_ADDRESS}")
-            await client.start_notify(ALERT_CHARACTERISTIC_UUID, notification_handler)
+            await connect_ble_with_retries(client)
 
             # Keep the connection open
             while True:
@@ -243,6 +245,35 @@ async def connect_ble_device():
         logger.error(f"BLE error: {str(e)}")
     except Exception as e:
         logger.error(f"General error connecting to BLE device: {str(e)}")
+
+
+async def connect_ble_with_retries(client, retries=3, delay=5):
+    attempt = 0
+    while attempt < retries:
+        try:
+            logger.info(f"Attempt {attempt + 1} to connect to BLE device...")
+            # Attempt BLE connection
+            await client.start_notify(ALERT_CHARACTERISTIC_UUID, notification_handler)
+
+            # Keep the connection open
+            while True:
+                await asyncio.sleep(1)
+            break  # If successful, break out of the loop
+        except BleakError as e:
+            logger.error(f"BLE error on attempt {attempt + 1}: {str(e)}")
+        except Exception as e:
+            logger.error(
+                f"General error connecting to BLE device on attempt {attempt + 1}: {str(e)}"
+            )
+
+        attempt += 1
+        if attempt < retries:
+            logger.info(f"Retrying in {delay} seconds...")
+            await asyncio.sleep(delay)
+
+    if attempt == retries:
+        logger.error(f"Failed to connect to BLE device after {retries} attempts.")
+
 
 async def main_startup():
     global startup
