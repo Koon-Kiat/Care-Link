@@ -18,3 +18,5 @@ The Care Link Project aims to create a portable, wearable device designed to ass
 - **Daily Reminders**: Sends notifications for important daily tasks, improving users’ routine management.
 - **Safety Alerts**: Monitors users’ locations and behaviors, issuing alerts for potential safety concerns.
 
+## Installtion
+For detailed installation instructions, please refer to the [Installation Guide](INSTALL.md).
