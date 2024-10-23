@@ -60,7 +60,7 @@ The Care Link Project aims to develop a portable and wearable device to assist i
    - Open a terminal or command prompt.
    - Navigate to your desired directory.
    - Run the following command:
-     ```sh
+     ```bash
      git clone https://github.com/Koon-Kiat/Tiny-Circuit-Project
      ```
 
@@ -109,7 +109,7 @@ To enable Telegram bot functionality, you need to install the following Python l
 2. **Install Required Python Libraries**:
    - Open a terminal or command prompt.
    - Run the following command to install the required libraries globally:
-     ```
+     ```bash
      pip install logging os time asyncio bleak python-telegram-bot python-dotenv
      ```
 
@@ -145,7 +145,7 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 
    - In the root of your project directory, create a file named `.env`.
    - Add the following environment variables to the `.env` file:
-     ```
+     ```bash
      TELEGRAM_TOKEN=your_telegram_bot_token
      TELEGRAM_CHAT_ID=your_telegram_chat_id
      BLE_DEVICE_MAC_ADDRESS=your_ble_device_mac_address
@@ -166,7 +166,7 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 
    - Open the Serial Monitor in the Arduino IDE or VS Code to start the Bluetooth communication.
    - You should see the following output in the Serial Monitor:
-     ```plaintext
+     ```bash
      BLE Stack Initialized.
      UART service added successfully.
      Initializing BMA...
@@ -180,11 +180,11 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 4. **Run the MAC Address Script**:
 
    - Run the following script to list available Bluetooth devices and their MAC addresses:
-     ```sh
+     ```bash
      python ArduinoMac.py
      ```
    - You should see output similar to this:
-     ```plaintext
+     ```bash
      Device: None, Address: **:**:**:**:**:**
      Device: None, Address: **:**:**:**:**:**
      Device: None, Address: **:**:**:**:**:**
@@ -199,11 +199,11 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 5. **Run the UUID Checker Script**:
 
    - Run the following script to fetch the services and characteristics of the Bluetooth device:
-     ```sh
+     ```bash
      python UUIDChecker.py
      ```
    - You should see output similar to this:
-     ```plaintext
+     ```bash
      Service: ****1801-****-****-****-********34fb
          Characteristic: ****2a05-****-****-****-********34fb
      Service: ****1800-****-****-****-********34fb
@@ -219,7 +219,7 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 6. **Run the Telegram Bot Python File**:
 
    - Run your Python script directly from the terminal:
-     ```sh
+     ```bash
      python TelegramBot.py
      ```
 
