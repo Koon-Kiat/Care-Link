@@ -1,4 +1,4 @@
-# Installtion Guide
+# Installation Guide
 This guide outlines the steps to set up your Tiny Circuit Project, including required libraries, installation steps, and configuration for a Telegram bot.
 
 ## Required Libraries
