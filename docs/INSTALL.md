@@ -118,6 +118,6 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 
 ## Usage
 
-After completing the installation and setup, refer to the [Usage Guide](docs/USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
+After completing the installation and setup, refer to the [Usage Guide](USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
 
 
