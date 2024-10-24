@@ -23,7 +23,7 @@
 
    - Run the following script to list available Bluetooth devices and their MAC addresses:
      ```bash
-     python ArduinoMac.py
+     python mac_address.py
      ```
    - You should see output similar to this:
      ```bash
@@ -42,7 +42,7 @@
 
    - Run the following script to fetch the services and characteristics of the Bluetooth device:
      ```bash
-     python UUIDChecker.py
+     python uuid_checker.py
      ```
    - You should see output similar to this:
      ```bash
@@ -62,7 +62,7 @@
 
    - Run your Python script directly from the terminal:
      ```bash
-     python TelegramBot.py
+     python telegram_bot.py
      ```
 
 ## 7. Interact with the Telegram Bot

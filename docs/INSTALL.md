@@ -1,8 +1,9 @@
 # Installation Guide
+
 This guide outlines the steps to set up your Tiny Circuit Project, including required libraries, installation steps, and configuration for a Telegram bot.
 
-
 ## Arduino Setup
+
 ### Required Libraries
 
 - **STBLE**: For Bluetooth Low Energy communication
@@ -12,9 +13,10 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
 ### Installation Steps
 
 1. **Install Arduino IDE IDE and CLI**
-    Download and install the Arduino IDE and CLI from the [official website](https://www.arduino.cc/en/software/) and follow the setup instructions.
+   Download and install the Arduino IDE and CLI from the [official website](https://www.arduino.cc/en/software/) and follow the setup instructions.
 
 2. **Install Required Libraries**
+
    - Open the Arduino IDE, navigate to `Sketch` > `Include Library` > `Manage Libraries` and install `TinyScreen`
    - For `STBLE` library, follow the steps in the [TinyCircuits Bluetooth Low Energy TinyShield Tutorial](https://learn.tinycircuits.com/Communication/Bluetooth-Low-Energy_TinyShield_Tutorial/) to download the `STBLE` library from the provided link.
 
@@ -35,10 +37,11 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
 
    - Use the following command to clone the project repository:.
      ```bash
-     git clone https://github.com/Koon-Kiat/Tiny-Circuit-Project
+     git clone https://github.com/Koon-Kiat/Care-Link
      ```
 
 5. **Open the Project in VS Code**
+
    - Open the cloned project in VS Code, verify, and upload the code to your TinyZero.
 
 6. **Upload the Code to the Microcontroller**:
@@ -63,11 +66,12 @@ Refer to the following tutorials if you encounter issues:
 
 These resources provide comprehensive guides and troubleshooting tips to help you resolve common issues and ensure your project runs smoothly.
 
-
 ## Python Setup
+
 ### Setting Up the Python Environment
 
 1. **Install Python**
+
    - Download and install Python from the [official website](https://www.python.org/downloads/).
 
 2. **Install Required Python Libraries**
@@ -119,5 +123,3 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 ## Usage
 
 After completing the installation and setup, refer to the [Usage Guide](USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
-
-
