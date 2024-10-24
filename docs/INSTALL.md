@@ -1,13 +1,15 @@
 # Installation Guide
 This guide outlines the steps to set up your Tiny Circuit Project, including required libraries, installation steps, and configuration for a Telegram bot.
 
-## Required Libraries
+
+## Arduino Setup
+### Required Libraries
 
 - **STBLE**: For Bluetooth Low Energy communication
 - **BMA250**: For accelerometer functionality
 - **TinyScreen**: For TinyScreen display control
 
-## Installation Steps
+### Installation Steps
 
 1. **Install Arduino IDE IDE and CLI**
     Download and install the Arduino IDE and CLI from the [official website](https://www.arduino.cc/en/software/) and follow the setup instructions.
@@ -44,7 +46,7 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
    - Click the `Verify` button to verify the code.
    - Click the `Upload` button to upload the code to the TinyZero.
 
-## General Troubleshooting Tips
+### General Troubleshooting Tips
 
 Refer to the following tutorials if you encounter issues:
 
@@ -62,7 +64,8 @@ Refer to the following tutorials if you encounter issues:
 These resources provide comprehensive guides and troubleshooting tips to help you resolve common issues and ensure your project runs smoothly.
 
 
-## Setting Up the Python Environment
+## Python Setup
+### Setting Up the Python Environment
 
 1. **Install Python**
    - Download and install Python from the [official website](https://www.python.org/downloads/).
@@ -73,7 +76,7 @@ These resources provide comprehensive guides and troubleshooting tips to help yo
      pip install logging os time asyncio bleak python-telegram-bot python-dotenv
      ```
 
-## Creating a Telegram Bot
+### Creating a Telegram Bot
 
 To create a Telegram bot and obtain the necessary credentials, follow these steps:
 
@@ -99,7 +102,7 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
 5. **Configure the Bot**:
    - Optionally, you can set a profile picture, description, and other settings for your bot using commands provided by BotFather.
 
-## Configuring the Telegram Bot
+### Enviornment Setup
 
 1. **Create a `.env` File**
 
@@ -113,75 +116,8 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
      ALERT_CHARACTERISTIC_UUID=your_alert_characteristic_uuid
      ```
 
-2. **Update the Python Script**:
-   - Ensure your Python script is configured to load the environment variables and initialize the Telegram bot using the `python-telegram-bot` library.
-
 ## Usage
 
-1. **Verify and Upload**
+After completing the installation and setup, refer to the [Usage Guide](docs/USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
 
-   - Verify your code in the Arduino IDE or VS Code and upload it to the TinyZero.
 
-2. **Run Serial Monitor to Start BT**:
-
-   - Open the Serial Monitor in the Arduino IDE or VS Code to start the Bluetooth communication.
-   - You should see the following output in the Serial Monitor:
-     ```bash
-     BLE Stack Initialized.
-     UART service added successfully.
-     Initializing BMA...
-     General Discoverable Mode.
-     ```
-
-3. **Stop Serial Monitor**
-
-   - Once the Bluetooth communication is established, stop the Serial Monitor.
-
-4. **Run the MAC Address Script**
-
-   - Run the following script to list available Bluetooth devices and their MAC addresses:
-     ```bash
-     python ArduinoMac.py
-     ```
-   - You should see output similar to this:
-     ```bash
-     Device: None, Address: **:**:**:**:**:**
-     Device: None, Address: **:**:**:**:**:**
-     Device: None, Address: **:**:**:**:**:**
-     Device: None, Address: **:**:**:**:**:**
-     Device: None, Address: **:**:**:**:**:**
-     Device: BlueNRG, Address: **:**:**:**:**:**
-     Device: None, Address: **:**:**:**:**:**
-     Device: None, Address: **:**:**:**:**:**
-     ```
-   - Identify and note the MAC address of the `BlueNRG` device.
-
-5. **Run the UUID Checker Script**
-
-   - Run the following script to fetch the services and characteristics of the Bluetooth device:
-     ```bash
-     python UUIDChecker.py
-     ```
-   - You should see output similar to this:
-     ```bash
-     Service: ****1801-****-****-****-********34fb
-         Characteristic: ****2a05-****-****-****-********34fb
-     Service: ****1800-****-****-****-********34fb
-         Characteristic: ****2a00-****-****-****-********34fb
-         Characteristic: ****2a01-****-****-****-********34fb
-         Characteristic: ****2a04-****-****-****-********34fb
-     Service: ****0001-****-****-****-********cca9e
-         Characteristic: ****0002-****-****-****-********cca9e
-         Characteristic: ****0003-****-****-****-********cca9e
-     ```
-   - Choose the third last line and the last line for the `ALERT_SERVICE_UUID` and `ALERT_CHARACTERISTIC_UUID` environment variables respectively.
-
-6. **Run the Telegram Bot Python File**
-
-   - Run your Python script directly from the terminal:
-     ```bash
-     python TelegramBot.py
-     ```
-
-7. **Start Interaction with the Telegram Bot**
-   - Open Telegram and start a chat with your bot using the provided token. Send the `/start` command to begin interaction.
