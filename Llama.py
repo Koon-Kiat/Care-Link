@@ -21,17 +21,24 @@ pipeline = transformers.pipeline(
 )
 
 # Serial connection setup
-ser = serial.Serial('COM5', 9600, timeout=1)  # Replace with your serial port
+ser = serial.Serial("COM5", 9600, timeout=1)  # Replace with your serial port
 time.sleep(2)  # Allow time for the serial connection to establish
 
 processed_prompts = set()  # To keep track of processed prompts
 
 # Define keywords or patterns to filter out unwanted messages
-error_keywords = ["Error", "TX dropped", "failed", "not valid", "characteristic", "warning"]
+error_keywords = [
+    "Error",
+    "TX dropped",
+    "failed",
+    "not valid",
+    "characteristic",
+    "warning",
+]
 
 while True:
     if ser.in_waiting > 0:
-        data = ser.readline().decode('utf-8').strip()
+        data = ser.readline().decode("utf-8").strip()
         if data:
             print(f"Received prompt: {data}")
 
@@ -41,7 +48,9 @@ while True:
                 continue  # Skip this iteration if it's an error message
 
             # Remove the "16 :" part from the prompt
-            cleaned_prompt = re.sub(r'^\d+\s*:\s*', '', data)  # Regex to remove leading number and colon
+            cleaned_prompt = re.sub(
+                r"^\d+\s*:\s*", "", data
+            )  # Regex to remove leading number and colon
             print(f"Cleaned prompt: {cleaned_prompt}\n")
 
             # Check if the prompt has already been processed
@@ -65,7 +74,7 @@ while True:
 
             # Retrieve the generated text
             for seq in sequences:
-                result = seq['generated_text'].strip()  # Clean up the output
+                result = seq["generated_text"].strip()  # Clean up the output
                 print(f"Result: {result}")
 
                 # Optionally, limit the result length for sending
@@ -73,7 +82,9 @@ while True:
                 result_to_send = result[:max_send_length]  # Limit to first N characters
 
                 # Send the result back to TinyZero via serial
-                ser.write(result_to_send.encode('utf-8') + b'\n')  # Add a newline for clarity
+                ser.write(
+                    result_to_send.encode("utf-8") + b"\n"
+                )  # Add a newline for clarity
 
         # Optional: add a small delay to avoid overwhelming the serial connection
         time.sleep(0.1)
