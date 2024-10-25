@@ -1,4 +1,9 @@
 # Care Link
+![GitHub repo size](https://img.shields.io/github/repo-size/Koon-Kiat/Care-Link)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/Koon-Kiat/Care-Link?style=flat)
+![GitHub issues](https://img.shields.io/github/issues/Koon-Kiat/Care-Link)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/Koon-Kiat/Care-Link)
+![GitHub Repo stars](https://img.shields.io/github/stars/Koon-Kiat/Care-Link?style=flat)
 
 ## Overview
 
