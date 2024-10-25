@@ -74,10 +74,24 @@ These resources provide comprehensive guides and troubleshooting tips to help yo
 
    - Download and install Python from the [official website](https://www.python.org/downloads/).
 
-2. **Install Required Python Libraries**
-   - Run the following command to install the required libraries globally:
+2. **Create a Virtual Environment**
+
+   - Open a terminal and navigate to your project directory.
+   - Run the following command to create a virtual environment named `venv`:
      ```bash
-     pip install logging os time asyncio bleak python-telegram-bot python-dotenv
+     python -m venv Care-Link
+     ```
+   - Activate the virtual environment:
+      ```bash
+      .\Care-Link\Scripts\activate
+      ```
+
+
+3. **Install Required Python Libraries**
+
+   - Run the following command to install the required libraries within the virtual environment:
+     ```bash
+     pip install asyncio bleak python-telegram-bot python-dotenv
      ```
 
 ### Creating a Telegram Bot
