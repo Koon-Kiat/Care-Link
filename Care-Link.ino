@@ -275,6 +275,8 @@ void sendToBluetooth(const char *data)
             SerialMonitorInterface.print("Failed to send data over BLE, error code: ");
             SerialMonitorInterface.println(result);
         }
+
+        delay(1000);
     }
     else
     {
