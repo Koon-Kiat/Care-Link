@@ -1,6 +1,6 @@
 # Installation Guide
 
-This guide outlines the steps to set up your Tiny Circuit Project, including required libraries, installation steps, and configuration for a Telegram bot.
+This guide outlines the steps to set up your Tiny Circuit Project, including required libraries, installation steps, and configurations for a Telegram bot.
 
 ## Arduino Setup
 
