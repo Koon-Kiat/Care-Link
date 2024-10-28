@@ -30,7 +30,6 @@ BLE_DEVICE_MAC_ADDRESS = os.getenv("BLE_DEVICE_MAC_ADDRESS")
 ALERT_SERVICE_UUID = os.getenv("ALERT_SERVICE_UUID")
 ALERT_CHARACTERISTIC_UUID = os.getenv("ALERT_CHARACTERISTIC_UUID")
 
-# Validate TELEGRAM_CHAT_ID
 if TELEGRAM_CHAT_ID is None or not TELEGRAM_CHAT_ID.isdigit():
     logger.error(
         "Invalid TELEGRAM_CHAT_ID. Please check your environment variables.")
@@ -38,7 +37,6 @@ if TELEGRAM_CHAT_ID is None or not TELEGRAM_CHAT_ID.isdigit():
 
 YOUR_CHAT_ID = int(TELEGRAM_CHAT_ID)
 
-# Store user's location
 user_location = None
 location_shared = False
 last_temperature_alert_time = 0  # Variable to store last alert time
@@ -49,7 +47,6 @@ previous_fall_status = None
 previous_temperature_status = None
 startup = True
 
-# Async event to signal when BLE is connected
 ble_connected_event = asyncio.Event()
 
 
@@ -282,13 +279,9 @@ async def main_startup():
 def main() -> None:
     app = Application.builder().token(TELEGRAM_BOT_API_KEY).build()
     app.add_handler(MessageHandler(filters.LOCATION, location_handler))
-
-    # Start the BLE connection in a separate task
     loop = asyncio.get_event_loop()
     loop.create_task(connect_ble_device())
     loop.create_task(main_startup())
-
-    # Send the initial message
     loop.run_until_complete(send_initial_message(app))
 
     app.run_polling(allowed_updates=Update.ALL_TYPES)
