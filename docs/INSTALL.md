@@ -12,13 +12,14 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
 
 ### Installation Steps
 
-1. **Install Arduino IDE IDE and CLI**
-   Download and install the Arduino IDE and CLI from the [official website](https://www.arduino.cc/en/software/) and follow the setup instructions.
+1. **Install Arduino IDE and CLI**
+
+   - Download and install the Arduino IDE and CLI from the [official website](https://www.arduino.cc/en/software/) and follow the setup instructions.
 
 2. **Install Required Libraries**
 
-   - Open the Arduino IDE, navigate to `Sketch` > `Include Library` > `Manage Libraries` and install `TinyScreen`
-   - For `STBLE` library, follow the steps in the [TinyCircuits Bluetooth Low Energy TinyShield Tutorial](https://learn.tinycircuits.com/Communication/Bluetooth-Low-Energy_TinyShield_Tutorial/) to download the `STBLE` library from the provided link.
+   - Open the Arduino IDE, navigate to `Sketch` > `Include Library` > `Manage Libraries` and install `TinyScreen`.
+   - For the `STBLE` library, follow the steps in the [TinyCircuits Bluetooth Low Energy TinyShield Tutorial](https://learn.tinycircuits.com/Communication/Bluetooth-Low-Energy_TinyShield_Tutorial/) to download the `STBLE` library from the provided link.
 
 3. **Set Up Arduino Extension for VS Code**
 
@@ -35,36 +36,13 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
 
 4. **Clone the Project Repository**
 
-   - Use the following command to clone the project repository:.
+   - Use the following command to clone the project repository:
      ```bash
      git clone https://github.com/Koon-Kiat/Care-Link
      ```
 
 5. **Open the Project in VS Code**
-
    - Open the cloned project in VS Code, verify, and upload the code to your TinyZero.
-
-6. **Upload the Code to the Microcontroller**:
-   - Connect your TinyZero to your computer via USB.
-   - Click the `Verify` button to verify the code.
-   - Click the `Upload` button to upload the code to the TinyZero.
-
-### General Troubleshooting Tips
-
-Refer to the following tutorials if you encounter issues:
-
-1. **TinyZero Setup Tutorial**
-
-   - [TinyZero Setup Tutorial](https://learn.tinycircuits.com/Processors/TinyZero_Setup_Tutorial/)
-
-2. **Bluetooth Low Energy TinyShield Tutorial**
-
-   - [Bluetooth Low Energy TinyShield Tutorial](https://learn.tinycircuits.com/Communication/Bluetooth-Low-Energy_TinyShield_Tutorial/)
-
-3. **TinyScreen TinyShield Tutorial**:
-   - [TinyScreen TinyShield Tutorial](https://learn.tinycircuits.com/Display/TinyScreen_TinyShield_Tutorial/)
-
-These resources provide comprehensive guides and troubleshooting tips to help you resolve common issues and ensure your project runs smoothly.
 
 ## Python Setup
 
@@ -82,13 +60,11 @@ These resources provide comprehensive guides and troubleshooting tips to help yo
      python -m venv Care-Link
      ```
    - Activate the virtual environment:
-      ```bash
-      .\Care-Link\Scripts\activate
-      ```
-
+     ```bash
+     .\Care-Link\Scripts\activate
+     ```
 
 3. **Install Required Python Libraries**
-
    - Run the following command to install the required libraries within the virtual environment:
      ```bash
      pip install asyncio bleak python-telegram-bot python-dotenv
@@ -113,27 +89,11 @@ To create a Telegram bot and obtain the necessary credentials, follow these step
    - Follow the prompts to choose a name and username for your bot. The username must end with `bot` (e.g., `MyAwesomeBot`).
 
 4. **Obtain the Bot Token**
-
    - After creating the bot, BotFather will provide you with a token. This token is required to authenticate your bot and interact with the Telegram Bot API.
-   - Copy the token and keep it secure. You will need it to configure your bot.
 
-5. **Configure the Bot**:
-   - Optionally, you can set a profile picture, description, and other settings for your bot using commands provided by BotFather.
+## Troubleshooting
 
-### Enviornment Setup
-
-1. **Create a `.env` File**
-
-   - In the root of your project directory, create a file named `.env`.
-   - Add the following environment variables to the `.env` file:
-     ```bash
-     TELEGRAM_TOKEN=your_telegram_bot_token
-     TELEGRAM_CHAT_ID=your_telegram_chat_id
-     BLE_DEVICE_MAC_ADDRESS=your_ble_device_mac_address
-     ALERT_SERVICE_UUID=your_alert_service_uuid
-     ALERT_CHARACTERISTIC_UUID=your_alert_characteristic_uuid
-     ```
-
-## Usage
-
-After completing the installation and setup, refer to the [Usage Guide](USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
+- **Arduino IDE Issues**: Ensure you have the correct version of the Arduino IDE and all required libraries installed.
+- **Python Environment Issues**: Verify that the virtual environment is activated and all required libraries are installed.
+- **Telegram Bot Issues**: Ensure the bot token is correct and the bot is properly set up in Telegram.
+- **General Errors**: Refer to the [TinyZero Setup Tutorial](https://learn.tinycircuits.com/Processors/TinyZero_Setup_Tutorial/) for additional troubleshooting tips.
