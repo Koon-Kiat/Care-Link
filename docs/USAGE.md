@@ -4,22 +4,7 @@
 
    - Verify your code in the Arduino IDE or VS Code and upload it to the TinyZero.
 
-## 2. Run Serial Monitor to Start BT
-
-   - Open the Serial Monitor in the Arduino IDE or VS Code to start the Bluetooth communication.
-   - You should see the following output in the Serial Monitor:
-     ```bash
-     BLE Stack Initialized.
-     UART service added successfully.
-     Initializing BMA...
-     General Discoverable Mode.
-     ```
-
-## 3. Stop Serial Monitor
-
-   - Once the Bluetooth communication is established, stop the Serial Monitor.
-
-## 4. List Avaliable Bluetooth Devices
+## 2. List Avaliable Bluetooth Devices
 
    - Run the following script to list available Bluetooth devices and their MAC addresses:
      ```bash
@@ -38,7 +23,7 @@
      ```
    - Identify and note the MAC address of the `BlueNRG` device.
 
-## 5. Fetch Bluetooth Services and Characteristics
+## 3. Fetch Bluetooth Services and Characteristics
 
    - Run the following script to fetch the services and characteristics of the Bluetooth device:
      ```bash
@@ -58,12 +43,12 @@
      ```
    - Choose the third last line and the last line for the `ALERT_SERVICE_UUID` and `ALERT_CHARACTERISTIC_UUID` environment variables respectively.
 
-## 6. Run the Telegram Bot
+## 4. Run the Telegram Bot
 
    - Run your Python script directly from the terminal:
      ```bash
      python telegram_bot.py
      ```
 
-## 7. Interact with the Telegram Bot
-   - Open Telegram and start a chat with your bot using the provided token. Send the `/start` command to begin interaction.
+## 5. Interact with the Telegram Bot
+- Open Telegram and start a chat with your bot using the provided token. You **do not need to send the `/start` command**; the bot will automatically send a welcome message to you as soon as the script starts.
