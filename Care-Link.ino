@@ -36,8 +36,6 @@ double temp;
 void setup()
 {
     SerialMonitorInterface.begin(9600);
-    while (!SerialMonitorInterface)
-        ; // Block until a serial monitor is opened with TinyScreen+!
     BLEsetup();
 
     Wire.begin();
@@ -53,28 +51,31 @@ void loop()
 {
     aci_loop(); // Process any ACI commands or events from the NRF8001
 
-    // Check if data is available
-    if (ble_rx_buffer_len)
+    if (ble_connection_state)
     {
-        SerialMonitorInterface.print(ble_rx_buffer_len);
-        SerialMonitorInterface.print(" : ");
-        SerialMonitorInterface.println((char *)ble_rx_buffer);
 
-        // Display received message
-        display.clearScreen();
-        display.setFont(thinPixel7_10ptFontInfo);
-        int width = display.getPrintWidth((char *)ble_rx_buffer);
-        display.setCursor(64 - width / 2, 32 - 10 / 2);
-        display.fontColor(TS_8b_Green, TS_8b_Black);
-        display.print((char *)ble_rx_buffer);
-        display.println();
+        // Check if data is available
+        if (ble_rx_buffer_len)
+        {
+            SerialMonitorInterface.print(ble_rx_buffer_len);
+            SerialMonitorInterface.print(" : ");
+            SerialMonitorInterface.println((char *)ble_rx_buffer);
 
-        ble_rx_buffer_len = 0; // Clear after reading
+            // Display received message
+            display.clearScreen();
+            display.setFont(thinPixel7_10ptFontInfo);
+            int width = display.getPrintWidth((char *)ble_rx_buffer);
+            display.setCursor(64 - width / 2, 32 - 10 / 2);
+            display.fontColor(TS_8b_Green, TS_8b_Black);
+            display.print((char *)ble_rx_buffer);
+            display.println();
+
+            ble_rx_buffer_len = 0; // Clear after reading
+        }
+
+        // Check accelerometer for fall detection and temperature
+        checkFallDetectionAndTemperature();
     }
-
-    // Check accelerometer for fall detection and temperature
-    checkFallDetectionAndTemperature();
-
     // Check if serial input is available
     if (SerialMonitorInterface.available())
     {
