@@ -1,0 +1,5 @@
+{
+    "board": "TinyCircuits:samd:tinyzero",
+    "port": "COM5",
+    "sketch": "Care-Link.ino"
+}
