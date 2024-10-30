@@ -14,17 +14,18 @@
 #define BMA250_range_4g 0x05
 #define BMA250_range_8g 0x08
 #define BMA250_range_16g 0x0C
- 
+
 #include <inttypes.h>
 
-class BMA250 {
+class BMA250
+{
 public:
-BMA250();
-int begin(uint8_t, uint8_t);
-void read();
-int16_t X,Y,Z;
-int8_t rawTemp;
-int8_t tempC;
-uint8_t I2Caddress=0;
+    BMA250();
+    int begin(uint8_t, uint8_t);
+    void read();
+    int16_t X, Y, Z;
+    int8_t rawTemp;
+    int8_t tempC;
+    uint8_t I2Caddress = 0;
 };
 #endif
