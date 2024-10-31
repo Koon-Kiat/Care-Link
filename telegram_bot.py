@@ -116,8 +116,7 @@ async def send_alert_message(message):
         # Send current user's location if available
         if user_location:
             latitude, longitude = user_location
-            logger.info(f"Sending location: Latitude: {
-                        latitude}, Longitude: {longitude}")
+            logger.info(f"Sending location: Latitude: {latitude}, Longitude: {longitude}")
             await app.bot.send_location(chat_id=YOUR_CHAT_ID, latitude=latitude, longitude=longitude)
         else:
             logger.warning("User location not available!")
@@ -151,8 +150,7 @@ async def send_temperature_alert(message):
     elif temperature_status == "H":
         temp_message = "Temperature is HIGH. Seek shelter; there is a possible risk of heat injury!"
     else:
-        logger.warning(f"Received unrecognized temperature status: {
-                       temperature_status}")
+        logger.warning(f"Received unrecognized temperature status: {temperature_status}")
         return
 
     current_time = time.time()
@@ -215,8 +213,7 @@ async def connect_ble_with_retries(client, retries=3, delay=5):
             await asyncio.sleep(delay)
 
     if attempt == retries:
-        logger.error(f"Failed to connect to BLE device after {
-                     retries} attempts.")
+        logger.error(f"Failed to connect to BLE device after {retries} attempts.")
 
 
 async def start(update: Update, context: CallbackContext):
@@ -249,8 +246,7 @@ async def location_handler(update: Update, context: CallbackContext):
         location_shared = True  # Mark location as shared
 
         logger.info(
-            f"User location updated: Latitude: {
-                user_location[0]}, Longitude: {user_location[1]}"
+            f"User location updated: Latitude: {user_location[0]}, Longitude: {user_location[1]}"
         )
         await update.message.reply_text("Thank you! Your live location has been saved.")
         await update.message.reply_text("Your location will be updated continuously.")
