@@ -15,6 +15,10 @@ The Care Link Project aims to create a portable, wearable device designed to ass
 - **TinyScreen**: Model ASD2431-R
 - **TinyShield BT**: Model ASD2116-R
 
+## Key Technologies
+- **C++**: Primary programming language for the firmware.
+- **Python**: Used for telegram bot.
+
 ## Features
 
 - **Fall Detection**: Automatically detects falls and sends alerts to caregivers, ensuring prompt assistance.
@@ -30,4 +34,4 @@ For detailed installation instructions, please refer to the [Installation Guide]
 After completing the installation, refer to the [Usage Guide](docs/USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for more information.
