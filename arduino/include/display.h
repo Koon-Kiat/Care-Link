@@ -3,7 +3,7 @@
 #define DISPLAY_H
 
 #include <Arduino.h>
-#include <TinyScreen.h>
+#include "config.h"
 
 // Declare the external display object defined in Care-Link.ino
 extern TinyScreen display;

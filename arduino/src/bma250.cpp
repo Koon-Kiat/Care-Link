@@ -1,4 +1,4 @@
-#include "BMA250.h"
+#include "../include/bma250.h"
 #include <inttypes.h>
 #include "Arduino.h"
 #include <Wire.h>

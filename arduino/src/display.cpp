@@ -1,11 +1,5 @@
 // src/Display.cpp
-#include "Display.h"
-
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
+#include "../include/display.h"
 
 void displayActivityStatus(const char *status, double temperature)
 {

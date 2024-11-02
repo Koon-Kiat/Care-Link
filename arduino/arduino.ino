@@ -2,35 +2,14 @@
 #include <STBLE.h>
 #include <TinyScreen.h>
 #include <Wire.h>
-#include "src/BMA250.h"                   // Include BMA250 accelerometer module
-#include "src/UART.h"                     // Include UART module
-#include "src/BLE.h"                      // Include BLE module
-#include "src/StatusSender.h"             // Include StatusSender module
-#include "src/FallAndTemperatureSensor.h" // Include FallAndTemperatureSensor module
-#include "src/Display.h"                  // Include Display module
-#include "src/Serial.h"                   // Include Serial module
-
-// Define BMA250 I2C address
-#define BMA250_ADDRESS 0x18
-
-// Debug output adds extra flash and memory requirements!
-#ifndef BLE_DEBUG
-#define BLE_DEBUG true
-#endif
-
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
-
-// Define the display object (only once)
-TinyScreen display = TinyScreen(TinyScreenDefault);
-
-// Declare global variables (defined once here)
-BMA250 accel_sensor; // Instance of BMA250 accelerometer
-int x, y, z;
-double temp;
+#include "include/BMA250.h"             // Include BMA250 accelerometer module
+#include "include/UART.h"                 // Include UART module
+#include "include/ble.h"                         // Include BLE module
+#include "include/status.h"                      // Include StatusSender module
+#include "include/fall_and_temperature_sensor.h" // Include FallAndTemperatureSensor module
+#include "include/display.h"                     // Include Display module
+#include "include/serial.h"                      // Include Serial module
+#include "include/config.h"                      // Include configuration file
 
 void setup()
 {

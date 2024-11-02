@@ -1,11 +1,10 @@
-// src/Serial.h
 #ifndef SERIAL_H
 #define SERIAL_H
 
 #include <Arduino.h>
-#include "UART.h"         // For SerialMonitorInterface
-#include "StatusSender.h" // For sendFallStatus and sendTemperatureStatus
-#include "Display.h"      // For display functions (optional)
+#include "uart.h"         // For SerialMonitorInterface
+#include "status.h" // For sendFallStatus and sendTemperatureStatus
+#include "display.h"      // For display functions (optional)
 
 // Declare external variables defined in Care-Link.ino
 extern int x;
@@ -26,4 +25,4 @@ void handleSerialInput();
  */
 void showSerial();
 
-#endif // SERIAL_H
+#endif 

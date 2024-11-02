@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include <stdint.h>
+#include "config.h"
 
 // ----------------------
 // Macro Definitions
@@ -20,18 +21,11 @@ extern char sprintbuff[100];
 #define PRINTF(...)
 #endif
 
-// ----------------------
-// Constants and Definitions
-// ----------------------
-#define MAX_BUFFER_SIZE 256 // Define as per your requirements
-#define MAX_RECEIVED_MESSAGE_SIZE 256
 
 // ----------------------
 // External Variable Declarations
 // ----------------------
 extern uint8_t ble_rx_buffer_len;
-
-// Other Global Variables
 extern volatile uint8_t set_connectable;
 extern uint16_t connection_handle;
 extern bool connected;
@@ -71,4 +65,4 @@ uint8_t lib_aci_send_data(uint8_t ignore, uint8_t *sendBuffer, uint8_t sendLengt
 // UART Transmission Function (C++ linkage)
 uint8_t Write_UART_TX(char *TXdata, uint8_t datasize);
 
-#endif // UART_H
+#endif

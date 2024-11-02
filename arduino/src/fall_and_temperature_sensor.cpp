@@ -1,15 +1,10 @@
 // src/SensorHandler.cpp
-#include "FallAndTemperatureSensor.h"
+#include "../include/fall_and_temperature_sensor.h"
 #include <math.h>
-#include "BMA250.h"
-#include "Display.h"
-#include "Serial.h"
+#include "../include/bma250.h"
+#include "../include/display.h"
+#include "../include/serial.h"
 
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
 
 void checkFallDetectionAndTemperature()
 {

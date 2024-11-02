@@ -1,12 +1,5 @@
 // src/Serial.cpp
-#include "Serial.h"
-
-// Preprocessor Definitions (if needed)
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
+#include "../include/serial.h"
 
 /**
  * @brief Handles serial input from the Serial Monitor.

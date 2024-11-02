@@ -9,4 +9,4 @@ void sendFallStatus(const char *status);
 // Send temperature status
 void sendTemperatureStatus(double temperature);
 
-#endif // STATUS_SENDER_H
+#endif
