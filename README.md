@@ -24,7 +24,7 @@ The Care Link Project aims to create a portable, wearable device designed to ass
 - **Safety Alerts**: Monitors users’ locations and behaviors, issuing alerts for potential safety concerns.
 
 ## Installation
-For detailed installation instructions, please refer to the [Installation Guide](docs/INSTALL.md).
+For detailed installation instructions, please refer to the [Installation Guide](docs/INSTALLATION.md).
 
 ## Usage
 After completing the installation, refer to the [Usage Guide](docs/USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
