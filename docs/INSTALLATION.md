@@ -67,7 +67,7 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
 3. **Install Required Python Libraries**
    - Run the following command to install the required libraries within the virtual environment:
      ```bash
-     pip install asyncio bleak python-telegram-bot python-dotenv
+     pip install -r requirements.txt
      ```
 
 ### Creating a Telegram Bot
