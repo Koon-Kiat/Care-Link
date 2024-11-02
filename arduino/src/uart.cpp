@@ -1,6 +1,6 @@
-#include "UART.h"
+#include "../include/uart.h"
 #include <STBLE.h> // Ensure STBLE library is included
-#include "BLE.h"
+#include "../include/ble.h"
 
 // ----------------------
 // Global Variable Definitions
@@ -18,21 +18,10 @@ uint16_t connection_handle = 0;
 
 bool connected = false;
 
-// Remove these definitions to prevent multiple definitions
-// uint8_t ble_rx_buffer[MAX_BUFFER_SIZE];
-// uint8_t ble_rx_buffer_len = 0;
-
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
 
 // Forward Declaration
 uint8_t Add_UART_Service(void);
-// ----------------------
-// Function Definitions
-// ----------------------
+
 
 // UART Setup Function
 void UARTSetup()
