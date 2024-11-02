@@ -13,6 +13,7 @@
 ## 2. List Avaliable Bluetooth Devices
 
 - Navigate to the `src/python/scripts` directory and run the following script to list available Bluetooth devices and their MAC addresses:
+  
   ```bash
   cd src/Python
   python mac_address.py
@@ -33,6 +34,7 @@
 ## 3. Fetch Bluetooth Services and Characteristics
 
 - Navigate to the `src/python/scripts` directory and run the following script to fetch the services and characteristics of the Bluetooth device:
+  
   ```bash
   cd src/python/scripts
   python uuid_checker.py
