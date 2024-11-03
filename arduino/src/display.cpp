@@ -1,6 +1,11 @@
 #include "../include/display.h"
 
-
+/**
+ * @brief Displays the activity status and temperature on the TinyScreen.
+ *
+ * @param status The activity status string (e.g., "RESTING", "WALKING", "RUNNING", "FALL DETECTED!").
+ * @param temperature The current temperature in Celsius.
+ */
 void displayActivityStatus(const char *status, double temperature)
 {
     display.clearScreen();
@@ -25,7 +30,12 @@ void displayActivityStatus(const char *status, double temperature)
     display.print(getTemperatureCategory(temperature));
 }
 
-
+/**
+ * @brief Categorizes the temperature.
+ *
+ * @param temperature The current temperature in Celsius.
+ * @return String The temperature category ("COOL", "COMFORTABLE", "HOT").
+ */
 String getTemperatureCategory(double temperature)
 {
     if (temperature < 28)
