@@ -2,7 +2,7 @@
 #define FALLANDTEMPERATURESENSOR_H
 
 #include <Arduino.h>
-#include "bma250.h"       // Accelerometer module
+#include "bma250.h" // Accelerometer module
 #include "status.h" // For sendFallStatus and sendTemperatureStatus
 #include "config.h"
 

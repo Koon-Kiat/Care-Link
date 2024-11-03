@@ -5,7 +5,6 @@
 #include "../include/display.h"
 #include "../include/serial.h"
 
-
 void checkFallDetectionAndTemperature()
 {
     accel_sensor.read(); // Update acceleration values
