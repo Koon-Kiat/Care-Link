@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 #include <TinyScreen.h>
-#include "bma250.h" // Include BMA250 accelerometer module
+#include "bma250.h"
 
 // Define Bluetooth-related constants
 #define PIPE_UART_OVER_BTLE_UART_TX_TX 0
@@ -41,4 +41,4 @@ extern BMA250 accel_sensor;
 extern int x, y, z;
 extern double temp;
 
-#endif // CONFIG_H
+#endif

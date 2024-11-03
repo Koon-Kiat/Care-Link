@@ -1,6 +1,10 @@
 #include "../include/status.h"
-#include "../include/ble.h" // Assuming sendToBluetooth is defined here
 
+/**
+ * @brief Sends the fall status to the server.
+ *
+ * @param status The fall status string (e.g., "SAFE", "SEVERE FALL DETECTED", "MODERATE FALL DETECTED", "MINOR FALL DETECTED").
+ */
 void sendFallStatus(const char *status)
 {
     String message;
@@ -24,9 +28,14 @@ void sendFallStatus(const char *status)
 
     SerialMonitorInterface.print("Preparing to send: ");
     SerialMonitorInterface.println(message.c_str());
-    sendToBluetooth(message.c_str());
+    sendStatus(message.c_str());
 }
 
+/**
+ * @brief Sends the temperature status to the server.
+ *
+ * @param temperature The current temperature in Celsius.
+ */
 void sendTemperatureStatus(double temperature)
 {
     String message = "TEMP: ";
@@ -45,5 +54,17 @@ void sendTemperatureStatus(double temperature)
         message += "H"; // HOT
     }
 
-    sendToBluetooth(message.c_str());
+    SerialMonitorInterface.print("Preparing to send: ");
+    SerialMonitorInterface.println(message.c_str());
+    sendStatus(message.c_str());
+}
+
+/**
+ * @brief Sends the status message to the server.
+ *
+ * @param message The status message to be sent.
+ */
+void sendStatus(const char *message)
+{
+    // Implement WIFI or other communication methods here
 }
