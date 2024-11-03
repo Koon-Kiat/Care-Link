@@ -1,11 +1,5 @@
-#include "StatusSender.h"
-#include "BLE.h" // Assuming sendToBluetooth is defined here
-
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
+#include "../include/status.h"
+#include "../include/ble.h" // Assuming sendToBluetooth is defined here
 
 void sendFallStatus(const char *status)
 {

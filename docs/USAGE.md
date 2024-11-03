@@ -12,8 +12,10 @@
 
 ## 2. List Avaliable Bluetooth Devices
 
-- Run the following script to list available Bluetooth devices and their MAC addresses:
+- Navigate to the `src/python/scripts` directory and run the following script to list available Bluetooth devices and their MAC addresses:
+  
   ```bash
+  cd src/Python
   python mac_address.py
   ```
 - You should see output similar to this:
@@ -31,8 +33,10 @@
 
 ## 3. Fetch Bluetooth Services and Characteristics
 
-- Run the following script to fetch the services and characteristics of the Bluetooth device:
+- Navigate to the `src/python/scripts` directory and run the following script to fetch the services and characteristics of the Bluetooth device:
+  
   ```bash
+  cd src/python/scripts
   python uuid_checker.py
   ```
 - You should see output similar to this:
@@ -51,8 +55,10 @@
 
 ## 4. Run the Telegram Bot
 
-- Run your Python script directly from the terminal:
+- Navigate to the `src/Python` directory and run your Python script directly from the terminal:
+
   ```bash
+  cd src/python
   python telegram_bot.py
   ```
 

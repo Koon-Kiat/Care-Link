@@ -1,13 +1,11 @@
-// BLE.h
 #ifndef BLE_H
 #define BLE_H
 
 #include <SPI.h>
 #include <STBLE.h>
-#include "UART.h"
+#include "uart.h"
+#include "config.h"
 
-// Define Bluetooth-related constants and variables
-#define PIPE_UART_OVER_BTLE_UART_TX_TX 0
 
 extern char receivedBuffer[MAX_RECEIVED_MESSAGE_SIZE];
 extern uint8_t receivedBufferLength;
@@ -26,4 +24,4 @@ void BluetoothLoop();
 // Send data over Bluetooth
 void sendToBluetooth(const char *data);
 
-#endif // BLE_H
+#endif

@@ -1,20 +1,5 @@
 // BLE.cpp
-#include "BLE.h"
-
-// Define Bluetooth-related variables
-char receivedBuffer[MAX_RECEIVED_MESSAGE_SIZE];
-uint8_t receivedBufferLength = 0;
-bool ble_connection_state = false;
-uint8_t ble_rx_buffer_len = 0;
-
-// Define ble_rx_buffer here
-uint8_t ble_rx_buffer[MAX_BUFFER_SIZE];
-
-#if defined(ARDUINO_ARCH_AVR)
-#define SerialMonitorInterface Serial
-#elif defined(ARDUINO_ARCH_SAMD)
-#define SerialMonitorInterface SerialUSB
-#endif
+#include "../include/ble.h"
 
 void sendToBluetooth(const char *data)
 {

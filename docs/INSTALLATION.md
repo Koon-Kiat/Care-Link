@@ -57,17 +57,17 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
    - Open a terminal and navigate to your project directory.
    - Run the following command to create a virtual environment named `venv`:
      ```bash
-     python -m venv Care-Link
+     python -m venv venv
      ```
    - Activate the virtual environment:
      ```bash
-     .\Care-Link\Scripts\activate
+     .\venv\Scripts\activate
      ```
 
 3. **Install Required Python Libraries**
    - Run the following command to install the required libraries within the virtual environment:
      ```bash
-     pip install asyncio bleak python-telegram-bot python-dotenv
+     pip install -r requirements.txt
      ```
 
 ### Creating a Telegram Bot
