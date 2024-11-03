@@ -4,8 +4,6 @@
 #include <Arduino.h>
 #include "config.h"
 
-
-
 void sendFallStatus(const char *status);
 void sendTemperatureStatus(double temperature);
 void sendStatus(const char *message);
