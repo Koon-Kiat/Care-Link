@@ -1,5 +1,5 @@
 #include "../include/status.h"
-#include "../include/ble.h" // Assuming sendToBluetooth is defined here
+
 
 void sendFallStatus(const char *status)
 {
@@ -24,8 +24,9 @@ void sendFallStatus(const char *status)
 
     SerialMonitorInterface.print("Preparing to send: ");
     SerialMonitorInterface.println(message.c_str());
-    sendToBluetooth(message.c_str());
+    sendStatus(message.c_str());
 }
+
 
 void sendTemperatureStatus(double temperature)
 {
@@ -45,5 +46,13 @@ void sendTemperatureStatus(double temperature)
         message += "H"; // HOT
     }
 
-    sendToBluetooth(message.c_str());
+    SerialMonitorInterface.print("Preparing to send: ");
+    SerialMonitorInterface.println(message.c_str());
+    sendStatus(message.c_str());
+}
+
+
+void sendStatus(const char *message)
+{
+    // Implement WIFI or other communication methods here
 }
