@@ -2,9 +2,9 @@
 #define SERIAL_H
 
 #include <Arduino.h>
-#include "uart.h"    // For SerialMonitorInterface
-#include "status.h"  // For sendFallStatus and sendTemperatureStatus
-#include "display.h" // For display functions (optional)
+#include "uart.h"   
+#include "status.h"  
+#include "display.h"
 
 extern int x;
 extern int y;
