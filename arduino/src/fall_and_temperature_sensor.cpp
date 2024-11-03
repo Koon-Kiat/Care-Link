@@ -5,7 +5,14 @@
 #include "../include/display.h"
 #include "../include/serial.h"
 
-
+/**
+ * @brief Checks for fall detection and temperature.
+ *
+ * This function reads the acceleration values from the BMA250 sensor and calculates the magnitude.
+ * It then categorizes the activity status based on the magnitude and checks for fall detection.
+ * If a fall is detected, it sends the fall status to the connected device and displays the activity status and temperature.
+ *
+ */
 void checkFallDetectionAndTemperature()
 {
     accel_sensor.read(); // Update acceleration values

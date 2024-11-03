@@ -2,11 +2,10 @@
 #define STATUS_SENDER_H
 
 #include <Arduino.h>
+#include "config.h"
 
-// Send fall status
 void sendFallStatus(const char *status);
-
-// Send temperature status
 void sendTemperatureStatus(double temperature);
+void sendStatus(const char *message);
 
 #endif
