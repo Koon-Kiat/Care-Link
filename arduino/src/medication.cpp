@@ -1,7 +1,7 @@
 #include "../include/medication.h"
 #include "../include/display.h"
 #include "../include/config.h"
-#include "../include/status.h" // Added include for Status module
+#include "../include/status.h"
 
 /**
  * @brief Handles user confirmation for medication intake.
@@ -10,6 +10,7 @@
  * whether the user has confirmed taking their medication or canceled the confirmation.
  * Based on the button pressed, it updates the display with the corresponding message,
  * sends the appropriate status to the server, and updates the activity status.
+ * 
  */
 void handleMedicationConfirmation()
 {
@@ -24,7 +25,7 @@ void handleMedicationConfirmation()
         display.setCursor(0, 0);
         display.print("Taken");
         // Send confirmation status
-        sendStatus("MED_CONFIRM");
+        sendMedicationStatus("MED_CONFIRM");
         delay(2000); // Display message for 2 seconds
         displayActivityStatus("CONFIRMED", temp);
     }
@@ -36,7 +37,7 @@ void handleMedicationConfirmation()
         display.setCursor(0, 0);
         display.print("Not Taken.");
         // Send cancellation status
-        sendStatus("MED_CANCEL");
+        sendMedicationStatus("MED_CANCEL");
         delay(2000); // Display message for 2 seconds
         displayActivityStatus("CANCELLED", temp);
     }

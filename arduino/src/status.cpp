@@ -60,6 +60,29 @@ void sendTemperatureStatus(double temperature)
 }
 
 /**
+ * @brief Sends the medication status to the server.
+ *
+ * @param medStatus The medication status string ("MED_CONFIRM" or "MED_CANCEL").
+ */
+void sendMedicationStatus(const char *medStatus)
+{
+    String message;
+
+    if (strcmp(medStatus, "MED_CONFIRM") == 0)
+    {
+        message = "MED: C"; // Confirmed
+    }
+    else if (strcmp(medStatus, "MED_CANCEL") == 0)
+    {
+        message = "MED: CN"; // Canceled
+    }
+
+    SerialMonitorInterface.print("Preparing to send: ");
+    SerialMonitorInterface.println(message.c_str());
+    sendStatus(message.c_str());
+}
+
+/**
  * @brief Sends the status message to the server.
  *
  * @param message The status message to be sent.
@@ -69,5 +92,5 @@ void sendStatus(const char *message)
     // Implement WIFI or other communication methods here
     // Example implementation:
     // wifiModule.sendMessage(message);
-    SerialMonitorInterface.println("Status sent: " + String(message));
+    
 }
