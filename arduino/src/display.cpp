@@ -1,9 +1,14 @@
 #include "../include/display.h"
+#include "../include/medication.h"
 
 /**
- * @brief Displays the activity status and temperature on the TinyScreen.
+ * @brief Updates and displays the activity status and temperature on the TinyScreen.
  *
- * @param status The activity status string (e.g., "RESTING", "WALKING", "RUNNING", "FALL DETECTED!").
+ * This function clears the screen and sets the font to display the current activity status
+ * and temperature. It categorizes the temperature and provides a medication reminder
+ * to the user to confirm their medication intake.
+ *
+ * @param status The current activity status (e.g., "RESTING", "WALKING", "RUNNING", "FALL DETECTED!").
  * @param temperature The current temperature in Celsius.
  */
 void displayActivityStatus(const char *status, double temperature)
@@ -28,13 +33,21 @@ void displayActivityStatus(const char *status, double temperature)
     display.print(temperature);
     display.print("/");
     display.print(getTemperatureCategory(temperature));
+    cursorY += lineHeight;
+
+    // Print Medication Reminder in two lines
+    display.setCursor(cursorX, cursorY);
+    display.print("Medication:");
+    cursorY += lineHeight;
+    display.setCursor(cursorX, cursorY);
+    display.print("Press to confirm.");
 }
 
 /**
  * @brief Categorizes the temperature.
  *
  * @param temperature The current temperature in Celsius.
- * @return String The temperature category ("COOL", "COMFORTABLE", "HOT").
+ * @return String The temperature category ("C" for COOL, "N" for NORMAL, "H" for HOT).
  */
 String getTemperatureCategory(double temperature)
 {

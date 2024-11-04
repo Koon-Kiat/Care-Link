@@ -67,4 +67,7 @@ void sendTemperatureStatus(double temperature)
 void sendStatus(const char *message)
 {
     // Implement WIFI or other communication methods here
+    // Example implementation:
+    // wifiModule.sendMessage(message);
+    SerialMonitorInterface.println("Status sent: " + String(message));
 }

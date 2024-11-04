@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "config.h"
+#include "medication.h" // Added include for Medication module
 
 extern TinyScreen display;
 
