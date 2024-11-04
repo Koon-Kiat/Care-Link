@@ -7,5 +7,6 @@
 void sendFallStatus(const char *status);
 void sendTemperatureStatus(double temperature);
 void sendStatus(const char *message);
+void sendMedicationStatus(const char *status);
 
 #endif
