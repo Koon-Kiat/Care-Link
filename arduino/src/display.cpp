@@ -1,58 +1,53 @@
-// src/Display.cpp
 #include "../include/display.h"
 
+/**
+ * @brief Displays the activity status and temperature on the TinyScreen.
+ *
+ * @param status The activity status string (e.g., "RESTING", "WALKING", "RUNNING", "FALL DETECTED!").
+ * @param temperature The current temperature in Celsius.
+ */
 void displayActivityStatus(const char *status, double temperature)
 {
     display.clearScreen();
     display.setFont(thinPixel7_10ptFontInfo);
 
-    int maxWidth = 96; // Set to your screen width in pixels (assuming 96px width for TinyScreen)
     int cursorX = 0;
     int cursorY = 0;
+    int lineHeight = display.getFontHeight() + 1;
 
     // Print "Status:" on the first line
     display.setCursor(cursorX, cursorY);
     display.fontColor(TS_8b_Green, TS_8b_Black);
     display.print("Status: ");
-    cursorX = display.getPrintWidth("Status: "); // Move the cursor after "Status: "
+    display.print(status);
+    cursorY += lineHeight;
 
-    // Print the activity status
-    display.print(status);                  // Print the activity status
-    cursorY += display.getFontHeight() + 2; // Move to the next line for buffer
-
-    // Print a buffer line
-    display.setCursor(0, cursorY);
-    display.print(" ");                     // Empty line for buffer
-    cursorY += display.getFontHeight() + 2; // Move to the next line for temperature display
-
-    // Print "Temperature:" on the next line
-    display.setCursor(0, cursorY);
-    display.print("Temperature: ");
-    cursorX = display.getPrintWidth("Temperature: "); // Move the cursor after "Temperature: "
-
-    // Print the temperature value
+    // Print temperature value and short category
+    display.setCursor(cursorX, cursorY);
+    display.print("Temp/Cat: ");
     display.print(temperature);
-    display.print(" C"); // Append Celsius indicator
-
-    // Display current temperature category
-    cursorY += display.getFontHeight() + 2; // Move to the next line for category display
-    display.setCursor(0, cursorY);
-    // display.print("Temp Category: ");
-    display.print(getTemperatureCategory(temperature)); // Display temperature category
+    display.print("/");
+    display.print(getTemperatureCategory(temperature));
 }
 
+/**
+ * @brief Categorizes the temperature.
+ *
+ * @param temperature The current temperature in Celsius.
+ * @return String The temperature category ("COOL", "COMFORTABLE", "HOT").
+ */
 String getTemperatureCategory(double temperature)
 {
     if (temperature < 28)
     {
-        return "COOL";
+        return "C"; // COOL
     }
     else if (temperature >= 28 && temperature <= 33)
     {
-        return "COMFORTABLE";
+        return "N"; // NORMAL
     }
-    else // temperature > 33
+    else
     {
-        return "HOT";
+        return "H"; // HOT
     }
 }
