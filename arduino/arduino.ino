@@ -9,6 +9,7 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
+#include "include/panicButton.h"                 // Include Panic Button module
 
 void setup()
 {
@@ -27,6 +28,7 @@ void loop()
 {
     checkFallDetectionAndTemperature();
     handleMedicationConfirmation();
+    panicButton();
     if (SerialMonitorInterface.available())
     {
         handleSerialInput();
