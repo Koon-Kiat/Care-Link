@@ -8,6 +8,7 @@
 #include "include/display.h"                     // Include Display module
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
+#include "include/medication.h"                  // Include Medication module
 
 void setup()
 {
@@ -19,14 +20,16 @@ void setup()
     // Initialize the BMA250 accelerometer with default range and bandwidth settings
     SerialMonitorInterface.print("Initializing BMA...\n");
     accel_sensor.begin(BMA250_range_2g, BMA250_update_time_64ms);
+
 }
 
 void loop()
 {
     checkFallDetectionAndTemperature();
-
+    handleMedicationConfirmation();
     if (SerialMonitorInterface.available())
     {
         handleSerialInput();
     }
+
 }
