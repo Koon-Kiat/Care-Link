@@ -2,8 +2,8 @@
 #define PANICBUTTON_H   
 
 #include <Arduino.h>
-#include "display.h" // Include display header for display functionality
+#include "display.h"
 
 void panicButton();
 
-#endif // PANICBUTTON_H
+#endif
