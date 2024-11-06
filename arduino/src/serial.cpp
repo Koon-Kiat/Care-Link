@@ -3,7 +3,7 @@
 
 /**
  * @brief Handles serial input from the Serial Monitor.
- *        Responds to specific commands like 's' and 'q'.
+ *        Responds to specific commands like 's', 'q', 'h', and 'a'.
  */
 void handleSerialInput()
 {
@@ -19,6 +19,16 @@ void handleSerialInput()
             SerialMonitorInterface.println("Quit requested!");
             while (1)
                 ; // Hang the system for quitting
+        }
+        else if (c == 'h') // Use 'h' to navigate to home screen
+        {
+            currentScreen = HOME_SCREEN;
+            SerialMonitorInterface.println("Navigated to Home Screen.");
+        }
+        else if (c == 'a') // Use 'a' to navigate to activity screen
+        {
+            currentScreen = ACTIVITY_SCREEN;
+            SerialMonitorInterface.println("Navigated to Activity Screen.");
         }
     }
 }

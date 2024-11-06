@@ -20,25 +20,15 @@ void handleMedicationConfirmation()
     if (buttons & TSButtonUpperRight)
     {
         // Confirm medication taken
-        display.clearScreen();
-        display.setFont(thinPixel7_10ptFontInfo);
-        display.setCursor(0, 0);
-        display.print("Taken");
-        // Send confirmation status
         sendMedicationStatus("MED_CONFIRM");
+        activityStatus = "CONFIRMED";
         delay(2000); // Display message for 2 seconds
-        displayActivityStatus("CONFIRMED", temp);
     }
     else if (buttons & TSButtonLowerRight)
     {
         // Handle cancellation if needed
-        display.clearScreen();
-        display.setFont(thinPixel7_10ptFontInfo);
-        display.setCursor(0, 0);
-        display.print("Not Taken.");
-        // Send cancellation status
         sendMedicationStatus("MED_CANCEL");
+        activityStatus = "CANCELLED";
         delay(2000); // Display message for 2 seconds
-        displayActivityStatus("CANCELLED", temp);
     }
 }

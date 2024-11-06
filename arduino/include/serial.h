@@ -11,6 +11,8 @@ extern int y;
 extern int z;
 extern double temp;
 
+extern String activityStatus;
+
 void handleSerialInput();
 void showSerial();
 

@@ -1,6 +1,61 @@
 #include "../include/display.h"
 #include "../include/medication.h"
 
+// Define the current screen state
+ScreenState currentScreen = HOME_SCREEN;
+
+// Define the activityStatus variable
+String activityStatus = "Idle";
+
+// Function to display the home screen
+void displayHomeScreen()
+{
+    display.clearScreen();
+    display.setFont(thinPixel7_10ptFontInfo);
+
+    int cursorX = 0;
+    int cursorY = 0;
+    int lineHeight = display.getFontHeight() + 1;
+
+    display.setCursor(cursorX, cursorY);
+    display.fontColor(TS_8b_Green, TS_8b_Black);
+    display.print("Welcome!");
+    cursorY += lineHeight;
+
+    display.setCursor(cursorX, cursorY);
+    display.print("Press to view");
+    cursorY += lineHeight;
+
+    display.setCursor(cursorX, cursorY);
+    display.print("Activity Status");
+}
+
+// Update function to handle screen navigation
+void updateDisplay(double temperature, const char *activityStatusParam)
+{
+    uint8_t buttons = display.getButtons();
+    if (buttons & TSButtonUpperLeft)
+    {
+        // Navigate to activity screen
+        currentScreen = ACTIVITY_SCREEN;
+    }
+    else if (buttons & TSButtonLowerLeft)
+    {
+        // Navigate back to home screen
+        currentScreen = HOME_SCREEN;
+    }
+
+    // Display the current screen
+    if (currentScreen == HOME_SCREEN)
+    {
+        displayHomeScreen();
+    }
+    else if (currentScreen == ACTIVITY_SCREEN)
+    {
+        displayActivityStatus(activityStatusParam, temperature);
+    }
+}
+
 /**
  * @brief Updates and displays the activity status and temperature on the TinyScreen.
  *

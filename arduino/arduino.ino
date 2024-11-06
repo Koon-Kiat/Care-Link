@@ -20,16 +20,20 @@ void setup()
     // Initialize the BMA250 accelerometer with default range and bandwidth settings
     SerialMonitorInterface.print("Initializing BMA...\n");
     accel_sensor.begin(BMA250_range_2g, BMA250_update_time_64ms);
-
 }
 
 void loop()
 {
     checkFallDetectionAndTemperature();
     handleMedicationConfirmation();
+
+    // Update the display based on the current screen and activity status
+    updateDisplay(temp, activityStatus.c_str());
+
     if (SerialMonitorInterface.available())
     {
         handleSerialInput();
     }
 
+    // ...existing code...
 }

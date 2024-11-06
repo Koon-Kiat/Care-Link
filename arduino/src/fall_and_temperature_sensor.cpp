@@ -46,7 +46,6 @@ void checkFallDetectionAndTemperature()
 
     // Calculate magnitude
     double magnitude = sqrt(x * x + y * y + z * z);
-    String activityStatus;
 
     if (magnitude < RESTING_THRESHOLD)
     {
@@ -66,21 +65,21 @@ void checkFallDetectionAndTemperature()
     {
         SerialMonitorInterface.println("Severe fall detected!");
         sendFallStatus("SEVERE FALL DETECTED\n");
-        displayActivityStatus("FALL DETECTED!", temp);
+        // Removed direct display call
         delay(10000); // Display for 10 seconds
     }
     else if (z <= FALL_MODERATE_THRESHOLD_LOW || z >= FALL_MODERATE_THRESHOLD_HIGH)
     {
         SerialMonitorInterface.println("Moderate fall detected!");
         sendFallStatus("MODERATE FALL DETECTED\n");
-        displayActivityStatus("FALL DETECTED!", temp);
+        // Removed direct display call
         delay(10000); // Display for 10 seconds
     }
     else if (z <= FALL_MINOR_THRESHOLD_LOW || z >= FALL_MINOR_THRESHOLD_HIGH)
     {
         SerialMonitorInterface.println("Minor fall detected!");
         sendFallStatus("MINOR FALL DETECTED\n");
-        displayActivityStatus("FALL DETECTED!", temp);
+        // Removed direct display call
         delay(10000); // Display for 10 seconds
     }
     else
@@ -89,7 +88,7 @@ void checkFallDetectionAndTemperature()
     }
 
     // Display activity status and temperature on TinyScreen
-    displayActivityStatus(activityStatus.c_str(), temp);
+    // Removed direct display call
     sendTemperatureStatus(temp);
 
     if (x == -1 && y == -1 && z == -1)
