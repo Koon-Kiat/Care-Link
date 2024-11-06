@@ -54,7 +54,7 @@ This guide outlines the steps to set up your Tiny Circuit Project, including req
 
 2. **Create a Virtual Environment**
 
-   - Open a terminal and navigate to your project directory.
+   - Open a terminal and navigate to `Care-Link/server/`
    - Run the following command to create a virtual environment named `venv`:
      ```bash
      python -m venv venv
