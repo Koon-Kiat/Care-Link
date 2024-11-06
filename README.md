@@ -14,6 +14,11 @@ The Care Link Project aims to create a portable, wearable device designed to ass
 - **TinyZero**: Model ASM2021-R
 - **TinyScreen**: Model ASD2431-R
 - **TinyShield BT**: Model ASD2116-R
+- **TinyShield WiFi Board**: Model ASD2123-R
+- **Microphone Wireling**: Model AST1030
+- **TinyShield Audio Board**: Model ASD2841
+- **Wireling Adapter**: Model ASD2022
+
 
 ## Key Technologies
 - **C++**: Primary programming language for the firmware.
