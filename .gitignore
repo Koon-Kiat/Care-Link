@@ -1,4 +1,22 @@
-/.env
-/.vscode
-/Care-Link
-/trash
+# Virtual environments
+server/venv/
+
+# Python cache
+*.pyc
+__pycache__/
+server/__pycache__/
+server/app/__pycache__/
+server/scripts/__pycache__/
+server/tests/__pycache__/
+
+# Environment variables
+server/.env
+
+# IDE specific
+.vscode/
+*.code-workspace
+
+# Deployment files
+server/Procfile
+
+# Other Ignored Files
