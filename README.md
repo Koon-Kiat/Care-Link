@@ -21,11 +21,21 @@ The Care Link Project aims to create a portable, wearable device designed to ass
 
 ## Features
 
-- **Fall Detection**: Automatically detects falls and sends alerts to caregivers, ensuring prompt assistance.
-- **Ambient Temperature Monitoring**: Tracks environmental temperature to help prevent heat-related illnesses and ensure comfort.
-- **Medication Management**: Provides reminders for medication schedules, helping users adhere to their prescriptions.
-- **Daily Reminders**: Sends notifications for important daily tasks, improving users’ routine management.
-- **Safety Alerts**: Monitors users’ locations and behaviors, issuing alerts for potential safety concerns.
+- **Fall Detection**: Automatically detects falls and immediately sends alerts to caregivers, ensuring prompt assistance in case of emergencies.
+
+- **Ambient Temperature Monitoring**: Continuously tracks environmental temperature, helping prevent heat-related illnesses and ensuring comfort.
+
+- **Medication Management**: Provides reminders for scheduled medication, assisting users in adhering to their prescriptions.
+
+- **Panic Button**: A manual panic button allows users to send an emergency alert instantly to caregivers, providing added security and peace of mind.
+
+- **Battery Indicator**: Displays current battery levels, notifying both users and caregivers when the device needs to be recharged, ensuring continuous operation.
+
+- **Live Location Tracking**: Provides real-time location updates to caregivers, enabling them to know the user's whereabouts and quickly assist if necessary.
+
+- **Caregiver Website Dashboard**: An online platform accessible to caregivers, displaying all real-time data, including fall alerts, temperature readings, medication reminders, battery status, and location updates, for centralized monitoring.
+
+
 
 ## Installation
 For detailed installation instructions, please refer to the [Installation Guide](docs/INSTALLATION.md).
