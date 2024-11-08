@@ -3,7 +3,8 @@
 
 /**
  * @brief Handles serial input from the Serial Monitor.
- *        Responds to specific commands like 's', 'q', 'h', and 'a'.
+ * Responds to specific commands like 's', 'q', 'h', and 'a'.
+ * This function is now redundant and can be removed.
  */
 void handleSerialInput()
 {
