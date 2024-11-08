@@ -1,9 +1,8 @@
-// src/SensorHandler.cpp
 #include "../include/fall_and_temperature_sensor.h"
-#include <math.h>
 #include "../include/bma250.h"
 #include "../include/display.h"
 #include "../include/serial.h"
+#include <math.h>
 
 /**
  * @brief Checks for fall detection and temperature.
@@ -34,7 +33,7 @@ void checkFallDetectionAndTemperature()
     static unsigned long lastCheckTime = 0;
     unsigned long currentTime = millis();
     if (currentTime - lastCheckTime < 100)
-    {           // Check every 100ms
+    {      
         return; // Skip this loop if within the sampling period
     }
     lastCheckTime = currentTime; // Update the last check time
@@ -65,21 +64,18 @@ void checkFallDetectionAndTemperature()
     {
         SerialMonitorInterface.println("Severe fall detected!");
         sendFallStatus("SEVERE FALL DETECTED\n");
-        // Removed direct display call
         delay(10000); // Display for 10 seconds
     }
     else if (z <= FALL_MODERATE_THRESHOLD_LOW || z >= FALL_MODERATE_THRESHOLD_HIGH)
     {
         SerialMonitorInterface.println("Moderate fall detected!");
         sendFallStatus("MODERATE FALL DETECTED\n");
-        // Removed direct display call
         delay(10000); // Display for 10 seconds
     }
     else if (z <= FALL_MINOR_THRESHOLD_LOW || z >= FALL_MINOR_THRESHOLD_HIGH)
     {
         SerialMonitorInterface.println("Minor fall detected!");
         sendFallStatus("MINOR FALL DETECTED\n");
-        // Removed direct display call
         delay(10000); // Display for 10 seconds
     }
     else
@@ -88,7 +84,6 @@ void checkFallDetectionAndTemperature()
     }
 
     // Display activity status and temperature on TinyScreen
-    // Removed direct display call
     sendTemperatureStatus(temp);
 
     if (x == -1 && y == -1 && z == -1)
