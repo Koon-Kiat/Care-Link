@@ -407,12 +407,15 @@ void displayMedicationScreen()
     display.setCursor(headerX, 0);
     display.print(header);
 
-    // Set smaller font for instructions
+    // Set even smaller font for instructions
     display.setFont(liberationSansNarrow_8ptFontInfo);
     int cursorY = display.getFontHeight() + 10;
 
+    // Push the instruction line further down
+    cursorY += 14; // Adjust this value as needed
+
     // Combine instructions into a single centered line with arrows
-    const char* instruction = "< Taken | Not Taken >";
+    const char* instruction = "< Yes        No >";
     int instructionWidth = display.getPrintWidth(const_cast<char*>(instruction));
     int instructionX = (SCREEN_WIDTH - instructionWidth) / 2;
     display.setCursor(instructionX, cursorY);

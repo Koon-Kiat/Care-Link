@@ -32,7 +32,7 @@ void handleMedicationConfirmation()
         display.clearScreen();
         display.setFont(liberationSansNarrow_10ptFontInfo);
         display.setCursor(10, 20);
-        display.print("Medication Confirmed!");
+        display.print("Confirmed!");
         delay(2000); // Display message for 2 seconds
         // Optionally navigate back to home screen
         currentScreen = HOME_SCREEN;
@@ -45,7 +45,7 @@ void handleMedicationConfirmation()
         display.clearScreen();
         display.setFont(liberationSansNarrow_10ptFontInfo);
         display.setCursor(10, 20);
-        display.print("Medication Cancelled!");
+        display.print("Not Taken!");
         delay(2000); // Display message for 2 seconds
         // Optionally navigate back to home screen
         currentScreen = HOME_SCREEN;
