@@ -1,8 +1,6 @@
 #include "../include/serial.h"
 
 /**
- * @brief Handles serial input from the Serial Monitor.
- * Responds to specific commands like 's', 'q', 'h', and 'a'.
  * This function is now redundant and can be removed.
  */
 void handleSerialInput()
@@ -27,7 +25,7 @@ void handleSerialInput()
         }
         else if (c == 'a') // Use 'a' to navigate to activity screen
         {
-            currentScreen = ACTIVITY_SCREEN;
+            currentScreen = FALL_AND_TEMP_SCREEN;
             SerialMonitorInterface.println("Navigated to Activity Screen.");
         }
     }

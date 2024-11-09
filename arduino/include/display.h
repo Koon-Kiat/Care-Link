@@ -3,26 +3,24 @@
 
 #include <Arduino.h>
 #include "config.h"
-#include "medication.h" 
+#include "medication.h"
 
 extern TinyScreen display;
-
-// Add screen state enumeration
 enum ScreenState
 {
     HOME_SCREEN,
-    ACTIVITY_SCREEN
+    FALL_AND_TEMP_SCREEN
 };
 
 extern ScreenState currentScreen;
+extern String activityStatus;
 
-// Declare new display functions
 void displayHomeScreen();
 void updateDisplay(double temperature, const char *activityStatus);
-void displayActivityStatus(const char *status, double temperature);
+void updateFallDisplayStatus();
+void displayTemperatureAndFallStatus(const char *status, double temperature);
 String getTemperatureCategory(double temperature);
-
-// Add extern declaration for activityStatus
-extern String activityStatus;
+String getCurrentTime();
+void displayActivityStatus(const char *status, double temperature);
 
 #endif
