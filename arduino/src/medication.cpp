@@ -17,7 +17,7 @@ void handleMedicationConfirmation()
     // Read button states using display.getButtons()
     uint8_t buttons = display.getButtons();
 
-    if (buttons & TSButtonUpperRight)
+    if (buttons & TSButtonLowerLeft)
     {
         // Confirm medication taken
         sendMedicationStatus("MED_CONFIRM");
