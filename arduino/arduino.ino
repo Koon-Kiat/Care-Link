@@ -36,7 +36,11 @@ void loop()
         previousLoopTime = currentMillis;
 
         checkFallDetectionAndTemperature();
-        handleMedicationConfirmation();
+
+        if (currentScreen == MEDICATION_SCREEN)
+        {
+            handleMedicationConfirmation();
+        }
     }
 
     // Handle display updates every DISPLAY_UPDATE_INTERVAL

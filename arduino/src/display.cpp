@@ -135,13 +135,35 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     // Check for user navigation first
     if (buttons & TSButtonUpperLeft)
     {
-        // Navigate to activity screen
-        currentScreen = FALL_AND_TEMP_SCREEN;
+        // Navigate to previous screen
+        if (currentScreen == HOME_SCREEN)
+        {
+            currentScreen = FALL_AND_TEMP_SCREEN;
+        }
+        else if (currentScreen == FALL_AND_TEMP_SCREEN)
+        {
+            currentScreen = MEDICATION_SCREEN;
+        }
+        else if (currentScreen == MEDICATION_SCREEN)
+        {
+            currentScreen = HOME_SCREEN;
+        }
     }
     else if (buttons & TSButtonUpperRight)
     {
-        // Navigate back to home screen
-        currentScreen = HOME_SCREEN;
+        // Navigate to next screen
+        if (currentScreen == HOME_SCREEN)
+        {
+            currentScreen = MEDICATION_SCREEN;
+        }
+        else if (currentScreen == MEDICATION_SCREEN)
+        {
+            currentScreen = FALL_AND_TEMP_SCREEN;
+        }
+        else if (currentScreen == FALL_AND_TEMP_SCREEN)
+        {
+            currentScreen = HOME_SCREEN;
+        }
     }
 
     // Display the current screen
@@ -152,6 +174,10 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     else if (currentScreen == FALL_AND_TEMP_SCREEN)
     {
         displayTemperatureAndFallStatus(activityStatusParam, temperature);
+    }
+    else if (currentScreen == MEDICATION_SCREEN)
+    {
+        displayMedicationScreen();
     }
 }
 
@@ -366,44 +392,29 @@ String getCurrentTime()
     return String(timeStr);
 }
 
-/**
- * @brief Updates and displays the activity status and temperature on the TinyScreen.
- *
- * This function clears the screen and sets the font to display the current activity status
- * and temperature. It categorizes the temperature and provides a medication reminder
- * to the user to confirm their medication intake.
- *
- * @param status The current activity status (e.g., "RESTING", "WALKING", "RUNNING", "FALL DETECTED!").
- * @param temperature The current temperature in Celsius.
- */
-void displayActivityStatus(const char *status, double temperature)
+void displayMedicationScreen()
 {
     display.clearScreen();
-    display.setFont(thinPixel7_10ptFontInfo);
 
-    int cursorX = 0;
-    int cursorY = 0;
-    int lineHeight = display.getFontHeight() + 1;
+    // Set font and color for header
+    display.setFont(liberationSansNarrow_12ptFontInfo);
+    display.fontColor(TS_8b_White, TS_8b_Black);
 
-    // Print "Status:" on the first line
-    display.setCursor(cursorX, cursorY);
-    display.fontColor(TS_8b_Green, TS_8b_Black);
-    display.print("Status: ");
-    display.print(status);
-    cursorY += lineHeight;
+    // Display "Medication" centered
+    const char* header = "Medication";
+    int headerWidth = display.getPrintWidth(const_cast<char*>(header));
+    int headerX = (SCREEN_WIDTH - headerWidth) / 2;
+    display.setCursor(headerX, 0);
+    display.print(header);
 
-    // Print temperature value and short category
-    display.setCursor(cursorX, cursorY);
-    display.print("Temp/Cat: ");
-    display.print(temperature);
-    display.print("/");
-    display.print(getTemperatureCategory(temperature));
-    cursorY += lineHeight;
+    // Set smaller font for instructions
+    display.setFont(liberationSansNarrow_8ptFontInfo);
+    int cursorY = display.getFontHeight() + 10;
 
-    // Print Medication Reminder in two lines
-    display.setCursor(cursorX, cursorY);
-    display.print("Medication:");
-    cursorY += lineHeight;
-    display.setCursor(cursorX, cursorY);
-    display.print("Press to confirm.");
+    // Combine instructions into a single centered line with arrows
+    const char* instruction = "< Taken | Not Taken >";
+    int instructionWidth = display.getPrintWidth(const_cast<char*>(instruction));
+    int instructionX = (SCREEN_WIDTH - instructionWidth) / 2;
+    display.setCursor(instructionX, cursorY);
+    display.print(instruction);
 }

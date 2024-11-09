@@ -3,6 +3,8 @@
 #include "../include/config.h"
 #include "../include/status.h"
 
+extern ScreenState currentScreen;
+
 /**
  * @brief Handles user confirmation for medication intake.
  *
@@ -14,6 +16,11 @@
  */
 void handleMedicationConfirmation()
 {
+    if (currentScreen != MEDICATION_SCREEN)
+    {
+        return;
+    }
+
     // Read button states using display.getButtons()
     uint8_t buttons = display.getButtons();
 
@@ -21,14 +28,31 @@ void handleMedicationConfirmation()
     {
         // Confirm medication taken
         sendMedicationStatus("MED_CONFIRM");
-        activityStatus = "CONFIRMED";
+        activityStatus = "MEDICATION CONFIRMED";
+        display.clearScreen();
+        display.setFont(liberationSansNarrow_10ptFontInfo);
+        display.setCursor(10, 20);
+        display.print("Medication Confirmed!");
         delay(2000); // Display message for 2 seconds
+        // Optionally navigate back to home screen
+        currentScreen = HOME_SCREEN;
     }
     else if (buttons & TSButtonLowerRight)
     {
         // Handle cancellation if needed
         sendMedicationStatus("MED_CANCEL");
-        activityStatus = "CANCELLED";
+        activityStatus = "MEDICATION CANCELLED";
+        display.clearScreen();
+        display.setFont(liberationSansNarrow_10ptFontInfo);
+        display.setCursor(10, 20);
+        display.print("Medication Cancelled!");
         delay(2000); // Display message for 2 seconds
+        // Optionally navigate back to home screen
+        currentScreen = HOME_SCREEN;
+    }
+    else
+    {
+        // Handle unexpected button presses or no action
+        // Optionally, provide feedback or keep the screen active
     }
 }
