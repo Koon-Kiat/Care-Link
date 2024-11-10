@@ -35,8 +35,8 @@ void handleMedicationConfirmation()
         display.setCursor(10, 20);
         display.print("Confirmed!");
         delay(2000); // Display message for 2 seconds
-        // Return to previous screen
-        currentScreen = previousScreen;
+        // Return to home screen
+        currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
     }
     else if (buttons & TSButtonLowerRight)
     {
@@ -48,8 +48,8 @@ void handleMedicationConfirmation()
         display.setCursor(10, 20);
         display.print("Not Taken!");
         delay(2000); // Display message for 2 seconds
-        // Return to previous screen
-        currentScreen = previousScreen;
+        // Return to home screen
+        currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
     }
     else
     {

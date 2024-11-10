@@ -65,15 +65,14 @@ void checkMedicationAlarm()
 {
     // Placeholder for medication time check
     String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
-    String medicationTime = "08:00";       // Example medication time
+    String medicationTime = "22:14";       // Example medication time
 
     if (currentTime == medicationTime)
     {
         if (currentScreen != MEDICATION_SCREEN)
         {
-            // Save previous screen
-            previousScreen = currentScreen;
-            // Display the medication confirmation popup
+            // currentScreen already holds the previous screen, no need to set previousScreen
+            // Directly display the medication confirmation popup
             currentScreen = MEDICATION_SCREEN;
         }
     }

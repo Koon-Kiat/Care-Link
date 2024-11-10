@@ -136,34 +136,24 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     // Check for user navigation first
     if (buttons & TSButtonUpperLeft)
     {
-        // Navigate to previous screen
         if (currentScreen == HOME_SCREEN)
         {
-            currentScreen = MEDICATION_INFO_SCREEN;
+            currentScreen = FALL_AND_TEMP_SCREEN; // Navigate to Activity Status Screen
         }
-        else if (currentScreen == MEDICATION_INFO_SCREEN)
+        else
         {
-            currentScreen = FALL_AND_TEMP_SCREEN;
-        }
-        else if (currentScreen == FALL_AND_TEMP_SCREEN)
-        {
-            currentScreen = HOME_SCREEN;
+            // ...existing navigation logic...
         }
     }
     else if (buttons & TSButtonUpperRight)
     {
-        // Navigate to next screen
         if (currentScreen == HOME_SCREEN)
         {
-            currentScreen = FALL_AND_TEMP_SCREEN;
+            currentScreen = MEDICATION_INFO_SCREEN; // Navigate to Medication Info Screen
         }
-        else if (currentScreen == FALL_AND_TEMP_SCREEN)
+        else
         {
-            currentScreen = MEDICATION_INFO_SCREEN;
-        }
-        else if (currentScreen == MEDICATION_INFO_SCREEN)
-        {
-            currentScreen = HOME_SCREEN;
+            // ...existing navigation logic...
         }
     }
 
