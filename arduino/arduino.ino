@@ -10,40 +10,41 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 
-
 void setup()
 {
+    // Initialize serial communication
     SerialMonitorInterface.begin(9600);
     delay(1000);
 
+    // Initialize the display
     Wire.begin();
     display.begin();
     display.setBrightness(10);
 
+    // Initialize the RTC
     rtc.begin();
 
+    // Initialize the BMA250 accelerometer
     SerialMonitorInterface.print("Initializing BMA...\n");
-    accel_sensor.begin(BMA250_range_2g, BMA250_update_time_64ms);
+    accel_sensor.begin(BMA250_range_16g, BMA250_update_time_64ms);
 }
 
 void loop()
 {
     unsigned long currentMillis = millis();
-
-    // Handle sensor reading every SENSOR_READ_INTERVAL
+    // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
     {
         previousLoopTime = currentMillis;
 
         checkFallDetectionAndTemperature();
-
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
         }
     }
 
-    // Handle display updates every DISPLAY_UPDATE_INTERVAL
+    // Display updates
     static unsigned long lastDisplayUpdate = 0;
     if (currentMillis - lastDisplayUpdate >= DISPLAY_UPDATE_INTERVAL)
     {
