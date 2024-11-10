@@ -58,17 +58,8 @@ extern const int SCREEN_HEIGHT;
 // Declare fall detection variables
 extern bool fallDetectedFlag;
 extern unsigned long fallDetectedTime;
-extern const unsigned long FALL_DISPLAY_DURATION;
 extern const unsigned long SENSOR_READ_INTERVAL;
 extern const unsigned long DISPLAY_UPDATE_INTERVAL;
 extern unsigned long previousLoopTime;
-
-// Declare the display state
-enum DisplayState
-{
-    NORMAL,
-    FALL_DISPLAY
-};
-extern DisplayState currentDisplayState;
 
 #endif

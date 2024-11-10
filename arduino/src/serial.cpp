@@ -37,13 +37,10 @@ void handleSerialInput()
 void showSerial()
 {
     // Print sensor values to Serial Monitor
-    SerialMonitorInterface.print("X: ");
-    SerialMonitorInterface.print(x);
-    SerialMonitorInterface.print(", Y: ");
-    SerialMonitorInterface.print(y);
-    SerialMonitorInterface.print(", Z: ");
-    SerialMonitorInterface.print(z);
-    SerialMonitorInterface.print(", Temperature: ");
+    SerialMonitorInterface.print("Temperature: ");
     SerialMonitorInterface.print(temp);
     SerialMonitorInterface.println(" C");
+    SerialMonitorInterface.print("Activity Status: ");
+    SerialMonitorInterface.println(activityStatus);
+    SerialMonitorInterface.println();;
 }
