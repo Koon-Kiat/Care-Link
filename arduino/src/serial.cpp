@@ -42,8 +42,11 @@ void showSerial()
     SerialMonitorInterface.print(", Y: ");
     SerialMonitorInterface.print(y);
     SerialMonitorInterface.print(", Z: ");
-    SerialMonitorInterface.print(z);
-    SerialMonitorInterface.print(", Temperature: ");
+    SerialMonitorInterface.println(z);
+    SerialMonitorInterface.print("Temperature: ");
     SerialMonitorInterface.print(temp);
     SerialMonitorInterface.println(" C");
+    SerialMonitorInterface.print("Activity Status: ");
+    SerialMonitorInterface.println(activityStatus);
+    SerialMonitorInterface.println();;
 }
