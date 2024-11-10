@@ -44,6 +44,9 @@ void loop()
         }
     }
 
+    // Medication alarm check
+    checkMedicationAlarm();
+
     // Display updates
     static unsigned long lastDisplayUpdate = 0;
     if (currentMillis - lastDisplayUpdate >= DISPLAY_UPDATE_INTERVAL)
@@ -55,5 +58,23 @@ void loop()
     if (SerialMonitorInterface.available())
     {
         handleSerialInput();
+    }
+}
+
+void checkMedicationAlarm()
+{
+    // Placeholder for medication time check
+    String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
+    String medicationTime = "08:00";       // Example medication time
+
+    if (currentTime == medicationTime)
+    {
+        if (currentScreen != MEDICATION_SCREEN)
+        {
+            // Save previous screen
+            previousScreen = currentScreen;
+            // Display the medication confirmation popup
+            currentScreen = MEDICATION_SCREEN;
+        }
     }
 }

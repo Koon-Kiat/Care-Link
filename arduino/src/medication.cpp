@@ -4,6 +4,7 @@
 #include "../include/status.h"
 
 extern ScreenState currentScreen;
+extern ScreenState previousScreen; // Add this line
 
 /**
  * @brief Handles user confirmation for medication intake.
@@ -34,8 +35,8 @@ void handleMedicationConfirmation()
         display.setCursor(10, 20);
         display.print("Confirmed!");
         delay(2000); // Display message for 2 seconds
-        // Optionally navigate back to home screen
-        currentScreen = HOME_SCREEN;
+        // Return to previous screen
+        currentScreen = previousScreen;
     }
     else if (buttons & TSButtonLowerRight)
     {
@@ -47,8 +48,8 @@ void handleMedicationConfirmation()
         display.setCursor(10, 20);
         display.print("Not Taken!");
         delay(2000); // Display message for 2 seconds
-        // Optionally navigate back to home screen
-        currentScreen = HOME_SCREEN;
+        // Return to previous screen
+        currentScreen = previousScreen;
     }
     else
     {

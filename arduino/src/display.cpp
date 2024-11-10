@@ -2,6 +2,7 @@
 #include "../include/medication.h"
 
 ScreenState currentScreen = HOME_SCREEN;
+ScreenState previousScreen = HOME_SCREEN; // Define previousScreen
 String activityStatus = "RESTING";
 
 /**
@@ -138,13 +139,13 @@ void updateDisplay(double temperature, const char *activityStatusParam)
         // Navigate to previous screen
         if (currentScreen == HOME_SCREEN)
         {
+            currentScreen = MEDICATION_INFO_SCREEN;
+        }
+        else if (currentScreen == MEDICATION_INFO_SCREEN)
+        {
             currentScreen = FALL_AND_TEMP_SCREEN;
         }
         else if (currentScreen == FALL_AND_TEMP_SCREEN)
-        {
-            currentScreen = MEDICATION_SCREEN;
-        }
-        else if (currentScreen == MEDICATION_SCREEN)
         {
             currentScreen = HOME_SCREEN;
         }
@@ -154,13 +155,13 @@ void updateDisplay(double temperature, const char *activityStatusParam)
         // Navigate to next screen
         if (currentScreen == HOME_SCREEN)
         {
-            currentScreen = MEDICATION_SCREEN;
-        }
-        else if (currentScreen == MEDICATION_SCREEN)
-        {
             currentScreen = FALL_AND_TEMP_SCREEN;
         }
         else if (currentScreen == FALL_AND_TEMP_SCREEN)
+        {
+            currentScreen = MEDICATION_INFO_SCREEN;
+        }
+        else if (currentScreen == MEDICATION_INFO_SCREEN)
         {
             currentScreen = HOME_SCREEN;
         }
@@ -175,9 +176,13 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     {
         displayTemperatureAndFallStatus(activityStatusParam, temperature);
     }
+    else if (currentScreen == MEDICATION_INFO_SCREEN)
+    {
+        displayMedicationInfoScreen();
+    }
     else if (currentScreen == MEDICATION_SCREEN)
     {
-        displayMedicationScreen();
+        displayMedicationScreen(); // Display popup screen
     }
 }
 
@@ -418,4 +423,39 @@ void displayMedicationScreen()
     int instructionX = (SCREEN_WIDTH - instructionWidth) / 2;
     display.setCursor(instructionX, cursorY);
     display.print(instruction);
+}
+
+void displayMedicationInfoScreen()
+{
+    display.clearScreen();
+
+    // Set font and color for header
+    display.setFont(liberationSansNarrow_12ptFontInfo);
+    display.fontColor(TS_8b_White, TS_8b_Black);
+
+    // Display "Medication Info" centered
+    const char *header = "Medication Info";
+    int headerWidth = display.getPrintWidth(const_cast<char *>(header));
+    int headerX = (SCREEN_WIDTH - headerWidth) / 2;
+    display.setCursor(headerX, 0);
+    display.print(header);
+
+    // Display medication type and time
+    display.setFont(liberationSansNarrow_10ptFontInfo);
+    int cursorY = display.getFontHeight() + 10;
+
+    // Example medication type and time
+    const char *medType = "Aspirin";
+    const char *medTime = "08:00 AM";
+
+    // Display medication type
+    display.setCursor(0, cursorY);
+    display.print("Medication: ");
+    display.print(medType);
+    cursorY += display.getFontHeight() + 2;
+
+    // Display medication time
+    display.setCursor(0, cursorY);
+    display.print("Time: ");
+    display.print(medTime);
 }
