@@ -133,27 +133,43 @@ void updateDisplay(double temperature, const char *activityStatusParam)
 {
     uint8_t buttons = display.getButtons();
 
-    // Check for user navigation first
+    // Handle carousel navigation
     if (buttons & TSButtonUpperLeft)
     {
-        if (currentScreen == HOME_SCREEN)
+        // Navigate to previous screen
+        switch (currentScreen)
         {
-            currentScreen = FALL_AND_TEMP_SCREEN; // Navigate to Activity Status Screen
-        }
-        else
-        {
-            // ...existing navigation logic...
+            case HOME_SCREEN:
+                currentScreen = MEDICATION_INFO_SCREEN;
+                break;
+            case FALL_AND_TEMP_SCREEN:
+                currentScreen = HOME_SCREEN;
+                break;
+            case MEDICATION_INFO_SCREEN:
+                currentScreen = FALL_AND_TEMP_SCREEN;
+                break;
+            default:
+                currentScreen = HOME_SCREEN;
+                break;
         }
     }
     else if (buttons & TSButtonUpperRight)
     {
-        if (currentScreen == HOME_SCREEN)
+        // Navigate to next screen
+        switch (currentScreen)
         {
-            currentScreen = MEDICATION_INFO_SCREEN; // Navigate to Medication Info Screen
-        }
-        else
-        {
-            // ...existing navigation logic...
+            case HOME_SCREEN:
+                currentScreen = FALL_AND_TEMP_SCREEN;
+                break;
+            case FALL_AND_TEMP_SCREEN:
+                currentScreen = MEDICATION_INFO_SCREEN;
+                break;
+            case MEDICATION_INFO_SCREEN:
+                currentScreen = HOME_SCREEN;
+                break;
+            default:
+                currentScreen = HOME_SCREEN;
+                break;
         }
     }
 

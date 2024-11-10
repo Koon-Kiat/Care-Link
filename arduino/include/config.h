@@ -31,6 +31,7 @@ extern uint8_t receivedBufferLength;
 extern bool ble_connection_state;
 extern uint8_t ble_rx_buffer_len;
 extern uint8_t ble_rx_buffer[MAX_BUFFER_SIZE];
+extern bool alarmHandled;
 
 // Declare display object as extern
 extern TinyScreen display;

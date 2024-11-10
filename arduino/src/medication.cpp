@@ -5,6 +5,7 @@
 
 extern ScreenState currentScreen;
 extern ScreenState previousScreen; // Add this line
+extern bool alarmHandled;
 
 /**
  * @brief Handles user confirmation for medication intake.
@@ -37,6 +38,7 @@ void handleMedicationConfirmation()
         delay(2000); // Display message for 2 seconds
         // Return to home screen
         currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+        alarmHandled = true;
     }
     else if (buttons & TSButtonLowerRight)
     {
@@ -50,6 +52,7 @@ void handleMedicationConfirmation()
         delay(2000); // Display message for 2 seconds
         // Return to home screen
         currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+        alarmHandled = true;
     }
     else
     {

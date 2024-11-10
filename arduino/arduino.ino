@@ -10,6 +10,8 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 
+bool alarmHandled = false;
+
 void setup()
 {
     // Initialize serial communication
@@ -67,7 +69,7 @@ void checkMedicationAlarm()
     String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
     String medicationTime = "22:14";       // Example medication time
 
-    if (currentTime == medicationTime)
+    if (currentTime == medicationTime && !alarmHandled)
     {
         if (currentScreen != MEDICATION_SCREEN)
         {
