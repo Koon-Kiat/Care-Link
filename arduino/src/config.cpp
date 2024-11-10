@@ -17,7 +17,6 @@ BMA250 accel_sensor;
 int x = 0, y = 0, z = 0;
 double temp = 0.0;
 
-
 // Define the RTC object
 RTCZero rtc; // create an rtc object
 
@@ -31,19 +30,13 @@ const byte day = 8;
 const byte month = 11;
 const byte year = 24;
 
-
 // Define the screen width and height 
 const int SCREEN_WIDTH = 96;
 const int SCREEN_HEIGHT = 64;
 
-
 // Define fall detection variables
 bool fallDetectedFlag = false;
 unsigned long fallDetectedTime = 0;
-const unsigned long FALL_DISPLAY_DURATION = 10000;
-const unsigned long SENSOR_READ_INTERVAL = 2000;    
+const unsigned long SENSOR_READ_INTERVAL = 500;    
 const unsigned long DISPLAY_UPDATE_INTERVAL = 2000; 
 unsigned long previousLoopTime = 0;
-
-
-DisplayState currentDisplayState = NORMAL;
