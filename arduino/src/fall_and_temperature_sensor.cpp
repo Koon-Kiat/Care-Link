@@ -14,21 +14,25 @@
  */
 void checkFallDetectionAndTemperature()
 {
+    // Read accelerometer data
     accel_sensor.read();
     x = accel_sensor.X;
     y = accel_sensor.Y;
     z = accel_sensor.Z;
     temp = ((accel_sensor.rawTemp * 0.5) + 24.0);
 
-    // Define fall thresholds for categorization
-    const double FALL_MINOR_THRESHOLD = 400.0;
-    const double FALL_MODERATE_THRESHOLD = 600.0;
-    const double FALL_SEVERE_THRESHOLD = 800.0;
+    // Check if BMA250 is not detected
+    if (x == -1 && y == -1 && z == -1)
+    {
+        SerialMonitorInterface.println("ERROR! NO BMA250 DETECTED!");
+        return;
+    }
 
-    // Define thresholds for activity detection
-    const double RESTING_THRESHOLD = 300.0;
-    const double WALKING_THRESHOLD = 450.0;
-    const double RUNNING_THRESHOLD = 650.0;
+    // Calculate magnitude of acceleration vector
+    double magnitude = sqrt(x * x + y * y + z * z);
+    static double prevMagnitude = magnitude;
+    double deltaMagnitude = fabs(magnitude - prevMagnitude);
+    prevMagnitude = magnitude;
 
     // Introduce a short delay between readings for better sampling
     static unsigned long lastCheckTime = 0;
@@ -39,46 +43,64 @@ void checkFallDetectionAndTemperature()
     }
     lastCheckTime = currentTime;
 
-    // Calculate magnitude
-    double magnitude = sqrt(x * x + y * y + z * z);
+    // Debug output
+    SerialMonitorInterface.print("x: ");
+    SerialMonitorInterface.print(x);
+    SerialMonitorInterface.print(" y: ");
+    SerialMonitorInterface.print(y);
+    SerialMonitorInterface.print(" z: ");
+    SerialMonitorInterface.println(z);
 
-    static double prevMagnitude = magnitude;
-
-    double deltaMagnitude = abs(magnitude - prevMagnitude);
-
-    prevMagnitude = magnitude;
-
+    SerialMonitorInterface.print("magnitude: ");
     SerialMonitorInterface.println(magnitude);
+
+    SerialMonitorInterface.print("deltaMagnitude: ");
     SerialMonitorInterface.println(deltaMagnitude);
 
-    if (magnitude < RESTING_THRESHOLD)
+    // Define thresholds for activity detection (adjusted based on observations)
+    const double RESTING_MAX_THRESHOLD = 3.0;
+    const double WALKING_MAX_THRESHOLD = 100.0;
+    const double RUNNING_MAX_THRESHOLD = 270.0;
+
+    // Activity detection based on magnitude_no_gravity
+    if (fallDetectedFlag)
+    {
+        return; // Skip updating activity status during fall display
+    }
+    else if (deltaMagnitude <= RESTING_MAX_THRESHOLD)
     {
         activityStatus = "RESTING";
     }
-    else if (magnitude < WALKING_THRESHOLD)
+    else if (deltaMagnitude > RESTING_MAX_THRESHOLD && deltaMagnitude <= WALKING_MAX_THRESHOLD)
     {
         activityStatus = "WALKING";
     }
-    else
+    else if (deltaMagnitude > WALKING_MAX_THRESHOLD && deltaMagnitude <= RUNNING_MAX_THRESHOLD)
     {
         activityStatus = "RUNNING";
     }
 
-    if (deltaMagnitude > FALL_SEVERE_THRESHOLD)
+    // Define fall thresholds for categorization (adjusted based on observations)
+    const double FALL_MINOR_MIN_THRESHOLD = 280.0;
+    const double FALL_MINOR_MAX_THRESHOLD = 600.0;
+    const double FALL_MODERATE_MAX_THRESHOLD = 800.0;
+
+    // Fall detection based on deltaMagnitude
+    if (deltaMagnitude > FALL_MODERATE_MAX_THRESHOLD)
     {
         activityStatus = "SEVERE FALL DETECTED!";
         SerialMonitorInterface.println("Severe fall detected!");
         sendFallStatus("SEVERE FALL DETECTED\n");
         initiateFallDisplay();
     }
-    else if (deltaMagnitude > FALL_MODERATE_THRESHOLD)
+    else if (deltaMagnitude > FALL_MINOR_MAX_THRESHOLD && deltaMagnitude <= FALL_MODERATE_MAX_THRESHOLD)
     {
         activityStatus = "MODERATE FALL DETECTED!";
         SerialMonitorInterface.println("Moderate fall detected!");
         sendFallStatus("MODERATE FALL DETECTED\n");
         initiateFallDisplay();
     }
-    else if (deltaMagnitude > FALL_MINOR_THRESHOLD)
+    else if (deltaMagnitude > FALL_MINOR_MIN_THRESHOLD && deltaMagnitude <= FALL_MINOR_MAX_THRESHOLD)
     {
         activityStatus = "MINOR FALL DETECTED!";
         SerialMonitorInterface.println("Minor fall detected!");
@@ -90,18 +112,9 @@ void checkFallDetectionAndTemperature()
         sendFallStatus("SAFE\n");
     }
 
-    // Check if BMA250 is not detected
-    if (x == -1 && y == -1 && z == -1)
-    {
-        // Print error message to Serial Monitor
-        SerialMonitorInterface.print("ERROR! NO BMA250 DETECTED!");
-    }
-    else
-    {
-        showSerial();
-    }
+    // Show serial debug information
+    showSerial();
 }
-
 /**
  * @brief Initiates the fall display by setting flags and timestamps.
  *
@@ -112,6 +125,5 @@ void initiateFallDisplay()
     {
         fallDetectedFlag = true;
         fallDetectedTime = millis();
-        currentDisplayState = FALL_DISPLAY;
     }
 }
