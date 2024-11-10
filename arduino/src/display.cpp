@@ -110,7 +110,7 @@ void displayHomeScreen()
     centerPrint("Welcome!", cursorY);
 
     // Center "Press to view"
-    centerPrint("Press to view", cursorY);
+    centerPrint("Current Status:", cursorY);
 
     // Center "Activity Status"
     display.fontColor(TS_8b_Green, TS_8b_Black);
