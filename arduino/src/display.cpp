@@ -191,28 +191,26 @@ void updateDisplay(double temperature, const char *activityStatusParam)
  */
 void updateFallDisplayStatus()
 {
-    unsigned long currentTime = millis();
+    unsigned long currentTime = millis(); // Update current time
 
-    // Check if fall display should continue
-    if (currentDisplayState == FALL_DISPLAY)
+    if (fallDetectedFlag)
     {
-        if (currentTime - fallDetectedTime >= FALL_DISPLAY_DURATION)
+        if (currentTime - fallDetectedTime < 10000) // Display for 10 seconds
         {
-            // Fall display duration ended
-            fallDetectedFlag = false;
-            currentDisplayState = NORMAL;
-            activityStatus = "RESTING"; // Or revert to previous state if tracked
+            // Continue displaying fall message
+            displayTemperatureAndFallStatus(activityStatus.c_str(), temp);
         }
         else
         {
-            // Continue displaying fall status
-            displayTemperatureAndFallStatus(activityStatus.c_str(), temp);
-            return; // Exit to prevent normal display update
+            // Stop displaying fall message after 10 seconds
+            fallDetectedFlag = false;
         }
     }
-
-    // Normal display update
-    updateDisplay(temp, activityStatus.c_str());
+    else
+    {
+        // Continue with normal display updates
+        updateDisplay(temp, activityStatus.c_str());
+    }
 }
 
 /**
@@ -401,8 +399,8 @@ void displayMedicationScreen()
     display.fontColor(TS_8b_White, TS_8b_Black);
 
     // Display "Medication" centered
-    const char* header = "Medication";
-    int headerWidth = display.getPrintWidth(const_cast<char*>(header));
+    const char *header = "Medication";
+    int headerWidth = display.getPrintWidth(const_cast<char *>(header));
     int headerX = (SCREEN_WIDTH - headerWidth) / 2;
     display.setCursor(headerX, 0);
     display.print(header);
@@ -415,8 +413,8 @@ void displayMedicationScreen()
     cursorY += 14; // Adjust this value as needed
 
     // Combine instructions into a single centered line with arrows
-    const char* instruction = "< Yes        No >";
-    int instructionWidth = display.getPrintWidth(const_cast<char*>(instruction));
+    const char *instruction = "< Yes        No >";
+    int instructionWidth = display.getPrintWidth(const_cast<char *>(instruction));
     int instructionX = (SCREEN_WIDTH - instructionWidth) / 2;
     display.setCursor(instructionX, cursorY);
     display.print(instruction);
