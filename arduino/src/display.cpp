@@ -131,10 +131,14 @@ void displayHomeScreen()
  */
 void updateDisplay(double temperature, const char *activityStatusParam)
 {
+    static uint8_t previousButtons = 0; // Add static variable to track previous button states
     uint8_t buttons = display.getButtons();
 
+    // Detect newly pressed buttons
+    uint8_t justPressed = buttons & (~previousButtons);
+
     // Handle carousel navigation
-    if (buttons & TSButtonUpperLeft)
+    if (justPressed & TSButtonUpperLeft)
     {
         // Navigate to previous screen
         switch (currentScreen)
@@ -153,7 +157,7 @@ void updateDisplay(double temperature, const char *activityStatusParam)
                 break;
         }
     }
-    else if (buttons & TSButtonUpperRight)
+    else if (justPressed & TSButtonUpperRight)
     {
         // Navigate to next screen
         switch (currentScreen)
@@ -172,6 +176,8 @@ void updateDisplay(double temperature, const char *activityStatusParam)
                 break;
         }
     }
+
+    previousButtons = buttons; // Update previous button states
 
     // Display the current screen
     if (currentScreen == HOME_SCREEN)
