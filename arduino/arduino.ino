@@ -62,20 +62,3 @@ void loop()
         handleSerialInput();
     }
 }
-
-void checkMedicationAlarm()
-{
-    // Placeholder for medication time check
-    String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
-    String medicationTime = "22:14";       // Example medication time
-
-    if (currentTime == medicationTime && !alarmHandled)
-    {
-        if (currentScreen != MEDICATION_SCREEN)
-        {
-            // currentScreen already holds the previous screen, no need to set previousScreen
-            // Directly display the medication confirmation popup
-            currentScreen = MEDICATION_SCREEN;
-        }
-    }
-}
