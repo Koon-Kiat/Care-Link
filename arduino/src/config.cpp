@@ -40,3 +40,6 @@ unsigned long fallDetectedTime = 0;
 const unsigned long SENSOR_READ_INTERVAL = 500;    
 const unsigned long DISPLAY_UPDATE_INTERVAL = 1000; 
 unsigned long previousLoopTime = 0;
+
+//Define the alarmHandled variable
+bool alarmHandled = false;

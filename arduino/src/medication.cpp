@@ -3,9 +3,6 @@
 #include "../include/config.h"
 #include "../include/status.h"
 
-extern ScreenState currentScreen;
-extern ScreenState previousScreen;
-extern bool alarmHandled;
 
 /**
  * @brief Handles user confirmation for medication intake.
@@ -53,11 +50,6 @@ void handleMedicationConfirmation()
         // Return to home screen
         currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
         alarmHandled = true;
-    }
-    else
-    {
-        // Handle unexpected button presses or no action
-        // Optionally, provide feedback or keep the screen active
     }
 }
 
