@@ -61,6 +61,13 @@ void handleMedicationConfirmation()
     }
 }
 
+/**
+ * @brief Checks if it's time for medication and handles the alarm.
+ *
+ * This function compares the current time with the scheduled medication time.
+ * If it's time for medication and the alarm hasn't been handled yet, it
+ * updates the current screen to the medication screen.
+ */
 void checkMedicationAlarm()
 {
     // Placeholder for medication time check

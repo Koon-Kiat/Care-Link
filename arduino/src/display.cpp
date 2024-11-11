@@ -407,6 +407,12 @@ String getCurrentTime()
     return String(timeStr);
 }
 
+/**
+ * @brief Displays the medication confirmation screen on the TinyScreen.
+ *
+ * This function clears the screen, sets the font and color for the header,
+ * and displays the "Medication" title along with instructions for user confirmation.
+ */
 void displayMedicationScreen()
 {
     display.clearScreen();
@@ -437,6 +443,12 @@ void displayMedicationScreen()
     display.print(instruction);
 }
 
+/**
+ * @brief Displays the medication information screen on the TinyScreen.
+ *
+ * This function clears the screen and sets the font and color for the header.
+ * It displays the medication information, including medication type and time.
+ */
 void displayMedicationInfoScreen()
 {
     display.clearScreen();
