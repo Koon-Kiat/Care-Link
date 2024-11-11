@@ -4,7 +4,7 @@
 #include "../include/status.h"
 
 extern ScreenState currentScreen;
-extern ScreenState previousScreen; // Add this line
+extern ScreenState previousScreen;
 extern bool alarmHandled;
 
 /**

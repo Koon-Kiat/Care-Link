@@ -2,7 +2,7 @@
 #include "../include/medication.h"
 
 ScreenState currentScreen = HOME_SCREEN;
-ScreenState previousScreen = HOME_SCREEN; // Define previousScreen
+ScreenState previousScreen = HOME_SCREEN; 
 String activityStatus = "RESTING";
 
 /**
