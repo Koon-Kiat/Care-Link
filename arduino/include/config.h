@@ -63,6 +63,7 @@ extern const unsigned long SENSOR_READ_INTERVAL;
 extern const unsigned long DISPLAY_UPDATE_INTERVAL;
 extern unsigned long previousLoopTime;
 
-//Decalre the alarmHandled variable
+// Decalre the alarmHandled variable
 extern bool alarmHandled;
+
 #endif
