@@ -23,12 +23,6 @@ void panicButton()
     // Check if the bottom left button is pressed
     if (buttons & TSButtonLowerLeft)
     {
-        // // Display "Help!" message
-        // display.clearScreen();
-        // display.setFont(thinPixel7_10ptFontInfo);
-        // display.setCursor(0, 0);
-        // display.print("Help!");
-        // delay(2000);
         display.clearScreen();
 
         display.setFont(liberationSansNarrow_16ptFontInfo);
@@ -39,6 +33,8 @@ void panicButton()
         int headerX = (SCREEN_WIDTH - headerWidth) / 2;
         display.setCursor(headerX, 0);
         display.print(header);
+
+        delay(5000); // 5 seconds on screen
 
         // Send help status to the server
         sendPanicStatus("HELP: REQUESTED");
