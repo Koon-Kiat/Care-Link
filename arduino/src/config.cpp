@@ -43,6 +43,3 @@ unsigned long previousLoopTime = 0;
 
 // Define the alarmHandled variable
 bool alarmHandled = false;
-
-// Define color constant
-const uint8_t TS_8b_Orange = 0x13;
