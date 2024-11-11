@@ -10,8 +10,6 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 
-
-
 void setup()
 {
     // Initialize serial communication
