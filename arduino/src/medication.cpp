@@ -72,7 +72,7 @@ void checkMedicationAlarm()
 {
     // Placeholder for medication time check
     String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
-    String medicationTime = "22:14";       // Example medication time
+    String medicationTime = "22:15";       // Example medication time
 
     if (currentTime == medicationTime && !alarmHandled)
     {
