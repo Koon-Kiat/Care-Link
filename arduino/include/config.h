@@ -2,12 +2,13 @@
 #define CONFIG_H
 
 #include <TinyScreen.h>
+#include <RTCZero.h>
 #include "bma250.h"
 
-// Define Bluetooth-related constants
+// Declare Bluetooth-related constants
 #define PIPE_UART_OVER_BTLE_UART_TX_TX 0
 
-// Define BMA250 I2C address
+// Declare BMA250 I2C address
 #define BMA250_ADDRESS 0x18
 
 // Debug output
@@ -30,6 +31,7 @@ extern uint8_t receivedBufferLength;
 extern bool ble_connection_state;
 extern uint8_t ble_rx_buffer_len;
 extern uint8_t ble_rx_buffer[MAX_BUFFER_SIZE];
+extern bool alarmHandled;
 
 // Declare display object as extern
 extern TinyScreen display;
@@ -40,5 +42,28 @@ extern BMA250 accel_sensor;
 // Declare sensor data variables as extern
 extern int x, y, z;
 extern double temp;
+
+// Declare the RTC object
+extern RTCZero rtc;
+extern const byte hours;
+extern const byte minutes;
+extern const byte seconds;
+extern const byte day;
+extern const byte month;
+extern const byte year;
+
+// Declare the screen width and height
+extern const int SCREEN_WIDTH;
+extern const int SCREEN_HEIGHT;
+
+// Declare fall detection variables
+extern bool fallDetectedFlag;
+extern unsigned long fallDetectedTime;
+extern const unsigned long SENSOR_READ_INTERVAL;
+extern const unsigned long DISPLAY_UPDATE_INTERVAL;
+extern unsigned long previousLoopTime;
+
+// Decalre the alarmHandled variable
+extern bool alarmHandled;
 
 #endif

@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 
-
 void showMedicationReminder(int cursorX, int cursorY);
 void handleMedicationConfirmation();
+void checkMedicationAlarm();
 
 #endif

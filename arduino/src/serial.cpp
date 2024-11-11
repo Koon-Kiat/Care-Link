@@ -1,9 +1,7 @@
-// src/Serial.cpp
 #include "../include/serial.h"
 
 /**
- * @brief Handles serial input from the Serial Monitor.
- *        Responds to specific commands like 's' and 'q'.
+ * This function is now redundant and can be removed.
  */
 void handleSerialInput()
 {
@@ -20,6 +18,16 @@ void handleSerialInput()
             while (1)
                 ; // Hang the system for quitting
         }
+        else if (c == 'h') // Use 'h' to navigate to home screen
+        {
+            currentScreen = HOME_SCREEN;
+            SerialMonitorInterface.println("Navigated to Home Screen.");
+        }
+        else if (c == 'a') // Use 'a' to navigate to activity screen
+        {
+            currentScreen = FALL_AND_TEMP_SCREEN;
+            SerialMonitorInterface.println("Navigated to Activity Screen.");
+        }
     }
 }
 
@@ -29,13 +37,10 @@ void handleSerialInput()
 void showSerial()
 {
     // Print sensor values to Serial Monitor
-    SerialMonitorInterface.print("X: ");
-    SerialMonitorInterface.print(x);
-    SerialMonitorInterface.print(", Y: ");
-    SerialMonitorInterface.print(y);
-    SerialMonitorInterface.print(", Z: ");
-    SerialMonitorInterface.print(z);
-    SerialMonitorInterface.print(", Temperature: ");
+    SerialMonitorInterface.print("Temperature: ");
     SerialMonitorInterface.print(temp);
     SerialMonitorInterface.println(" C");
+    SerialMonitorInterface.print("Activity Status: ");
+    SerialMonitorInterface.println(activityStatus);
+    SerialMonitorInterface.println();;
 }
