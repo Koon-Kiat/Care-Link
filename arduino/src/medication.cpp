@@ -3,6 +3,7 @@
 #include "../include/config.h"
 #include "../include/status.h"
 
+
 /**
  * @brief Handles user confirmation for medication intake.
  *
@@ -14,31 +15,62 @@
  */
 void handleMedicationConfirmation()
 {
+    if (currentScreen != MEDICATION_SCREEN)
+    {
+        return;
+    }
+
     // Read button states using display.getButtons()
     uint8_t buttons = display.getButtons();
 
-    if (buttons & TSButtonUpperRight)
+    if (buttons & TSButtonLowerLeft)
     {
         // Confirm medication taken
-        display.clearScreen();
-        display.setFont(thinPixel7_10ptFontInfo);
-        display.setCursor(0, 0);
-        display.print("Taken");
-        // Send confirmation status
         sendMedicationStatus("MED_CONFIRM");
+        activityStatus = "MEDICATION CONFIRMED";
+        display.clearScreen();
+        display.setFont(liberationSansNarrow_10ptFontInfo);
+        display.setCursor(10, 20);
+        display.print("Confirmed!");
         delay(2000); // Display message for 2 seconds
-        displayActivityStatus("CONFIRMED", temp);
+        // Return to home screen
+        currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+        alarmHandled = true;
     }
     else if (buttons & TSButtonLowerRight)
     {
         // Handle cancellation if needed
-        display.clearScreen();
-        display.setFont(thinPixel7_10ptFontInfo);
-        display.setCursor(0, 0);
-        display.print("Not Taken.");
-        // Send cancellation status
         sendMedicationStatus("MED_CANCEL");
+        activityStatus = "MEDICATION CANCELLED";
+        display.clearScreen();
+        display.setFont(liberationSansNarrow_10ptFontInfo);
+        display.setCursor(10, 20);
+        display.print("Not Taken!");
         delay(2000); // Display message for 2 seconds
-        displayActivityStatus("CANCELLED", temp);
+        // Return to home screen
+        currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+        alarmHandled = true;
+    }
+}
+
+/**
+ * @brief Checks if it's time for medication and handles the alarm.
+ *
+ * This function compares the current time with the scheduled medication time.
+ * If it's time for medication and the alarm hasn't been handled yet, it
+ * updates the current screen to the medication screen.
+ */
+void checkMedicationAlarm()
+{
+    // Placeholder for medication time check
+    String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
+    String medicationTime = "22:15";       // Example medication time
+
+    if (currentTime == medicationTime && !alarmHandled)
+    {
+        if (currentScreen != MEDICATION_SCREEN)
+        {
+            currentScreen = MEDICATION_SCREEN;
+        }
     }
 }
