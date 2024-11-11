@@ -32,7 +32,7 @@ void setup()
 
 void loop()
 {
-    panicButton();
+    // panicButton();
 
     unsigned long currentMillis = millis();
     // Sensor reading
@@ -44,8 +44,11 @@ void loop()
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
-        }
+        } else {
+            // Medication screen is not active; trigger panic button action
+            panicButton();
     }
+}
 
     // Medication alarm check
     checkMedicationAlarm();

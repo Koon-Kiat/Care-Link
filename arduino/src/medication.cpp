@@ -2,6 +2,7 @@
 #include "../include/display.h"
 #include "../include/config.h"
 #include "../include/status.h"
+#include "../include/panicButton.h"
 
 
 /**
@@ -23,19 +24,53 @@ void handleMedicationConfirmation()
     // Read button states using display.getButtons()
     uint8_t buttons = display.getButtons();
 
+    // if (buttons & TSButtonLowerLeft)
+    // {
+    //     // Confirm medication taken
+    //     sendMedicationStatus("MED_CONFIRM");
+    //     activityStatus = "MEDICATION CONFIRMED";
+    //     display.clearScreen();
+    //     display.setFont(liberationSansNarrow_10ptFontInfo);
+    //     display.setCursor(10, 20);
+    //     display.print("Confirmed!");
+    //     delay(2000); // Display message for 2 seconds
+    //     // Return to home screen
+    //     currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+    //     alarmHandled = true;
+    // }
+    // else if (buttons & TSButtonLowerRight)
+    // {
+    //     // Handle cancellation if needed
+    //     sendMedicationStatus("MED_CANCEL");
+    //     activityStatus = "MEDICATION CANCELLED";
+    //     display.clearScreen();
+    //     display.setFont(liberationSansNarrow_10ptFontInfo);
+    //     display.setCursor(10, 20);
+    //     display.print("Not Taken!");
+    //     delay(2000); // Display message for 2 seconds
+    //     // Return to home screen
+    //     currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+    //     alarmHandled = true;
+    // }
+
     if (buttons & TSButtonLowerLeft)
     {
-        // Confirm medication taken
-        sendMedicationStatus("MED_CONFIRM");
-        activityStatus = "MEDICATION CONFIRMED";
-        display.clearScreen();
-        display.setFont(liberationSansNarrow_10ptFontInfo);
-        display.setCursor(10, 20);
-        display.print("Confirmed!");
-        delay(2000); // Display message for 2 seconds
-        // Return to home screen
-        currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
-        alarmHandled = true;
+        if (currentScreen == MEDICATION_SCREEN) {
+            // Confirm medication taken
+            sendMedicationStatus("MED_CONFIRM");
+            activityStatus = "MEDICATION CONFIRMED";
+            display.clearScreen();
+            display.setFont(liberationSansNarrow_10ptFontInfo);
+            display.setCursor(10, 20);
+            display.print("Confirmed!");
+            delay(2000); // Display message for 2 seconds
+            // Return to home screen
+            currentScreen = HOME_SCREEN;
+            alarmHandled = true;
+        } else {
+            // If not on medication screen, act as a panic button
+            panicButton();
+        }
     }
     else if (buttons & TSButtonLowerRight)
     {
@@ -48,7 +83,7 @@ void handleMedicationConfirmation()
         display.print("Not Taken!");
         delay(2000); // Display message for 2 seconds
         // Return to home screen
-        currentScreen = HOME_SCREEN; // Changed from previousScreen to HOME_SCREEN
+        currentScreen = HOME_SCREEN;
         alarmHandled = true;
     }
 }
@@ -64,7 +99,7 @@ void checkMedicationAlarm()
 {
     // Placeholder for medication time check
     String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
-    String medicationTime = "22:15";       // Example medication time
+    String medicationTime = "22:14";       // Example medication time
 
     if (currentTime == medicationTime && !alarmHandled)
     {
