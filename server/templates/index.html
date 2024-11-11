@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Data</title>
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/sensordata');
+                const data = await response.json();
+
+                document.getElementById('fallStatus').innerText = data.fall_status;
+                document.getElementById('activityStatus').innerText = data.activity_status;
+                document.getElementById('temperature').innerText = data.temperature + " °C";
+                document.getElementById('timestamp').innerText = data.timestamp;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        setInterval(fetchData, 2000); // Fetch new data every 2 seconds
+        window.onload = fetchData;
+    </script>
+</head>
+<body>
+    <h1>Live Sensor Data</h1>
+    <p><strong>Fall Status:</strong> <span id="fallStatus">Loading...</span></p>
+    <p><strong>Activity Status:</strong> <span id="activityStatus">Loading...</span></p>
+    <p><strong>Temperature:</strong> <span id="temperature">Loading...</span></p>
+    <p><strong>Last Updated:</strong> <span id="timestamp">Loading...</span></p>
+</body>
+</html>
