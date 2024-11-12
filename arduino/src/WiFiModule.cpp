@@ -3,8 +3,6 @@
 #include "../include/serial.h"
 #include "../include/WiFiConfig.h"
 
-
-
 void initializeWiFi() {
     WiFi.setPins(8, 2, A3, -1); // Pins for TinyDuino WiFi
     SerialMonitorInterface.print("Connecting to WiFi: ");

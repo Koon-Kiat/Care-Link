@@ -14,6 +14,7 @@
 #include "include/medication.h"                  // Include Medication module
 #include "include/WiFiModule.h"                  // Include WiFi module
 #include "include/WiFiConfig.h"
+#include "include/dataSender.h"
 
 void setup()
 {
@@ -21,7 +22,8 @@ void setup()
         while (!SerialMonitorInterface) {
         delay(100); // Ensure Serial is ready
     }
-    
+
+
     initializeWiFi();
 
     Wire.begin();
@@ -43,18 +45,8 @@ void loop()
     String fallStatus = getFallStatus();           // Get fall status
     float temperature = getTemperature();          // Get temperature
 
-    // Create a JSON object for the server
-    StaticJsonDocument<200> jsonDoc;
-    jsonDoc["fall_status"] = fallStatus.c_str();       // Add fall status
-    jsonDoc["activity_status"] = activityStatus.c_str(); // Add activity status
-    jsonDoc["temperature"] = temperature;             // Add temperature
-
-    // Serialize JSON to a string
-    String sensorData;
-    serializeJson(jsonDoc, sensorData);
-
     // Send data to the server
-    sendSensorData(SERVER_ADDRESS, SERVER_PORT, sensorData);
+    sendDataToServer(fallStatus, activityStatus, temperature);
 
     if (SerialMonitorInterface.available())
     {
