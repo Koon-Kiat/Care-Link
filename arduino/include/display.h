@@ -11,7 +11,8 @@ enum ScreenState
     HOME_SCREEN,
     FALL_AND_TEMP_SCREEN,   // Activity Status Screen
     MEDICATION_INFO_SCREEN, // Add new screen state
-    MEDICATION_SCREEN
+    MEDICATION_SCREEN,
+    BATTERY_SCREEN
 };
 
 extern ScreenState currentScreen;
@@ -26,5 +27,6 @@ String getTemperatureCategory(double temperature);
 String getCurrentTime();
 void displayMedicationScreen();
 void displayMedicationInfoScreen();
+void displayBatteryScreen(double temperature);
 
 #endif

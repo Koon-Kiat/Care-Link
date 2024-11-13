@@ -1,5 +1,6 @@
 #include "../include/display.h"
 #include "../include/medication.h"
+#include "../include/battery.h"
 
 ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN; 
@@ -118,6 +119,26 @@ void displayHomeScreen()
     centerPrint(activityStatus, cursorY);
 }
 
+void displayBatteryScreen(double temperature) {
+    display.clearScreen();
+    display.setFont(liberationSansNarrow_12ptFontInfo);
+    display.fontColor(TS_8b_White, TS_8b_Black);
+    display.setCursor(0, 0);
+    display.print("Battery");
+    display.setFont(liberationSansNarrow_10ptFontInfo);
+    display.setCursor(0, 20);
+    display.print("Voltage: ");
+    display.print(getBattVoltage());
+    display.print("V");
+    displayBattery();
+
+    // Display Temperature
+    display.setCursor(0, 40);
+    display.print("Temp: ");
+    display.print(temperature, 1);
+    display.print(" C");
+}
+
 /**
  * @brief Updates the display based on the current screen state.
  *
@@ -144,13 +165,16 @@ void updateDisplay(double temperature, const char *activityStatusParam)
         switch (currentScreen)
         {
             case HOME_SCREEN:
-                currentScreen = MEDICATION_INFO_SCREEN;
+                currentScreen = BATTERY_SCREEN;
                 break;
             case FALL_AND_TEMP_SCREEN:
                 currentScreen = HOME_SCREEN;
                 break;
             case MEDICATION_INFO_SCREEN:
                 currentScreen = FALL_AND_TEMP_SCREEN;
+                break;
+            case BATTERY_SCREEN:
+                currentScreen = MEDICATION_INFO_SCREEN;
                 break;
             default:
                 currentScreen = HOME_SCREEN;
@@ -169,6 +193,9 @@ void updateDisplay(double temperature, const char *activityStatusParam)
                 currentScreen = MEDICATION_INFO_SCREEN;
                 break;
             case MEDICATION_INFO_SCREEN:
+                currentScreen = BATTERY_SCREEN;
+                break;
+            case BATTERY_SCREEN:
                 currentScreen = HOME_SCREEN;
                 break;
             default:
@@ -195,6 +222,10 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     else if (currentScreen == MEDICATION_SCREEN)
     {
         displayMedicationScreen(); // Display popup screen
+    }
+    else if (currentScreen == BATTERY_SCREEN)
+    {
+        displayBatteryScreen(temperature);
     }
 }
 
