@@ -1,4 +1,6 @@
 #include "../include/status.h"
+#include "../include/WiFiModule.h"
+#include "../include/config.h" // Include the config file for server details
 
 /**
  * @brief Sends the fall status to the server.
@@ -87,10 +89,16 @@ void sendMedicationStatus(const char *medStatus)
  *
  * @param message The status message to be sent.
  */
-void sendStatus(const char *message)
-{
-    // Implement WIFI or other communication methods here
-    // Example implementation:
-    // wifiModule.sendMessage(message);
-    
+void sendStatus(const char *message) {
+    // Construct the JSON payload
+    String jsonData = "{";
+    jsonData += "\"status\": \"" + String(message) + "\"";
+    jsonData += "}";
+
+    // Send the JSON payload to the server
+    sendSensorData(SERVER_ADDRESS, SERVER_PORT, jsonData);
+
+    // Debug output
+    Serial.print("Sent to server: ");
+    Serial.println(jsonData);
 }
