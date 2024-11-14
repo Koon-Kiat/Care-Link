@@ -30,15 +30,40 @@ void setup()
     display.begin();
     display.setBrightness(10);
 
-    // Initialize the BMA250 accelerometer with default range and bandwidth settings
+    // Initialize the RTC
+    rtc.begin();
+
+    // Initialize the BMA250 accelerometer
     SerialMonitorInterface.print("Initializing BMA...\n");
-    accel_sensor.begin(BMA250_range_2g, BMA250_update_time_64ms);
+    accel_sensor.begin(BMA250_range_16g, BMA250_update_time_64ms);
 }
 
 void loop()
 {
-    checkFallDetectionAndTemperature();
-    handleMedicationConfirmation();
+    unsigned long currentMillis = millis();
+    // Sensor reading
+    if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
+    {
+        previousLoopTime = currentMillis;
+
+        checkFallDetectionAndTemperature();
+        if (currentScreen == MEDICATION_SCREEN)
+        {
+            handleMedicationConfirmation();
+        }
+    }
+
+    // Medication alarm check
+    checkMedicationAlarm();
+
+    // Display updates
+    static unsigned long lastDisplayUpdate = 0;
+    if (currentMillis - lastDisplayUpdate >= DISPLAY_UPDATE_INTERVAL)
+    {
+        lastDisplayUpdate = currentMillis;
+        updateFallDisplayStatus();
+    }
+
 
     // Retrieve the latest sensor data
     String activityStatus = getActivityStatus();   // Get activity status
@@ -52,6 +77,4 @@ void loop()
     {
         handleSerialInput();
     }
-
-    delay(5000); // Wait for 5 seconds before sending the next update
 }

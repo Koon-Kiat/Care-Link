@@ -2,8 +2,8 @@
 #define FALLANDTEMPERATURESENSOR_H
 
 #include <Arduino.h>
-#include "bma250.h" 
-#include "status.h" 
+#include "bma250.h"
+#include "status.h"
 #include "config.h"
 
 extern TinyScreen display;
@@ -13,6 +13,7 @@ extern double temp;
 
 // Function declarations
 void checkFallDetectionAndTemperature();
+void initiateFallDisplay();
 String getFallStatus();
 String getActivityStatus();
 float getTemperature();
