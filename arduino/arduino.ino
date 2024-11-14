@@ -3,11 +3,6 @@
 #include <TinyScreen.h>
 #include <Wire.h>
 #include <WiFi101.h>
-<<<<<<< Updated upstream
-#include <ArduinoJson.h>                         // Include ArduinoJson for JSON handling
-
-=======
->>>>>>> Stashed changes
 #include "include/BMA250.h"                      // Include BMA250 accelerometer module
 #include "include/status.h"                      // Include StatusSender module
 #include "include/fall_and_temperature_sensor.h" // Include FallAndTemperatureSensor module
@@ -16,25 +11,12 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 #include "include/WiFiModule.h"                  // Include WiFi module
-<<<<<<< Updated upstream
-#include "include/WiFiConfig.h"
-#include "include/dataSender.h"
-=======
->>>>>>> Stashed changes
 
 void setup()
 {
     SerialMonitorInterface.begin(9600);
-<<<<<<< Updated upstream
-        while (!SerialMonitorInterface) {
-        delay(100); // Ensure Serial is ready
-    }
-
-
-=======
     delay(1000);
     
->>>>>>> Stashed changes
     initializeWiFi();
 
     Wire.begin();
