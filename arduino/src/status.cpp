@@ -1,12 +1,36 @@
 #include "../include/status.h"
 #include "../include/WiFiModule.h"
+#include "../include/WiFiConfig.h"
 #include "../include/config.h" // Include the config file for server details
+#include <ArduinoJson.h> // Use ArduinoJson for JSON handling
 
 /**
  * @brief Sends the fall status to the server.
  *
  * @param status The fall status string (e.g., "SAFE", "SEVERE FALL DETECTED", "MODERATE FALL DETECTED", "MINOR FALL DETECTED").
  */
+
+void sendAllSensorData(const char *fallStatus, const char *activityStatus, double temperature, const char *timestamp) {
+    // Create a JSON object for the data
+    StaticJsonDocument<256> jsonDoc;
+
+    jsonDoc["fall_status"] = fallStatus;
+    jsonDoc["activity_status"] = activityStatus;
+    jsonDoc["temperature"] = temperature;
+    jsonDoc["timestamp"] = timestamp;
+
+    // Serialize the JSON object to a string
+    String jsonData;
+    serializeJson(jsonDoc, jsonData);
+
+    // Send the JSON payload to the server
+    sendSensorData(SERVER_ADDRESS, SERVER_PORT, jsonData);
+
+    // Debug output
+    Serial.print("Sent to server: ");
+    Serial.println(jsonData);
+}
+
 void sendFallStatus(const char *status)
 {
     String message;

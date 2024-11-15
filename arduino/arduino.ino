@@ -3,6 +3,7 @@
 #include <TinyScreen.h>
 #include <Wire.h>
 #include <WiFi101.h>
+#include <ArduinoJson.h>                         // Include ArduinoJson for JSON handling
 #include "include/BMA250.h"                      // Include BMA250 accelerometer module
 #include "include/status.h"                      // Include StatusSender module
 #include "include/fall_and_temperature_sensor.h" // Include FallAndTemperatureSensor module
@@ -10,15 +11,20 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
-#include "include/WiFiModule.h"                  // Include WiFi module
+#include "include/WiFiModule.h"                  // Include Medication module
+#include "include/WiFiConfig.h"                  // Include Medication module
+
+
 
 void setup()
 {
+    // Initialize serial communication
     SerialMonitorInterface.begin(9600);
     delay(1000);
-    
+
     initializeWiFi();
 
+    // Initialize the display
     Wire.begin();
     display.begin();
     display.setBrightness(10);
@@ -57,17 +63,10 @@ void loop()
         updateFallDisplayStatus();
     }
 
-
-    // Retrieve the latest sensor data
-    String activityStatus = getActivityStatus();   // Get activity status
-    String fallStatus = getFallStatus();           // Get fall status
-    float temperature = getTemperature();          // Get temperature
-
-    // Send data to the server
-    sendDataToServer(fallStatus, activityStatus, temperature);
-
     if (SerialMonitorInterface.available())
     {
         handleSerialInput();
     }
+
+    
 }
