@@ -66,4 +66,7 @@ extern unsigned long previousLoopTime;
 // Decalre the alarmHandled variable
 extern bool alarmHandled;
 
+// Define color constant
+extern const uint8_t TS_8b_Orange;
+
 #endif
