@@ -47,7 +47,7 @@ void displayHomeScreen()
     String timeStr = getCurrentTime(); // Format "HH:MM"
 
     // Convert String to char array
-    char timeStrC[6]; // "HH:MM" + null terminator
+    char timeStrC[9]; // "HH:MM" + null terminator
     timeStr.toCharArray(timeStrC, sizeof(timeStrC));
 
     // Get the width of the time string
@@ -388,22 +388,36 @@ String getTemperatureCategory(double temperature)
  */
 String getCurrentTime()
 {
-    // Set the time
-    rtc.setHours(hours);
-    rtc.setMinutes(minutes);
-    rtc.setSeconds(seconds);
+    if (
+        // rtc.getDay() == NULL && rtc.getMonth() == NULL && rtc.getYear() == NULL &&
+    rtc.getHours() == NULL && rtc.getMinutes() == NULL && rtc.getSeconds() == NULL) {
+        // Set the time
+        rtc.setHours(hours);
+        rtc.setMinutes(minutes);
+        rtc.setSeconds(seconds);
 
-    // Set the date
-    rtc.setDay(day);
-    rtc.setMonth(month);
-    rtc.setYear(year);
+        // Set the date
+        rtc.setDay(day);
+        rtc.setMonth(month);
+        rtc.setYear(year);
+    }
+    // Set the time
+    // rtc.setHours(hours);
+    // rtc.setMinutes(minutes);
+    // rtc.setSeconds(seconds);
+
+    // // Set the date
+    // rtc.setDay(day);
+    // rtc.setMonth(month);
+    // rtc.setYear(year);
 
     // Retrieve the current time
     int currentHour = rtc.getHours();
     int currentMinute = rtc.getMinutes();
+    int currentSecond = rtc.getSeconds();
 
-    char timeStr[6]; // "HH:MM" + null terminator
-    sprintf(timeStr, "%02d:%02d", currentHour, currentMinute);
+    char timeStr[9]; // "HH:MM" + null terminator
+    sprintf(timeStr, "%02d:%02d:%02d", currentHour, currentMinute, currentSecond);
     return String(timeStr);
 }
 
