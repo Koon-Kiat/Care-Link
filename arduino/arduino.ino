@@ -27,6 +27,8 @@ void setup()
     // Initialize the BMA250 accelerometer
     SerialMonitorInterface.print("Initializing BMA...\n");
     accel_sensor.begin(BMA250_range_16g, BMA250_update_time_64ms);
+
+    requestScreenOn();
 }
 
 void loop()
@@ -59,4 +61,9 @@ void loop()
     {
         handleSerialInput();
     }
+
+    // Turn off the TinyScreen after a set period of time of inactivity.
+    sleepDisplay();
+    // Monitor the buttons and turn on the display if any button is pressed
+    checkButtons();
 }

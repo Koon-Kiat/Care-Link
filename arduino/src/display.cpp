@@ -6,6 +6,12 @@ ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN; 
 String activityStatus = "RESTING";
 
+// uint32_t sleepTime = 0;
+unsigned long sleepTimer = 0;
+uint8_t displayOn = 0;
+uint8_t buttonReleased = 1;
+int sleepTimeout = 10; // 10 seconds until display sleeps
+
 /**
  * @brief Displays the home screen on the TinyScreen.
  *
@@ -48,7 +54,7 @@ void displayHomeScreen()
     String timeStr = getCurrentTime(); // Format "HH:MM"
 
     // Convert String to char array
-    char timeStrC[6]; // "HH:MM" + null terminator
+    char timeStrC[9]; // "HH:MM" + null terminator
     timeStr.toCharArray(timeStrC, sizeof(timeStrC));
 
     // Get the width of the time string
@@ -419,22 +425,36 @@ String getTemperatureCategory(double temperature)
  */
 String getCurrentTime()
 {
-    // Set the time
-    rtc.setHours(hours);
-    rtc.setMinutes(minutes);
-    rtc.setSeconds(seconds);
+    if (
+        // rtc.getDay() == NULL && rtc.getMonth() == NULL && rtc.getYear() == NULL &&
+    rtc.getHours() == NULL && rtc.getMinutes() == NULL && rtc.getSeconds() == NULL) {
+        // Set the time
+        rtc.setHours(hours);
+        rtc.setMinutes(minutes);
+        rtc.setSeconds(seconds);
 
-    // Set the date
-    rtc.setDay(day);
-    rtc.setMonth(month);
-    rtc.setYear(year);
+        // Set the date
+        rtc.setDay(day);
+        rtc.setMonth(month);
+        rtc.setYear(year);
+    }
+    // Set the time
+    // rtc.setHours(hours);
+    // rtc.setMinutes(minutes);
+    // rtc.setSeconds(seconds);
+
+    // // Set the date
+    // rtc.setDay(day);
+    // rtc.setMonth(month);
+    // rtc.setYear(year);
 
     // Retrieve the current time
     int currentHour = rtc.getHours();
     int currentMinute = rtc.getMinutes();
+    int currentSecond = rtc.getSeconds();
 
-    char timeStr[6]; // "HH:MM" + null terminator
-    sprintf(timeStr, "%02d:%02d", currentHour, currentMinute);
+    char timeStr[9]; // "HH:MM" + null terminator
+    sprintf(timeStr, "%02d:%02d:%02d", currentHour, currentMinute, currentSecond);
     return String(timeStr);
 }
 
@@ -513,4 +533,47 @@ void displayMedicationInfoScreen()
     display.setCursor(0, cursorY);
     display.print("Time: ");
     display.print(medTime);
+}
+
+/**
+ * @brief Reset the sleepTimer variable and turn on the TinyScreen if it is currently off.
+ *
+ * This function is currently triggered when any button is pressed. 
+ */
+int requestScreenOn() {
+    sleepTimer = millis();
+    if (!displayOn) {
+        displayOn = 1;
+        display.on();
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * @brief Turn off the TinyScreen after a set period of time of inactivity.
+ */
+void sleepDisplay() {
+    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul)) {
+        if (displayOn) {
+            displayOn = 0;
+            display.off();
+        }
+    }
+}
+
+/**
+ * @brief Monitors the state of the buttons
+ *
+ * This function turns on the display if any button is pressed.
+ */
+void checkButtons() {
+    byte buttons = display.getButtons();
+    if (buttonReleased && buttons) {
+        requestScreenOn();
+        buttonReleased = 0;
+    }
+    if (!buttonReleased && !(buttons & 0x0F)) {
+        buttonReleased = 1;
+    }
 }

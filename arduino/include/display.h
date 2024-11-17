@@ -19,6 +19,13 @@ extern ScreenState currentScreen;
 extern ScreenState previousScreen;
 extern String activityStatus;
 
+extern uint32_t sleepTime;
+extern unsigned long millisOffsetCount;
+extern unsigned long sleepTimer;
+extern uint8_t displayOn;
+extern uint8_t buttonReleased;
+extern int sleepTimeout;
+
 void displayHomeScreen();
 void updateDisplay(double temperature, const char *activityStatus);
 void updateFallDisplayStatus();
@@ -28,5 +35,9 @@ String getCurrentTime();
 void displayMedicationScreen();
 void displayMedicationInfoScreen();
 void displayBatteryScreen(double temperature);
+int requestScreenOn();
+void sleepDisplay();
+void checkButtons();
+
 
 #endif
