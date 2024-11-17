@@ -5,6 +5,12 @@ ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN; 
 String activityStatus = "RESTING";
 
+// uint32_t sleepTime = 0;
+unsigned long sleepTimer = 0;
+uint8_t displayOn = 0;
+uint8_t buttonReleased = 1;
+int sleepTimeout = 10; // 10 seconds until display sleeps
+
 /**
  * @brief Displays the home screen on the TinyScreen.
  *
@@ -496,4 +502,47 @@ void displayMedicationInfoScreen()
     display.setCursor(0, cursorY);
     display.print("Time: ");
     display.print(medTime);
+}
+
+/**
+ * @brief Reset the sleepTimer variable and turn on the TinyScreen if it is currently off.
+ *
+ * This function is currently triggered when any button is pressed. 
+ */
+int requestScreenOn() {
+    sleepTimer = millis();
+    if (!displayOn) {
+        displayOn = 1;
+        display.on();
+        return 1;
+    }
+    return 0;
+}
+
+/**
+ * @brief Turn off the TinyScreen after a set period of time of inactivity.
+ */
+void sleepDisplay() {
+    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul)) {
+        if (displayOn) {
+            displayOn = 0;
+            display.off();
+        }
+    }
+}
+
+/**
+ * @brief Monitors the state of the buttons
+ *
+ * This function turns on the display if any button is pressed.
+ */
+void checkButtons() {
+    byte buttons = display.getButtons();
+    if (buttonReleased && buttons) {
+        requestScreenOn();
+        buttonReleased = 0;
+    }
+    if (!buttonReleased && !(buttons & 0x0F)) {
+        buttonReleased = 1;
+    }
 }

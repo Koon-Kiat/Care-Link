@@ -10,50 +10,6 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 
-uint32_t sleepTime = 0;
-unsigned long millisOffsetCount = 0;
-unsigned long sleepTimer = 0;
-uint8_t displayOn = 0;
-uint8_t buttonReleased = 1;
-int sleepTimeout = 5;
-
-void wakeHandler() {
-    if (sleepTime) {
-        millisOffsetCount += (rtc.getEpoch() - sleepTime);
-        sleepTime = 0;
-    }
-}
-
-void watchSleep() {
-    sleepTime = rtc.getEpoch();
-    rtc.standbyMode();
-}
-
-int requestScreenOn() {
-    sleepTimer = millisOffset();
-    if (!displayOn) {
-        displayOn = 1;
-        display.on();
-        return 1;
-    }
-    return 0;
-}
-
-void checkButtons() {
-    byte buttons = display.getButtons();
-    if (buttonReleased && buttons) {
-        requestScreenOn();
-        buttonReleased = 0;
-    }
-    if (!buttonReleased && !(buttons & 0x0F)) {
-        buttonReleased = 1;
-    }
-}
-
-uint32_t millisOffset() {
-    return (millisOffsetCount * 1000ul) + millis();
-}
-
 void setup()
 {
     // Initialize serial communication
@@ -106,11 +62,8 @@ void loop()
         handleSerialInput();
     }
 
-    if (millisOffset() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul)) {
-        if (displayOn) {
-            displayOn = 0;
-            display.off();
-        }
-    }
+    // Turn off the TinyScreen after a set period of time of inactivity.
+    sleepDisplay();
+    // Monitor the buttons and turn on the display if any button is pressed
     checkButtons();
 }
