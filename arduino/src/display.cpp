@@ -134,7 +134,9 @@ void displayBatteryScreen(double temperature) {
     display.setFont(liberationSansNarrow_10ptFontInfo);
     display.setCursor(0, 20);
     display.print("Voltage: ");
-    display.print(getBattVoltage());
+    
+    float battVoltage = getBattVoltage();
+    display.print(battVoltage);
     display.print("V");
     displayBattery();
 
