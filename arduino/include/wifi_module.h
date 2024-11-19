@@ -1,5 +1,5 @@
-#ifndef WiFiModule_h
-#define WiFiModule_h
+#ifndef WIFI_MODULE_H
+#define WIFI_MODULE_H
 
 #include <WiFi101.h>
 

@@ -1,7 +1,7 @@
-#include "../include/WiFiModule.h"
+#include "../include/wifi_module.h"
 #include <Wifi101.h>
 #include "../include/serial.h"
-#include "../include/WiFiConfig.h"
+#include "../include/wifi_config.h"
 
 void initializeWiFi() {
     WiFi.setPins(8, 2, A3, -1); // Pins for TinyDuino WiFi
@@ -35,45 +35,58 @@ void printWiFiStatus(int status) {
 WiFiClient client; // Create a WiFi client instance
 
 void sendSensorData(const char* server, int port, const String& data) {
+    SerialMonitorInterface.println("Starting data transmission...");
+
     if (WiFi.status() != WL_CONNECTED) {
-        SerialMonitorInterface.println("WiFi not connected. Attempting reconnection...");
-        initializeWiFi(); // Reinitialize WiFi if not connected
+        SerialMonitorInterface.println("WiFi is not connected. Reconnecting...");
+        initializeWiFi();
     }
 
     SerialMonitorInterface.print("Connecting to server: ");
     SerialMonitorInterface.println(server);
 
-    // Attempt to connect to the server
     if (client.connect(server, port)) {
-        SerialMonitorInterface.println("Connected to server");
+        SerialMonitorInterface.println("Connected to server!");
 
-        // Construct the HTTP POST request
+        // Construct HTTP POST request
         client.println("POST /api/sensordata HTTP/1.1");
         client.print("Host: ");
         client.println(server);
-        client.println("Content-Type: application/json"); // or "application/x-www-form-urlencoded" for URL-encoded data
+        client.println("Content-Type: application/json");
         client.print("Content-Length: ");
         client.println(data.length());
-        client.println(); // End of headers
-        client.println(data); // Send the data payload
+        SerialMonitorInterface.print("Payload length: ");
+        SerialMonitorInterface.println(data.length());
+        client.println();  // End headers
+        client.println(data);  // Send the data
+        SerialMonitorInterface.println("Payload sent to the server.");
+
+        // Log the full request
+        SerialMonitorInterface.println("HTTP Request:");
+        SerialMonitorInterface.println("POST /api/sensordata HTTP/1.1");
+        SerialMonitorInterface.print("Host: ");
+        SerialMonitorInterface.println(server);
+        SerialMonitorInterface.println("Content-Type: application/json");
+        SerialMonitorInterface.print("Content-Length: ");
+        SerialMonitorInterface.println(data.length());
+        SerialMonitorInterface.println(data);
 
         // Wait for server response
-        int timeout = 5000; // 5 seconds timeout
-        unsigned long startTime = millis();
-        while (!client.available() && (millis() - startTime < timeout)) {
+        unsigned long timeout = millis() + 5000; // 5-second timeout
+        while (!client.available() && millis() < timeout) {
             delay(100);
         }
 
         if (client.available()) {
             String response = client.readString();
-            SerialMonitorInterface.println("Server response:");
+            SerialMonitorInterface.println("Server Response:");
             SerialMonitorInterface.println(response);
         } else {
             SerialMonitorInterface.println("Server response timeout.");
         }
 
-        client.stop(); // Close the connection
+        client.stop();
     } else {
-        SerialMonitorInterface.println("Connection to server failed.");
+        SerialMonitorInterface.println("Failed to connect to server.");
     }
 }

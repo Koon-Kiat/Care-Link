@@ -2,7 +2,7 @@
 #define STATUS_SENDER_H
 
 #include <Arduino.h>
-#include "WiFiModule.h" // For sendSensorData function
+#include "wifi_module.h" // For sendSensorData function
 #include "config.h"
 
 void sendFallStatus(const char *status);

@@ -1,6 +1,6 @@
 #include "../include/status.h"
-#include "../include/WiFiModule.h"
-#include "../include/WiFiConfig.h"
+#include "../include/wifi_module.h"
+#include "../include/wifi_config.h"
 #include "../include/config.h" // Include the config file for server details
 #include <ArduinoJson.h> // Use ArduinoJson for JSON handling
 
@@ -23,12 +23,16 @@ void sendAllSensorData(const char *fallStatus, const char *activityStatus, doubl
     String jsonData;
     serializeJson(jsonDoc, jsonData);
 
+    // Debugging: Log the JSON payload
+    SerialMonitorInterface.println("Preparing to send the following JSON payload:");
+    SerialMonitorInterface.println(jsonData);
+
     // Send the JSON payload to the server
     sendSensorData(SERVER_ADDRESS, SERVER_PORT, jsonData);
 
     // Debug output
-    Serial.print("Sent to server: ");
-    Serial.println(jsonData);
+    SerialMonitorInterface.print("Sent to server: ");
+    SerialMonitorInterface.println(jsonData);
 }
 
 void sendFallStatus(const char *status)
@@ -123,6 +127,6 @@ void sendStatus(const char *message) {
     sendSensorData(SERVER_ADDRESS, SERVER_PORT, jsonData);
 
     // Debug output
-    Serial.print("Sent to server: ");
-    Serial.println(jsonData);
+    SerialMonitorInterface.print("Sent to server: ");
+    SerialMonitorInterface.println(jsonData);
 }
