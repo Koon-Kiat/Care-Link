@@ -32,7 +32,7 @@ void printWiFiStatus(int status) {
     }
 }
 
-WiFiClient client; // Create a WiFi client instance
+WiFiClient client;
 
 void sendSensorData(const char* server, int port, const String& data) {
     SerialMonitorInterface.println("Starting data transmission...");
@@ -57,8 +57,8 @@ void sendSensorData(const char* server, int port, const String& data) {
         client.println(data.length());
         SerialMonitorInterface.print("Payload length: ");
         SerialMonitorInterface.println(data.length());
-        client.println();  // End headers
-        client.println(data);  // Send the data
+        client.println(); 
+        client.println(data);
         SerialMonitorInterface.println("Payload sent to the server.");
 
         // Log the full request
@@ -72,7 +72,7 @@ void sendSensorData(const char* server, int port, const String& data) {
         SerialMonitorInterface.println(data);
 
         // Wait for server response
-        unsigned long timeout = millis() + 5000; // 5-second timeout
+        unsigned long timeout = millis() + 5000;
         while (!client.available() && millis() < timeout) {
             delay(100);
         }

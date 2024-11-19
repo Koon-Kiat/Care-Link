@@ -1,8 +1,8 @@
 #include "../include/status.h"
 #include "../include/wifi_module.h"
 #include "../include/wifi_config.h"
-#include "../include/config.h" // Include the config file for server details
-#include <ArduinoJson.h> // Use ArduinoJson for JSON handling
+#include "../include/config.h"
+#include <ArduinoJson.h>
 
 /**
  * @brief Sends the fall status to the server.
