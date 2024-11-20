@@ -10,12 +10,9 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 #include "include/panicButton.h"                 // Include Panic Button module
-
 #include <Arduino.h>
 
-// Undefine min and max macros
-#undef min
-#undef max
+
 
 void setup()
 {

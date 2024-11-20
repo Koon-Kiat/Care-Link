@@ -2,11 +2,6 @@
 #define STATUS_SENDER_H
 
 #include <Arduino.h>
-
-// Undefine min and max macros
-#undef min
-#undef max
-
 #include "config.h"
 
 void sendFallStatus(const char *status);

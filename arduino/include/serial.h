@@ -2,11 +2,6 @@
 #define SERIAL_H
 
 #include <Arduino.h>
-
-// Undefine min and max macros
-#undef min
-#undef max
-
 #include "uart.h"   
 #include "status.h"  
 #include "display.h"

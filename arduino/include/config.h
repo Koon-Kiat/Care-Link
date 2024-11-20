@@ -5,11 +5,8 @@
 #include <RTCZero.h>
 #include "bma250.h"
 #include <Arduino.h>
-
-// Undefine min and max macros to prevent conflicts with STL algorithms
 #undef min
 #undef max
-
 #include <vector>
 #include "medication.h"
 
