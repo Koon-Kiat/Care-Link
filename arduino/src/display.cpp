@@ -422,22 +422,19 @@ void displayMedicationScreen()
     display.fontColor(TS_8b_White, TS_8b_Black);
 
     // Display "Medication" centered
-    const char *header = "Medication";
-    int headerWidth = display.getPrintWidth(const_cast<char *>(header));
+    String header = currentMedication;
+    int headerWidth = display.getPrintWidth(const_cast<char*>(header.c_str()));
     int headerX = (SCREEN_WIDTH - headerWidth) / 2;
     display.setCursor(headerX, 0);
     display.print(header);
 
-    // Set even smaller font for instructions
+    // Set font for instructions
     display.setFont(liberationSansNarrow_8ptFontInfo);
-    int cursorY = display.getFontHeight() + 10;
+    int cursorY = display.getFontHeight() + 24; // Adjust as needed
 
-    // Push the instruction line further down
-    cursorY += 14; // Adjust this value as needed
-
-    // Combine instructions into a single centered line with arrows
+    // Display instructions centered
     const char *instruction = "< Yes        No >";
-    int instructionWidth = display.getPrintWidth(const_cast<char *>(instruction));
+    int instructionWidth = display.getPrintWidth(const_cast<char*>(instruction));
     int instructionX = (SCREEN_WIDTH - instructionWidth) / 2;
     display.setCursor(instructionX, cursorY);
     display.print(instruction);
@@ -464,22 +461,24 @@ void displayMedicationInfoScreen()
     display.setCursor(headerX, 0);
     display.print(header);
 
-    // Display medication type and time
-    display.setFont(liberationSansNarrow_10ptFontInfo);
+    // Set font for medication list
+    display.setFont(liberationSansNarrow_8ptFontInfo);
+    display.fontColor(TS_8b_White, TS_8b_Black);
     int cursorY = display.getFontHeight() + 10;
 
-    // Example medication type and time
-    const char *medType = "Aspirin";
-    const char *medTime = "08:00 AM";
+    for (const auto &med : medicationSchedule)
+    {
+        // Format: "HH:MM, Medication"
+        String medInfo = med.time + ", " + med.type;
 
-    // Display medication type
-    display.setCursor(0, cursorY);
-    display.print("Medication: ");
-    display.print(medType);
-    cursorY += display.getFontHeight() + 2;
+        display.setCursor(0, cursorY);
+        display.print(medInfo);
+        cursorY += display.getFontHeight() + 2;
 
-    // Display medication time
-    display.setCursor(0, cursorY);
-    display.print("Time: ");
-    display.print(medTime);
+        // Stop if cursorY exceeds the screen height
+        if (cursorY + display.getFontHeight() > SCREEN_HEIGHT)
+        {
+            break;
+        }
+    }
 }
