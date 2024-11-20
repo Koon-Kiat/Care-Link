@@ -1,5 +1,8 @@
 #include "../include/config.h"
 
+#include <vector>
+#include "../include/medication.h"
+
 // Define the actual global variables
 char receivedBuffer[MAX_RECEIVED_MESSAGE_SIZE];
 uint8_t receivedBufferLength = 0;
@@ -46,3 +49,12 @@ bool alarmHandled = false;
 
 // Define color constant
 const uint8_t TS_8b_Orange = 0x13;
+
+// Initialize medication schedule
+std::vector<MedicationSchedule> medicationSchedule = {
+    {"Aspirin", "08:00"},
+    {"Vitamin D", "12:00"},
+    {"Metformin", "22:14"}
+};
+
+String currentMedication = "";
