@@ -58,3 +58,6 @@ std::vector<MedicationSchedule> medicationSchedule = {
 };
 
 String currentMedication = "";
+
+// Define the panic button state
+bool isPanicOn = false;

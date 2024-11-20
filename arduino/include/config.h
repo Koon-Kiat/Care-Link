@@ -74,7 +74,11 @@ extern bool alarmHandled;
 // Define color constant
 extern const uint8_t TS_8b_Orange;
 
+// Declare the medication schedule
 extern std::vector<MedicationSchedule> medicationSchedule;
 extern String currentMedication;
+
+// Declare the panic button state
+extern bool isPanicOn;
 
 #endif
