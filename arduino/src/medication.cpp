@@ -2,7 +2,7 @@
 #include "../include/display.h"
 #include "../include/config.h"
 #include "../include/status.h"
-#include "../include/panicButton.h"
+#include "../include/panic_button.h"
 
 
 /**
