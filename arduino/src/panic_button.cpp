@@ -2,9 +2,6 @@
 #include "../include/display.h"
 #include "../include/status.h"
 
-// Track the toggle state
-bool isPanicOn = false;
-
 void panicButton()
 {
     // Read button states using display.getButtons()
@@ -53,6 +50,6 @@ void panicButton()
         }
 
         // Add a short delay to debounce the button press
-        delay(300); // Adjust if necessary
+        delay(300);
     }
 }
