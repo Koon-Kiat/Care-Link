@@ -22,6 +22,10 @@
 // Undefine min and max macros
 #undef min
 #undef max
+#include "include/wifi_module.h"                  // Include Medication module
+#include "include/wifi_config.h"                  // Include Medication module
+
+
 
 void setup()
 {
