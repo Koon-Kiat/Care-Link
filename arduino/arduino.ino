@@ -2,6 +2,8 @@
 #include <STBLE.h>
 #include <TinyScreen.h>
 #include <Wire.h>
+#include <WiFi101.h>
+#include <ArduinoJson.h>                         // Include ArduinoJson for JSON handling
 #include "include/BMA250.h"                      // Include BMA250 accelerometer module
 #include "include/status.h"                      // Include StatusSender module
 #include "include/fall_and_temperature_sensor.h" // Include FallAndTemperatureSensor module
@@ -16,12 +18,25 @@
 // Undefine min and max macros
 #undef min
 #undef max
+#include "include/wifi_module.h"                  // Include Medication module
+#include "include/wifi_config.h"                  // Include Medication module
+
+
 
 void setup()
 {
     // Initialize serial communication
     SerialMonitorInterface.begin(9600);
-    delay(1000);
+    while (!SerialMonitorInterface);
+
+    SerialMonitorInterface.println("Serial monitor initialized!");
+    initializeWiFi();
+
+    if (WiFi.status() == WL_CONNECTED) {
+        SerialMonitorInterface.println("WiFi connected successfully.");
+    } else {
+        SerialMonitorInterface.println("WiFi connection failed.");
+    }
 
     // Initialize the display
     Wire.begin();
@@ -47,6 +62,8 @@ void loop()
         previousLoopTime = currentMillis;
 
         checkFallDetectionAndTemperature();
+
+        sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str());
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
@@ -71,4 +88,6 @@ void loop()
     {
         handleSerialInput();
     }
+
+    
 }
