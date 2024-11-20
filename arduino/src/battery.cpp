@@ -1,6 +1,8 @@
 #include "../include/display.h"
 #include "../include/battery.h"
 
+double alpha = 0.001; // Smoothing factor (0 < ALPHA <= 1)
+
 bool lowBatteryAlertShown = false; // Flag to prevent multiple low battery alerts
 
 // This function gets the battery VCC internally, you can checkout this link 
@@ -51,7 +53,7 @@ void displayBattery() {
     uint8_t length = 20;
     uint8_t red, green;
     
-    float battVoltage = getBattVoltage();
+    float battVoltage = getSmoothedBattVoltage();
 
     display.drawLine(x - 1, y, x - 1, y + height, 0xFF); // Left border
     display.drawLine(x - 1, y - 1, x + length, y - 1, 0xFF); // Top border
@@ -102,9 +104,11 @@ void displayBattery() {
 }
 
 void lowBatteryAlert() {
-    float battVoltage = getBattVoltage();
+
+    float battVoltage = getSmoothedBattVoltage();
+
     // Once the set voltage has been reached, display the low battery alert once.
-    if (!(battVoltage >= 3.32) && lowBatteryAlertShown == false) {
+    if (!(battVoltage >= 3.32) && !(lowBatteryAlertShown)) {
         display.clearScreen();
         display.setFont(liberationSansNarrow_12ptFontInfo);
         display.fontColor(TS_8b_Red, TS_8b_Black);
@@ -118,4 +122,20 @@ void lowBatteryAlert() {
         delay(5000);
         lowBatteryAlertShown = true;
     }
+}
+
+float getSmoothedBattVoltage() {
+    static float ema = 0;
+    static bool initialized = false;
+
+    float newReading = getBattVoltage();
+
+    if (!initialized) {
+        ema = newReading;
+        initialized = true;
+    } else {
+        ema = (alpha * newReading) + ((1 - alpha) * ema);
+    }
+
+    return ema;
 }
