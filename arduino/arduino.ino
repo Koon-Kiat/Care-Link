@@ -38,7 +38,6 @@ void setup()
 
 void loop()
 {
-    // panicButton();
 
     unsigned long currentMillis = millis();
     // Sensor reading

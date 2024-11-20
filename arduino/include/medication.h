@@ -1,17 +1,8 @@
 #ifndef MEDICATION_H
 #define MEDICATION_H
 
-// ...existing code...
 
 #include <Arduino.h>
-
-// Undefine min and max macros
-#undef min
-#undef max
-
-#include <vector>
-
-// ...existing code...
 
 struct MedicationSchedule
 {
@@ -22,7 +13,6 @@ struct MedicationSchedule
 extern std::vector<MedicationSchedule> medicationSchedule;
 extern String currentMedication;
 
-// ...existing code...
 
 void showMedicationReminder(int cursorX, int cursorY);
 void handleMedicationConfirmation();
