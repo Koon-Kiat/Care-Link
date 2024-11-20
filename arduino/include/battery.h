@@ -6,5 +6,8 @@
 float getVCC();
 float getBattVoltage();
 void displayBattery();
+void lowBatteryAlert();
+
+extern bool lowBatteryAlertShown;
 
 #endif

@@ -1,6 +1,8 @@
 #include "../include/display.h"
 #include "../include/battery.h"
 
+bool lowBatteryAlertShown = false; // Flag to prevent multiple low battery alerts
+
 // This function gets the battery VCC internally, you can checkout this link 
 // if you want to know more about how: 
 // http://atmel.force.com/support/articles/en_US/FAQ/ADC-example
@@ -51,11 +53,11 @@ void displayBattery() {
     
     float battVoltage = getBattVoltage();
 
-    display.drawLine(x - 1, y, x - 1, y + height, 0xFF); //left boarder
-    display.drawLine(x - 1, y - 1, x + length, y - 1, 0xFF); //top border
-    display.drawLine(x - 1, y + height + 1, x + length, y + height + 1, 0xFF); //bottom border
-    display.drawLine(x + length, y - 1, x + length, y + height + 1, 0xFF); //right border
-    display.drawLine(x + length + 1, y + 2, x + length + 1, y + height - 2, 0xFF); //right border
+    display.drawLine(x - 1, y, x - 1, y + height, 0xFF); // Left border
+    display.drawLine(x - 1, y - 1, x + length, y - 1, 0xFF); // Top border
+    display.drawLine(x - 1, y + height + 1, x + length, y + height + 1, 0xFF); // Bottom border
+    display.drawLine(x + length, y - 1, x + length, y + height + 1, 0xFF); // Right border
+    display.drawLine(x + length + 1, y + 2, x + length + 1, y + height - 2, 0xFF); // Right border
 
     // 75% - 100%
     if (battVoltage >= 3.60) {
@@ -96,5 +98,24 @@ void displayBattery() {
         for (uint8_t i = 0; i < 1; i++) {
             display.drawLine(x + i, y, x + i, y + height, red, green, 0);
         }
+    }
+}
+
+void lowBatteryAlert() {
+    float battVoltage = getBattVoltage();
+    // Once the set voltage has been reached, display the low battery alert once.
+    if (!(battVoltage >= 3.32) && lowBatteryAlertShown == false) {
+        display.clearScreen();
+        display.setFont(liberationSansNarrow_12ptFontInfo);
+        display.fontColor(TS_8b_Red, TS_8b_Black);
+        display.setCursor(0, 0);
+        display.print("Low Battery");
+        display.setFont(liberationSansNarrow_10ptFontInfo);
+        display.setCursor(0, 20);
+        display.print("Please charge");
+        display.setCursor(0, 35);
+        display.print("the watch.");
+        delay(5000);
+        lowBatteryAlertShown = true;
     }
 }

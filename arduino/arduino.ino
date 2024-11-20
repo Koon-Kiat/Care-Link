@@ -9,6 +9,7 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
+#include "include/battery.h"                     // Include Battery module
 
 void setup()
 {
@@ -61,6 +62,8 @@ void loop()
     {
         handleSerialInput();
     }
+
+    lowBatteryAlert();
 
     // Turn off the TinyScreen after a set period of time of inactivity.
     sleepDisplay();
