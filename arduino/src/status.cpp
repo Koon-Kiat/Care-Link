@@ -83,6 +83,18 @@ void sendMedicationStatus(const char *medStatus)
 }
 
 /**
+ * @brief Sends the panic button status message to the server.
+ *
+ * @param panicStatus The panic button status string.
+ */
+void sendPanicStatus(const char *panicStatus)
+{
+    SerialMonitorInterface.print("Preparing to send: ");
+    SerialMonitorInterface.println(panicStatus);
+    sendStatus(panicStatus);
+}
+
+/**
  * @brief Sends the status message to the server.
  *
  * @param message The status message to be sent.

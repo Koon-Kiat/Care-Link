@@ -9,6 +9,13 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
+#include "include/panicButton.h"                 // Include Panic Button module
+
+#include <Arduino.h>
+
+// Undefine min and max macros
+#undef min
+#undef max
 
 void setup()
 {
@@ -31,6 +38,7 @@ void setup()
 
 void loop()
 {
+
     unsigned long currentMillis = millis();
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
@@ -41,8 +49,11 @@ void loop()
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
-        }
+        } else {
+            // Medication screen is not active; trigger panic button action
+            panicButton();
     }
+}
 
     // Medication alarm check
     checkMedicationAlarm();
