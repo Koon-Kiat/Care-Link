@@ -9,10 +9,8 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
-#include "include/panicButton.h"                 // Include Panic Button module
+#include "include/panic_button.h"                // Include Panic Button module
 #include <Arduino.h>
-
-
 
 void setup()
 {
@@ -46,11 +44,13 @@ void loop()
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
-        } else {
+        }
+        else
+        {
             // Medication screen is not active; trigger panic button action
             panicButton();
+        }
     }
-}
 
     // Medication alarm check
     checkMedicationAlarm();
