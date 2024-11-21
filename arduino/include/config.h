@@ -4,6 +4,11 @@
 #include <TinyScreen.h>
 #include <RTCZero.h>
 #include "bma250.h"
+#include <Arduino.h>
+#undef min
+#undef max
+#include <vector>
+#include "medication.h"
 
 // Declare Bluetooth-related constants
 #define PIPE_UART_OVER_BTLE_UART_TX_TX 0
@@ -68,5 +73,12 @@ extern bool alarmHandled;
 
 // Define color constant
 extern const uint8_t TS_8b_Orange;
+
+// Declare the medication schedule
+extern std::vector<MedicationSchedule> medicationSchedule;
+extern String currentMedication;
+
+// Declare the panic button state
+extern bool isPanicOn;
 
 #endif

@@ -10,6 +10,8 @@
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
 #include "include/battery.h"                     // Include Battery module
+#include "include/panic_button.h"                // Include Panic Button module
+#include <Arduino.h>
 
 void setup()
 {
@@ -34,6 +36,7 @@ void setup()
 
 void loop()
 {
+
     unsigned long currentMillis = millis();
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
@@ -44,6 +47,11 @@ void loop()
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
+        }
+        else
+        {
+            // Medication screen is not active; trigger panic button action
+            panicButton();
         }
     }
 

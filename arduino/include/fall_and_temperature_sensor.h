@@ -2,6 +2,9 @@
 #define FALLANDTEMPERATURESENSOR_H
 
 #include <Arduino.h>
+#undef min
+#undef max
+#include <vector>
 #include "bma250.h"
 #include "status.h"
 #include "config.h"
