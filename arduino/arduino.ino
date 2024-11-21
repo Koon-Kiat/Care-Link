@@ -31,6 +31,7 @@ void setup()
     SerialMonitorInterface.print("Initializing BMA...\n");
     accel_sensor.begin(BMA250_range_16g, BMA250_update_time_64ms);
 
+    // Turn on the display
     requestScreenOn();
 }
 
@@ -38,6 +39,7 @@ void loop()
 {
 
     unsigned long currentMillis = millis();
+
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
     {
@@ -66,15 +68,17 @@ void loop()
         updateFallDisplayStatus();
     }
 
-    if (SerialMonitorInterface.available())
-    {
-        handleSerialInput();
-    }
-
+    // Low battery alert
     lowBatteryAlert();
 
     // Turn off the TinyScreen after a set period of time of inactivity.
     sleepDisplay();
+
     // Monitor the buttons and turn on the display if any button is pressed
     checkButtons();
+
+    if (SerialMonitorInterface.available())
+    {
+        handleSerialInput();
+    }
 }
