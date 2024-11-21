@@ -139,12 +139,6 @@ void displayBatteryScreen(double temperature) {
     display.print(battVoltage);
     display.print("V");
     displayBattery();
-
-    // Display Temperature
-    display.setCursor(0, 40);
-    display.print("Temp: ");
-    display.print(temperature, 1);
-    display.print(" C");
 }
 
 /**
