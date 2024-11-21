@@ -56,8 +56,13 @@ std::vector<MedicationSchedule> medicationSchedule = {
     {"Vitamin D", "12:00"},
     {"Metformin", "22:14"}
 };
-
 String currentMedication = "";
 
 // Define the panic button state
 bool isPanicOn = false;
+
+// Sleep and display variables
+unsigned long sleepTimer = 0;
+uint8_t displayOn = 0;
+uint8_t buttonReleased = 1;
+int sleepTimeout = 10;
