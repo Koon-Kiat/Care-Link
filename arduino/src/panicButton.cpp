@@ -2,6 +2,9 @@
 #include "../include/display.h"
 #include "../include/status.h"
 
+// Track the toggle state
+bool isPanicOn = false;
+
 void panicButton()
 {
     // Read button states using display.getButtons()
@@ -10,20 +13,46 @@ void panicButton()
     // Check if the bottom left button is pressed
     if (buttons & TSButtonLowerLeft)
     {
-        display.clearScreen();
+        // Toggle the panic state
+        isPanicOn = !isPanicOn;
 
-        display.setFont(liberationSansNarrow_16ptFontInfo);
-        display.fontColor(TS_8b_Red, TS_8b_Black);
+        if (isPanicOn)
+        {
+            display.clearScreen();
 
-        const char *header = "Help!";
-        int headerWidth = display.getPrintWidth(const_cast<char *>(header));
-        int headerX = (SCREEN_WIDTH - headerWidth) / 2;
-        display.setCursor(headerX, 0);
-        display.print(header);
+            display.setFont(liberationSansNarrow_16ptFontInfo);
+            display.fontColor(TS_8b_Red, TS_8b_Black);
 
-        delay(5000); // 5 seconds on screen
+            const char *header = "Help On";
+            int headerWidth = display.getPrintWidth(const_cast<char *>(header));
+            int headerX = (SCREEN_WIDTH - headerWidth) / 2;
+            display.setCursor(headerX, 0);
+            display.print(header);
 
-        // Send help status to the server
-        sendPanicStatus("HELP: REQUESTED");
+            delay(5000);
+
+            // Optionally, you can add a visual cue for "panic mode" being active.
+            sendPanicStatus("HELP: REQUESTED");
+        }
+        else
+        {
+            // Clear the display to indicate the toggle is off
+            display.clearScreen();
+            display.setFont(liberationSansNarrow_16ptFontInfo);
+            display.fontColor(TS_8b_Green, TS_8b_Black);
+
+            const char *header = "Help Off";
+            int headerWidth = display.getPrintWidth(const_cast<char *>(header));
+            int headerX = (SCREEN_WIDTH - headerWidth) / 2;
+            display.setCursor(headerX, 0);
+            display.print(header);
+
+            delay(5000);
+
+            sendPanicStatus("HELP: CANCELLED");
+        }
+
+        // Add a short delay to debounce the button press
+        delay(300); // Adjust if necessary
     }
 }

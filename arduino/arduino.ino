@@ -19,6 +19,8 @@
 #include "include/wifi_config.h"                  // Include Medication module
 
 
+// Global variables
+String medStatus = "MED_CONFIRM"; // Initialize with a default status
 
 void setup()
 {
@@ -59,7 +61,7 @@ void loop()
 
         checkFallDetectionAndTemperature();
 
-        sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str());
+        sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str());
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();

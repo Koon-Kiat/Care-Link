@@ -101,6 +101,13 @@
                 fallStatusEl.textContent = data.fall_status;
                 fallStatusEl.className = `value ${fallStatusClass}`;
                 document.getElementById('fallIndicator').className = `status-indicator bg-${fallStatusClass}`;
+
+                                // Update Fall Status
+                const medStatusEl = document.getElementById('medStatus');
+                const medStatusClass = getStatusColor(data.med_status);
+                medStatusEl.textContent = data.med_status;
+                medStatusEl.className = `value ${medStatusClass}`;
+                document.getElementById('medIndicator').className = `status-indicator bg-${medStatusClass}`;
                 
                 // Update Activity Status
                 document.getElementById('activityStatus').textContent = data.activity_status;
@@ -158,6 +165,15 @@
             <div class="title">Last Updated</div>
             <div id="timestamp" class="value">Loading...</div>
         </div>
+
+        <div class="card">
+            <div class="title">Medication Status</div>
+            <div>
+                <span id="medStatus" class="value">Loading...</span>
+                <span id="medIndicator" class="status-indicator"></span>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>
