@@ -3,7 +3,7 @@
 
 // WiFi network credentials
 const char WIFI_SSID[] = "Linksys05529";
-const char WIFI_PASSWORD[] = "fbpp7dd";
+const char WIFI_PASSWORD[] = "fbyp7dd";
 
 // Define the server address and port
 const char SERVER_ADDRESS[] = "ultiswinger.pythonanywhere.com";

@@ -17,6 +17,7 @@ enum ScreenState
 extern ScreenState currentScreen;
 extern ScreenState previousScreen;
 extern String activityStatus;
+extern String medStatus;
 
 void displayHomeScreen();
 void updateDisplay(double temperature, const char *activityStatus);

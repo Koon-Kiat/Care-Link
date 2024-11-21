@@ -29,7 +29,7 @@ void handleMedicationConfirmation()
         if (currentScreen == MEDICATION_SCREEN) {
             // Confirm medication taken
             sendMedicationStatus("MED_CONFIRM");
-            activityStatus = "MEDICATION CONFIRMED";
+            medStatus = "MEDICATION CONFIRMED";
             display.clearScreen();
             display.setFont(liberationSansNarrow_10ptFontInfo);
 
@@ -55,7 +55,7 @@ void handleMedicationConfirmation()
     {
         // Handle cancellation if needed
         sendMedicationStatus("MED_CANCEL");
-        activityStatus = "MEDICATION CANCELLED";
+        medStatus = "MEDICATION CANCELLED";
         display.clearScreen();
         display.setFont(liberationSansNarrow_10ptFontInfo);
 

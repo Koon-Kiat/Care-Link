@@ -4,6 +4,8 @@
 ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN; 
 String activityStatus = "RESTING";
+String medStatus = "NOT CONFIRMED";
+
 
 /**
  * @brief Displays the home screen on the TinyScreen.
