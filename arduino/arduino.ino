@@ -9,6 +9,7 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
+#include "include/battery.h"                     // Include Battery module
 #include "include/panic_button.h"                // Include Panic Button module
 #include <Arduino.h>
 
@@ -29,12 +30,16 @@ void setup()
     // Initialize the BMA250 accelerometer
     SerialMonitorInterface.print("Initializing BMA...\n");
     accel_sensor.begin(BMA250_range_16g, BMA250_update_time_64ms);
+
+    // Turn on the display
+    requestScreenOn();
 }
 
 void loop()
 {
 
     unsigned long currentMillis = millis();
+
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
     {
@@ -62,6 +67,15 @@ void loop()
         lastDisplayUpdate = currentMillis;
         updateFallDisplayStatus();
     }
+
+    // Low battery alert
+    lowBatteryAlert();
+
+    // Turn off the TinyScreen after a set period of time of inactivity.
+    sleepDisplay();
+
+    // Monitor the buttons and turn on the display if any button is pressed
+    checkButtons();
 
     if (SerialMonitorInterface.available())
     {

@@ -19,4 +19,7 @@ server/.env
 # Deployment files
 server/Procfile
 
+# Mac
+.DS_Store
+
 # Other Ignored Files

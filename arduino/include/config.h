@@ -81,4 +81,10 @@ extern String currentMedication;
 // Declare the panic button state
 extern bool isPanicOn;
 
+// Sleep and display variables
+extern unsigned long sleepTime;
+extern uint8_t displayOn;
+extern uint8_t buttonReleased;
+extern int sleepTimeout;
+
 #endif
