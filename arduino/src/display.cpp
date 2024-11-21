@@ -5,6 +5,8 @@ ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN; 
 String activityStatus = "RESTING";
 String medStatus = "NOT CONFIRMED";
+String panicStatus = "FALSE";
+
 
 
 /**

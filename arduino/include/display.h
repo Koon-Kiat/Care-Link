@@ -18,6 +18,8 @@ extern ScreenState currentScreen;
 extern ScreenState previousScreen;
 extern String activityStatus;
 extern String medStatus;
+extern String panicStatus;
+
 
 void displayHomeScreen();
 void updateDisplay(double temperature, const char *activityStatus);

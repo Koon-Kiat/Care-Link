@@ -54,6 +54,12 @@ void loop()
 {
 
     unsigned long currentMillis = millis();
+
+     // Medication schedule update interval
+
+
+    
+    
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
     {
@@ -62,11 +68,11 @@ void loop()
         checkFallDetectionAndTemperature();
         
 
-   //     sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str());
+        sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str(), panicStatus.c_str());
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
-            sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str());
+           // sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str());
         } else {
             // Medication screen is not active; trigger panic button action
             panicButton();

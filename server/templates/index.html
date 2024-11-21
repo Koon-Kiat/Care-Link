@@ -108,6 +108,8 @@
                 medStatusEl.textContent = data.med_status;
                 medStatusEl.className = `value ${medStatusClass}`;
                 document.getElementById('medIndicator').className = `status-indicator bg-${medStatusClass}`;
+
+                document.getElementById('panicStatus').textContent = data.panic_status;
                 
                 // Update Activity Status
                 document.getElementById('activityStatus').textContent = data.activity_status;
@@ -171,6 +173,14 @@
             <div>
                 <span id="medStatus" class="value">Loading...</span>
                 <span id="medIndicator" class="status-indicator"></span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="title">Panic Button Status</div>
+            <div>
+                <span id="panicStatus" class="value">Loading...</span>
+                <span id="panicIndicator" class="status-indicator"></span>
             </div>
         </div>
 

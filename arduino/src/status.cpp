@@ -10,7 +10,7 @@
  * @param status The fall status string (e.g., "SAFE", "SEVERE FALL DETECTED", "MODERATE FALL DETECTED", "MINOR FALL DETECTED").
  */
 
-void sendAllSensorData(const char *fallStatus, const char *activityStatus, double temperature, const char *timestamp, const char *medStatus) {
+void sendAllSensorData(const char *fallStatus, const char *activityStatus, double temperature, const char *timestamp, const char *medStatus, const char *panicStatus) {
     // Create a JSON object for the data
     StaticJsonDocument<256> jsonDoc;
 
@@ -19,6 +19,8 @@ void sendAllSensorData(const char *fallStatus, const char *activityStatus, doubl
     jsonDoc["temperature"] = temperature;
     jsonDoc["timestamp"] = timestamp;
     jsonDoc["med_status"] = medStatus;
+    jsonDoc["panic_status"] = panicStatus;
+
 
 
     // Serialize the JSON object to a string
