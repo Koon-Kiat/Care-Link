@@ -3,13 +3,13 @@
 
 #include <Arduino.h>
 
+extern bool lowBatteryAlertShown;
+extern double alpha;
+
 float getVCC();
 float getBattVoltage();
 void displayBattery();
 void lowBatteryAlert();
 float getSmoothedBattVoltage();
-
-extern bool lowBatteryAlertShown;
-extern double alpha;
 
 #endif
