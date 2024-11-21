@@ -3,14 +3,8 @@
 #include "../include/battery.h"
 
 ScreenState currentScreen = HOME_SCREEN;
-ScreenState previousScreen = HOME_SCREEN; 
+ScreenState previousScreen = HOME_SCREEN;
 String activityStatus = "RESTING";
-
-// uint32_t sleepTime = 0;
-unsigned long sleepTimer = 0;
-uint8_t displayOn = 0;
-uint8_t buttonReleased = 1;
-int sleepTimeout = 10; // 10 seconds until display sleeps
 
 /**
  * @brief Displays the home screen on the TinyScreen.
@@ -125,7 +119,17 @@ void displayHomeScreen()
     centerPrint(activityStatus, cursorY);
 }
 
-void displayBatteryScreen(double temperature) {
+/**
+ * @brief Displays the battery information on the screen.
+ *
+ * This function clears the display, sets the font and color settings,
+ * and prints the battery voltage. It also calls `displayBattery()` to
+ * show the battery icon.
+ *
+ * @param temperature The current temperature value (unused in this function).
+ */
+void displayBatteryScreen(double temperature)
+{
     display.clearScreen();
     display.setFont(liberationSansNarrow_12ptFontInfo);
     display.fontColor(TS_8b_White, TS_8b_Black);
@@ -134,7 +138,7 @@ void displayBatteryScreen(double temperature) {
     display.setFont(liberationSansNarrow_10ptFontInfo);
     display.setCursor(0, 20);
     display.print("Voltage: ");
-    
+
     float battVoltage = getSmoothedBattVoltage();
     display.print(battVoltage);
     display.print("V");
@@ -166,21 +170,21 @@ void updateDisplay(double temperature, const char *activityStatusParam)
         // Navigate to previous screen
         switch (currentScreen)
         {
-            case HOME_SCREEN:
-                currentScreen = BATTERY_SCREEN;
-                break;
-            case FALL_AND_TEMP_SCREEN:
-                currentScreen = HOME_SCREEN;
-                break;
-            case MEDICATION_INFO_SCREEN:
-                currentScreen = FALL_AND_TEMP_SCREEN;
-                break;
-            case BATTERY_SCREEN:
-                currentScreen = MEDICATION_INFO_SCREEN;
-                break;
-            default:
-                currentScreen = HOME_SCREEN;
-                break;
+        case HOME_SCREEN:
+            currentScreen = BATTERY_SCREEN;
+            break;
+        case FALL_AND_TEMP_SCREEN:
+            currentScreen = HOME_SCREEN;
+            break;
+        case MEDICATION_INFO_SCREEN:
+            currentScreen = FALL_AND_TEMP_SCREEN;
+            break;
+        case BATTERY_SCREEN:
+            currentScreen = MEDICATION_INFO_SCREEN;
+            break;
+        default:
+            currentScreen = HOME_SCREEN;
+            break;
         }
     }
     else if (justPressed & TSButtonUpperRight)
@@ -188,21 +192,21 @@ void updateDisplay(double temperature, const char *activityStatusParam)
         // Navigate to next screen
         switch (currentScreen)
         {
-            case HOME_SCREEN:
-                currentScreen = FALL_AND_TEMP_SCREEN;
-                break;
-            case FALL_AND_TEMP_SCREEN:
-                currentScreen = MEDICATION_INFO_SCREEN;
-                break;
-            case MEDICATION_INFO_SCREEN:
-                currentScreen = BATTERY_SCREEN;
-                break;
-            case BATTERY_SCREEN:
-                currentScreen = HOME_SCREEN;
-                break;
-            default:
-                currentScreen = HOME_SCREEN;
-                break;
+        case HOME_SCREEN:
+            currentScreen = FALL_AND_TEMP_SCREEN;
+            break;
+        case FALL_AND_TEMP_SCREEN:
+            currentScreen = MEDICATION_INFO_SCREEN;
+            break;
+        case MEDICATION_INFO_SCREEN:
+            currentScreen = BATTERY_SCREEN;
+            break;
+        case BATTERY_SCREEN:
+            currentScreen = HOME_SCREEN;
+            break;
+        default:
+            currentScreen = HOME_SCREEN;
+            break;
         }
     }
 
@@ -421,7 +425,8 @@ String getTemperatureCategory(double temperature)
  */
 String getCurrentTime()
 {
-    if (rtc.getHours() == NULL && rtc.getMinutes() == NULL && rtc.getSeconds() == NULL) {
+    if (rtc.getHours() == NULL && rtc.getMinutes() == NULL && rtc.getSeconds() == NULL)
+    {
         // Set the time
         rtc.setHours(hours);
         rtc.setMinutes(minutes);
@@ -458,7 +463,7 @@ void displayMedicationScreen()
 
     // Display "Medication" centered
     String header = currentMedication;
-    int headerWidth = display.getPrintWidth(const_cast<char*>(header.c_str()));
+    int headerWidth = display.getPrintWidth(const_cast<char *>(header.c_str()));
     int headerX = (SCREEN_WIDTH - headerWidth) / 2;
     display.setCursor(headerX, 0);
     display.print(header);
@@ -469,7 +474,7 @@ void displayMedicationScreen()
 
     // Display instructions centered
     const char *instruction = "< Yes        No >";
-    int instructionWidth = display.getPrintWidth(const_cast<char*>(instruction));
+    int instructionWidth = display.getPrintWidth(const_cast<char *>(instruction));
     int instructionX = (SCREEN_WIDTH - instructionWidth) / 2;
     display.setCursor(instructionX, cursorY);
     display.print(instruction);
@@ -509,7 +514,7 @@ void displayMedicationInfoScreen()
         display.setCursor(0, cursorY);
         display.print(medInfo);
         cursorY += display.getFontHeight() + 2;
-      
+
         // Stop if cursorY exceeds the screen height
         if (cursorY + display.getFontHeight() > SCREEN_HEIGHT)
         {
@@ -521,11 +526,13 @@ void displayMedicationInfoScreen()
 /**
  * @brief Reset the sleepTimer variable and turn on the TinyScreen if it is currently off.
  *
- * This function is currently triggered when any button is pressed. 
+ * This function is currently triggered when any button is pressed.
  */
-int requestScreenOn() {
+int requestScreenOn()
+{
     sleepTimer = millis();
-    if (!displayOn) {
+    if (!displayOn)
+    {
         displayOn = 1;
         display.on();
         return 1;
@@ -536,9 +543,12 @@ int requestScreenOn() {
 /**
  * @brief Turn off the TinyScreen after a set period of time of inactivity.
  */
-void sleepDisplay() {
-    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul)) {
-        if (displayOn) {
+void sleepDisplay()
+{
+    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul))
+    {
+        if (displayOn)
+        {
             displayOn = 0;
             display.off();
         }
@@ -550,13 +560,16 @@ void sleepDisplay() {
  *
  * This function turns on the display if any button is pressed.
  */
-void checkButtons() {
+void checkButtons()
+{
     byte buttons = display.getButtons();
-    if (buttonReleased && buttons) {
+    if (buttonReleased && buttons)
+    {
         requestScreenOn();
         buttonReleased = 0;
     }
-    if (!buttonReleased && !(buttons & 0x0F)) {
+    if (!buttonReleased && !(buttons & 0x0F))
+    {
         buttonReleased = 1;
     }
 }
