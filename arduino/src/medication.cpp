@@ -3,6 +3,7 @@
 #include "../include/config.h"
 #include "../include/status.h"
 #include "../include/panicButton.h"
+#include <Arduino.h>
 
 
 /**
@@ -96,5 +97,15 @@ void checkMedicationAlarm()
                 currentMedication = med.type;
             }
         }
+    }
+}
+
+void printMedicationSchedule() {
+    Serial.println("Current Medication Schedule:");
+    for (const auto& med : medicationSchedule) {
+        Serial.print("Medication: ");
+        Serial.print(med.type);
+        Serial.print(", Time: ");
+        Serial.println(med.time);
     }
 }

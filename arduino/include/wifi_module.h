@@ -7,5 +7,7 @@
 void initializeWiFi();
 void printWiFiStatus(int status);
 void sendSensorData(const char* server, int port, const String& data);
+void processIncomingRequests();
+void handleMedicationUpdate(WiFiClient& client);
 
 #endif

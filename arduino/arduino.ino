@@ -57,8 +57,7 @@ void loop()
 
      // Medication schedule update interval
 
-
-    
+    processIncomingRequests();
     
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)

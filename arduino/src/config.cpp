@@ -1,6 +1,7 @@
 #include "../include/config.h"
 
 #include <vector>
+#include <Arduino.h>
 #include "../include/medication.h"
 
 // Define the actual global variables

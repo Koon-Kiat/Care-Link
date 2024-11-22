@@ -2,7 +2,10 @@
 #include <Wifi101.h>
 #include "../include/serial.h"
 #include "../include/wifi_config.h"
+#include <ArduinoJson.h>
+#include "../include/medication.h"
 
+WiFiServer server(80);
 void initializeWiFi() {
     WiFi.setPins(8, 2, A3, -1); // Pins for TinyDuino WiFi
     SerialMonitorInterface.print("Connecting to WiFi: ");
@@ -88,5 +91,74 @@ void sendSensorData(const char* server, int port, const String& data) {
         client.stop();
     } else {
         SerialMonitorInterface.println("Failed to connect to server.");
+    }
+}
+
+void processIncomingRequests() {
+    WiFiClient client = server.available(); // Check for new client
+    if (client) {
+        Serial.println("New client connected.");
+        String request = client.readStringUntil('\r'); // Read the HTTP request line
+        Serial.println("Received request:");
+        Serial.println(request);
+
+        // Check if the request is to update the medication
+        if (request.indexOf("POST /update_medication") != -1) {
+            handleMedicationUpdate(client);
+        }
+
+        client.stop(); // Close the connection
+        Serial.println("Client disconnected.");
+    }
+}
+
+void handleMedicationUpdate(WiFiClient& client) {
+    StaticJsonDocument<512> jsonDoc;
+    String requestBody = "";
+
+    // Skip HTTP headers
+    while (client.available()) {
+        String line = client.readStringUntil('\n');
+        if (line == "\r") {
+            break; // End of headers
+        }
+    }
+
+    // Read the JSON payload
+    while (client.available()) {
+        requestBody += client.readString();
+    }
+
+    // Log the raw payload for debugging
+    Serial.println("Received JSON payload:");
+    Serial.println(requestBody);
+
+    // Parse the JSON payload
+    DeserializationError error = deserializeJson(jsonDoc, requestBody);
+    if (error) {
+        Serial.print("JSON parsing failed: ");
+        Serial.println(error.c_str());
+        return;
+    }
+
+    // Clear the current medication schedule
+    medicationSchedule.clear();
+
+    // Update the medication schedule
+    JsonArray schedule = jsonDoc["schedule"];
+    for (JsonObject med : schedule) {
+        MedicationSchedule newMed;
+        newMed.type = med["name"].as<String>();
+        newMed.time = med["time"].as<String>();
+        medicationSchedule.push_back(newMed);
+    }
+
+    // Print the updated medication schedule
+    Serial.println("Updated Medication Schedule:");
+    for (const auto& med : medicationSchedule) {
+        Serial.print("Medication: ");
+        Serial.print(med.type);
+        Serial.print(", Time: ");
+        Serial.println(med.time);
     }
 }
