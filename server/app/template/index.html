@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Care Link Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <style>
+      :root {
+        --color-success: #22c55e;
+        --color-warning: #f59e0b;
+        --color-danger: #ef4444;
+        --color-primary: #6366f1;
+        --background: #ffffff;
+        --text: #000000;
+      }
+
+      .dark-mode {
+        --background: #1a1a1a;
+        --text: #ffffff;
+      }
+      body {
+        background-color: var(--background);
+        color: var(--text);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 2px solid currentColor;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .theme-toggle:hover {
+        opacity: 0.8;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        padding: 2rem;
+        color: #1e293b;
+      }
+
+      h1 {
+        text-align: center;
+        color: #0f172a;
+        margin-bottom: 2.5rem;
+        font-weight: 700;
+        font-size: 2rem;
+        letter-spacing: -0.025em;
+      }
+
+      .sensor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        border-radius: 1rem;
+        padding: 1.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        backdrop-filter: blur(8px);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08),
+          0 4px 6px -2px rgba(0, 0, 0, 0.04);
+      }
+
+      .title {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-bottom: 0.75rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+      }
+
+      .value {
+        font-size: 1.75rem;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .safe {
+        color: var(--color-success);
+      }
+      .warning {
+        color: var(--color-warning);
+      }
+      .danger {
+        color: var(--color-danger);
+      }
+
+      .status-indicator {
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+      }
+
+      .status-indicator::after {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 50%;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        opacity: 0.75;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.75;
+        }
+        50% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      .bg-safe {
+        background-color: var(--color-success);
+      }
+
+      .bg-safe::after {
+        background-color: var(--color-success);
+      }
+
+      .bg-warning {
+        background-color: var(--color-warning);
+      }
+
+      .bg-warning::after {
+        background-color: var(--color-warning);
+      }
+
+      .bg-danger {
+        background-color: var(--color-danger);
+      }
+
+      .bg-danger::after {
+        background-color: var(--color-danger);
+      }
+
+      .temperature-gauge {
+        width: 100%;
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 1rem;
+        margin-top: 1rem;
+        overflow: hidden;
+      }
+
+      .temperature-fill {
+        height: 100%;
+        border-radius: 1rem;
+        transition: all 0.5s ease-out;
+      }
+
+      #timestamp {
+        font-size: 1.125rem;
+        color: #64748b;
+      }
+
+      @media (max-width: 640px) {
+        body {
+          padding: 1rem;
+        }
+
+        .sensor-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .value {
+          font-size: 1.5rem;
+        }
+      }
+
+      .input-group {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+        flex-direction: column;
+      }
+
+      .input-field {
+        padding: 0.5rem;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.8);
+        font-size: 0.875rem;
+        width: 100%;
+        transition: border-color 0.2s ease;
+      }
+
+      .input-field:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+      }
+
+      .input-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 500;
+      }
+    </style>
+    <script>
+      function getStatusColor(status, type) {
+        status = status.toLowerCase();
+        switch (type) {
+          case "fall":
+            // Check for specific fall detections
+            if (
+              status === "severe fall detected" ||
+              status === "moderate fall detected" ||
+              status === "minor fall detected"
+            ) {
+              return "danger";
+            }
+            return "safe";
+          case "activity":
+            const activityColors = {
+              walking: "warning",
+              running: "danger",
+              resting: "safe",
+              default: "safe",
+            };
+            return activityColors[status] || activityColors.default;
+          case "medication":
+            return status === "MED_CONFIRM"
+              ? "safe"
+              : status === "MED_CANCEL"
+              ? "danger"
+              : "warning";
+          case "panic":
+            return status === "HELP: REQUESTED"
+              ? "danger"
+              : status === "false" || status === "HELP: CANCELLED"
+              ? "safe"
+              : "warning";
+          default:
+            return status === "safe"
+              ? "safe"
+              : status === "warning"
+              ? "warning"
+              : "danger";
+        }
+      }
+
+      function getTemperatureColor(temp) {
+        return temp >= 35 ? "danger" : temp >= 39 ? "5" : "safe";
+      }
+
+      async function fetchData() {
+        try {
+          const response = await fetch("/api/sensordata");
+          const data = await response.json();
+
+          // Update Fall Status
+          const fallStatusEl = document.getElementById("fallStatus");
+          const fallIndicatorEl = document.getElementById("fallIndicator");
+
+          const fallStatuses = [
+            "severe fall detected",
+            "moderate fall detected",
+            "minor fall detected",
+          ];
+
+          if (fallStatuses.includes(data.fall_status.toLowerCase())) {
+            fallStatusEl.textContent = "FALL DETECTED";
+            fallStatusEl.className = "value danger";
+            fallIndicatorEl.className = "status-indicator bg-danger";
+          } else if (
+            ["walking", "running", "resting"].includes(
+              data.activity_status.toLowerCase()
+            )
+          ) {
+            fallStatusEl.textContent = "SAFE";
+            fallStatusEl.className = "value safe";
+            fallIndicatorEl.className = "status-indicator bg-safe";
+          } else {
+            fallStatusEl.textContent = "UNKNOWN STATUS";
+            fallStatusEl.className = "value warning";
+            fallIndicatorEl.className = "status-indicator bg-warning";
+          }
+
+          // Update Medication Status
+          const medStatusEl = document.getElementById("medStatus");
+          const medStatusClass = getStatusColor(
+            data.med_status,
+            "med confirmed"
+          );
+          medStatusEl.textContent = data.med_status;
+          medStatusEl.className = `value ${medStatusClass}`;
+          document.getElementById(
+            "medIndicator"
+          ).className = `status-indicator bg-${medStatusClass}`;
+
+          // Update Panic Status
+          const panicStatusEl = document.getElementById("panicStatus");
+          const panicStatusClass = getStatusColor(data.panic_status, "help");
+          panicStatusEl.textContent = data.panic_status;
+          panicStatusEl.className = `value ${panicStatusClass}`;
+          document.getElementById(
+            "panicIndicator"
+          ).className = `status-indicator bg-${panicStatusClass}`;
+
+          // Update Activity Status
+          const activityStatusEl = document.getElementById("activityStatus");
+          const activityIndicatorEl =
+            document.getElementById("activityIndicator");
+          const activityStatusClass = getStatusColor(
+            data.activity_status,
+            "activity"
+          );
+          activityStatusEl.textContent = data.activity_status;
+          activityStatusEl.className = `value ${activityStatusClass}`;
+          activityIndicatorEl.className = `status-indicator bg-${activityStatusClass}`;
+
+          // Update Temperature
+          const tempEl = document.getElementById("temperature");
+          const tempClass = getTemperatureColor(data.temperature);
+          tempEl.textContent = `${data.temperature}°C`;
+          tempEl.className = `value ${tempClass}`;
+
+          const tempFill = document.getElementById("temperatureFill");
+          tempFill.style.width = `${(data.temperature / 45) * 100}%`;
+          tempFill.className = `temperature-fill bg-${tempClass}`;
+
+          // Update Timestamp
+          const date = new Date(data.timestamp);
+          const options = {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          };
+          const localTime = new Intl.DateTimeFormat("en-GB", options).format(
+            date
+          );
+          document.getElementById("timestamp").textContent = localTime;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      function handleMedicationSubmit() {
+        const medicationName = document.getElementById("medicationName").value;
+        const medicationTime = document.getElementById("medicationTime").value;
+
+        if (medicationName && medicationTime) {
+          const medStatusEl = document.getElementById("medStatus");
+          medStatusEl.textContent = `${medicationName} at ${medicationTime}`;
+
+          // Clear inputs after submission
+          document.getElementById("medicationName").value = "";
+          document.getElementById("medicationTime").value = "";
+        }
+      }
+
+      // Fetch data every 2 seconds
+      setInterval(fetchData, 2000);
+
+      // Initial fetch when page loads
+      window.onload = fetchData;
+    </script>
+  </head>
+  <body>
+    <h1>Care Link Dashboard</h1>
+    <div class="sensor-grid">
+      <div class="card">
+        <div class="title">Fall Status</div>
+        <div>
+          <span id="fallStatus" class="value">Loading...</span>
+          <span id="fallIndicator" class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Activity Status</div>
+        <div>
+          <span id="activityStatus" class="value">Loading...</span>
+          <span id="activityIndicator" class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Temperature</div>
+        <div id="temperature" class="value">Loading...</div>
+        <div class="temperature-gauge">
+          <div id="temperatureFill" class="temperature-fill"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Medication Status</div>
+        <div>
+          <span id="medStatus" class="value">Loading...</span>
+          <span id="medIndicator" class="status-indicator"></span>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="medicationName"
+            >Medication Name</label
+          >
+          <input
+            type="text"
+            id="medicationName"
+            class="input-field"
+            placeholder="Enter medication name"
+          />
+
+          <label class="input-label" for="medicationTime">Time to Take</label>
+          <input type="time" id="medicationTime" class="input-field" />
+
+          <button
+            onclick="handleMedicationSubmit()"
+            class="input-field"
+            style="
+              background: var(--color-primary);
+              color: white;
+              cursor: pointer;
+              font-weight: 500;
+            "
+          >
+            Set Medication
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Panic Button Status</div>
+        <div>
+          <span id="panicStatus" class="value">Loading...</span>
+          <span id="panicIndicator" class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Last Updated</div>
+        <div id="timestamp" class="value">Loading...</div>
+      </div>
+    </div>
+  </body>
+</html>
