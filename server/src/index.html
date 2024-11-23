@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Care Link Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <button id="darkModeToggle" onclick="toggleDarkMode()" class="theme-toggle">
+      🌙 Dark Mode
+    </button>
+    <h1>Care Link Dashboard</h1>
+    <div class="sensor-grid">
+      <div class="card">
+        <div class="title">Fall Status</div>
+        <div>
+          <span id="fallStatus" class="value">Loading...</span>
+          <span id="fallIndicator" class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Activity Status</div>
+        <div>
+          <span id="activityStatus" class="value">Loading...</span>
+          <span id="activityIndicator" class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Temperature</div>
+        <div id="temperature" class="value">Loading...</div>
+        <div class="temperature-gauge">
+          <div id="temperatureFill" class="temperature-fill"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Medication Status</div>
+        <div>
+          <span id="medStatus" class="value">Loading...</span>
+          <span id="medIndicator" class="status-indicator"></span>
+        </div>
+        <div class="input-group">
+          <label class="input-label" for="medicationName"
+            >Medication Name</label
+          >
+          <input
+            type="text"
+            id="medicationName"
+            class="input-field"
+            placeholder="Enter medication name"
+          />
+
+          <label class="input-label" for="medicationTime">Time to Take</label>
+          <input type="time" id="medicationTime" class="input-field" />
+
+          <button
+            onclick="handleMedicationSubmit()"
+            class="input-field"
+            style="
+              background: var(--color-primary);
+              color: white;
+              cursor: pointer;
+              font-weight: 500;
+            "
+          >
+            Set Medication
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Panic Button Status</div>
+        <div>
+          <span id="panicStatus" class="value">Loading...</span>
+          <span id="panicIndicator" class="status-indicator"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">Last Updated</div>
+        <div id="timestamp" class="value">Loading...</div>
+      </div>
+    </div>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
