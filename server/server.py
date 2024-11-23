@@ -1,15 +1,23 @@
 from flask import Flask, request, jsonify, render_template
 from datetime import datetime
 import requests
+import os
+import time
 
-app = Flask(__name__)
+# Set timezone to Singapore Time (SGT)
+os.environ['TZ'] = 'Asia/Singapore'
+time.tzset()
+
+app = Flask(__name__,
+            template_folder='templates',
+            static_folder='static')
+
 
 # In-memory medication schedule
 medication_schedule = [
     {"name": "Aspirin", "time": "08:00"},
     {"name": "Vitamin D", "time": "12:00"}
 ]
-
 
 
 # In-memory storage for the latest data
