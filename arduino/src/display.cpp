@@ -549,7 +549,7 @@ int requestScreenOn()
  */
 void sleepDisplay()
 {
-    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul))
+    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 6000ul))
     {
         if (displayOn)
         {
