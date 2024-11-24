@@ -11,10 +11,9 @@
 #include "include/serial.h"                      // Include Serial module
 #include "include/config.h"                      // Include configuration file
 #include "include/medication.h"                  // Include Medication module
-#include "include/panicButton.h"                 // Include Panic Button module
+#include "include/battery.h"                     // Include Battery module
+#include "include/panic_button.h"                // Include Panic Button module
 #include <Arduino.h>
-
-
 #include "include/wifi_module.h"                  // Include Medication module
 #include "include/wifi_config.h"                  // Include Medication module
 
@@ -48,6 +47,9 @@ void setup()
     // Initialize the BMA250 accelerometer
     SerialMonitorInterface.print("Initializing BMA...\n");
     accel_sensor.begin(BMA250_range_16g, BMA250_update_time_64ms);
+
+    // Turn on the display
+    requestScreenOn();
 }
 
 void loop()
@@ -59,6 +61,7 @@ void loop()
 
     processIncomingRequests();
     
+
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
     {
@@ -72,11 +75,13 @@ void loop()
         {
             handleMedicationConfirmation();
            // sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str());
-        } else {
+        }
+        else
+        {
             // Medication screen is not active; trigger panic button action
             panicButton();
+        }
     }
-}
 
     // Medication alarm check
     checkMedicationAlarm();
@@ -88,6 +93,15 @@ void loop()
         lastDisplayUpdate = currentMillis;
         updateFallDisplayStatus();
     }
+
+    // Low battery alert
+    lowBatteryAlert();
+
+    // Turn off the TinyScreen after a set period of time of inactivity.
+    sleepDisplay();
+
+    // Monitor the buttons and turn on the display if any button is pressed
+    checkButtons();
 
     if (SerialMonitorInterface.available())
     {

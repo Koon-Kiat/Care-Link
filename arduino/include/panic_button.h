@@ -1,8 +1,9 @@
-#ifndef PANICBUTTON_H
-#define PANICBUTTON_H   
+#ifndef PANIC_BUTTON_H
+#define PANIC_BUTTON_H
 
 #include <Arduino.h>
 #include "display.h"
+#include "config.h"
 
 void panicButton();
 

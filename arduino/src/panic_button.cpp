@@ -1,9 +1,6 @@
-#include "../include/panicButton.h"
+#include "../include/panic_button.h"
 #include "../include/display.h"
 #include "../include/status.h"
-
-// Track the toggle state
-bool isPanicOn = false;
 
 void panicButton()
 {
@@ -33,8 +30,6 @@ void panicButton()
 
             // Optionally, you can add a visual cue for "panic mode" being active.
             sendPanicStatus("HELP: REQUESTED");
-            panicStatus = "HELP REQUESTED";
-
         }
         else
         {
@@ -52,11 +47,9 @@ void panicButton()
             delay(5000);
 
             sendPanicStatus("HELP: CANCELLED");
-            panicStatus = "HELP: CANCELLED";
-            
         }
 
         // Add a short delay to debounce the button press
-        delay(300); // Adjust if necessary
+        delay(300);
     }
 }
