@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
 :root {
   --color-success: #22c55e;
   --color-warning: #f59e0b;
@@ -70,8 +72,10 @@ h1 {
   color: var(--heading-color);
   margin-bottom: 2.5rem;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 2.5rem;
   letter-spacing: -0.025em;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 .sensor-grid {
@@ -91,6 +95,10 @@ h1 {
     0 2px 4px -1px rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(8px);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card:hover {
@@ -101,6 +109,11 @@ h1 {
 
 .title {
   color: var(--title-color);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
 }
 
 .value {
@@ -110,6 +123,7 @@ h1 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: color 0.3s ease;
 }
 
 .safe {
@@ -128,6 +142,7 @@ h1 {
   border-radius: 50%;
   display: inline-block;
   position: relative;
+  transition: background-color 0.3s ease;
 }
 
 .status-indicator::after {
@@ -151,6 +166,26 @@ h1 {
   50% {
     transform: scale(1.5);
     opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -220,20 +255,21 @@ h1 {
 }
 
 .input-field {
-  padding: 0.5rem;
+  padding: 0.75rem;
   border: 1px solid var(--input-border);
   border-radius: 0.5rem;
   background: var(--input-bg);
   color: var(--text);
   font-size: 0.875rem;
   width: 100%;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .input-field:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  transform: translateY(-1px);
 }
 
 .input-label {
@@ -246,56 +282,115 @@ h1 {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   color: var(--text);
   cursor: pointer;
   font-size: 0.875rem;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 .theme-toggle:hover {
-  background: var(--gradient-end);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .toast-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-      }
-      
-      .toast {
-        background-color: var(--card-bg);
-        color: var(--text);
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        animation: slideIn 0.3s ease-out forwards;
-        border: 1px solid var(--card-border);
-      }
-      
-      @keyframes slideIn {
-        from {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-      
-      @keyframes slideOut {
-        from {
-          transform: translateX(0);
-          opacity: 1;
-        }
-        to {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-      }
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 400px;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: var(--card-bg);
+  color: var(--text);
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out forwards;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(8px);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  width: 100%;
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 1rem;
+  }
+
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toast {
+    width: calc(100vw - 40px);
+    margin: 0 10px;
+  }
+
+  .value {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
