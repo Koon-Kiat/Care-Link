@@ -5,12 +5,13 @@
 #include <math.h>
 
 /**
- * @brief Checks for fall detection and temperature status.
- *
- * This function reads the acceleration values from the BMA250 sensor and calculates the magnitude.
- * It then compares the magnitude to predefined thresholds to determine if a fall has occurred.
- * If a fall is detected, the function sets the activity status to the appropriate message and initiates the fall display.
- *
+ * @brief Checks for fall detection and temperature readings.
+ * 
+ * This function reads the accelerometer data from the BMA250 sensor and calculates the acceleration magnitude.
+ * It then calculates the jerk (rate of change of acceleration) and compares it to predefined thresholds to detect falls.
+ * If a fall is detected, it sends the fall status to the server and initiates the fall display.
+ * It also updates the activity status based on the acceleration magnitude.
+ * 
  */
 void checkFallDetectionAndTemperature()
 {
@@ -64,6 +65,7 @@ void checkFallDetectionAndTemperature()
     const double IMPACT_THRESHOLD_SEVERE = 400.0;                        // Increased for severe impacts
     const double JERK_THRESHOLD = 70.0;
 
+    // Show serial debug information
     SerialMonitorInterface.print("Magnitude: ");
     SerialMonitorInterface.println(magnitude);
     SerialMonitorInterface.print("Total jerk: ");
@@ -81,6 +83,8 @@ void checkFallDetectionAndTemperature()
     {
         freeFallDetected = true;
     }
+
+    // Check for fall based on magnitude and jerk thresholds
     else if (freeFallDetected && magnitude > IMPACT_THRESHOLD_MINOR && totalJerk > JERK_THRESHOLD)
     {
         if (magnitude <= IMPACT_THRESHOLD_MODERATE)
@@ -143,8 +147,8 @@ void checkFallDetectionAndTemperature()
 }
 
 /**
- * @brief Initiates the fall display by setting flags and timestamps.
- *
+ * @brief Initiates the fall display.
+ * 
  */
 void initiateFallDisplay()
 {

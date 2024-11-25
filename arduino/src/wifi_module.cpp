@@ -1,12 +1,19 @@
-#include "../include/wifi_module.h"
 #include <Wifi101.h>
+#include <ArduinoJson.h>
+#include "../include/wifi_module.h"
 #include "../include/serial.h"
 #include "../include/wifi_config.h"
-#include <ArduinoJson.h>
 #include "../include/medication.h"
 
 WiFiServer server(80);
 
+/**
+ * @brief Initializes the WiFi module.
+ * 
+ * This function initializes the WiFi module and connects to the specified network.
+ * It also prints the WiFi status to the Serial Monitor.
+ * 
+ */
 void initializeWiFi()
 {
     WiFi.setPins(8, 2, A3, -1);
@@ -24,6 +31,13 @@ void initializeWiFi()
     printWiFiStatus(WiFi.status());
 }
 
+/**
+ * @brief Prints the WiFi status to the Serial Monitor.
+ *
+ * @param status The WiFi status code.
+ *
+ * This function prints the WiFi status to the Serial Monitor based on the status code.
+ */
 void printWiFiStatus(int status)
 {
     switch (status)
@@ -60,6 +74,16 @@ void printWiFiStatus(int status)
 
 WiFiClient client;
 
+/**
+ * @brief Sends sensor data to the server.
+ *
+ * @param server The server address.
+ * @param port The server port.
+ * @param data The sensor data to be sent.
+ *
+ * This function sends the sensor data to the server using an HTTP POST request.
+ * It constructs the JSON payload and sends it to the server.
+ */
 void sendSensorData(const char *server, int port, const String &data)
 {
     SerialMonitorInterface.println("Starting data transmission...");
@@ -126,6 +150,13 @@ void sendSensorData(const char *server, int port, const String &data)
     }
 }
 
+/**
+ * @brief Processes incoming requests from the server.
+ * 
+ * This function listens for incoming requests from the server and processes them accordingly.
+ * It checks for new clients and reads the HTTP request line to determine the request type.
+ * 
+ */
 void processIncomingRequests()
 {
     // Check for new client
@@ -150,6 +181,14 @@ void processIncomingRequests()
     }
 }
 
+/**
+ * @brief Handles the medication update request from the server.
+ *
+ * @param client The WiFi client object.
+ *
+ * This function handles the medication update request from the server.
+ * It reads the JSON payload and updates the medication schedule accordingly.
+ */
 void handleMedicationUpdate(WiFiClient &client)
 {
     StaticJsonDocument<512> jsonDoc;

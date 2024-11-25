@@ -2,6 +2,14 @@
 #include "../include/display.h"
 #include "../include/status.h"
 
+/**
+ * @brief Toggles the panic button state.
+ * 
+ * This function reads the button states using `display.getButtons()` to determine
+ * whether the user has pressed the panic button. If the button is pressed, it toggles
+ * the panic state and sends the appropriate status to the server.
+ * 
+ */
 void panicButton()
 {
     // Read button states using display.getButtons()
