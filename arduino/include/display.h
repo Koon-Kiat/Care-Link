@@ -17,12 +17,11 @@ enum ScreenState
 
 extern ScreenState currentScreen;
 extern ScreenState previousScreen;
+
 extern String activityStatus;
 extern String medStatus;
 extern String panicStatus;
 extern String batteryStatus;
-
-
 
 extern uint32_t sleepTime;
 extern unsigned long millisOffsetCount;
@@ -43,6 +42,5 @@ void displayBatteryScreen(double temperature);
 int requestScreenOn();
 void sleepDisplay();
 void checkButtons();
-
 
 #endif
