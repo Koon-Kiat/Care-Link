@@ -20,6 +20,8 @@ extern ScreenState previousScreen;
 extern String activityStatus;
 extern String medStatus;
 extern String panicStatus;
+extern String batteryStatus;
+
 
 
 extern uint32_t sleepTime;

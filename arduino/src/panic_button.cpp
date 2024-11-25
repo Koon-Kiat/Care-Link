@@ -30,7 +30,7 @@ void panicButton()
 
             // Optionally, you can add a visual cue for "panic mode" being active.
             sendPanicStatus("HELP: REQUESTED");
-            panicStatus = "HELP: CANCELLED";
+            panicStatus = "HELP: REQUESTED";
 
         }
         else

@@ -1,11 +1,12 @@
 #include "../include/display.h"
 #include "../include/battery.h"
 
+
 double alpha = 0.001; // Smoothing factor (0 < ALPHA <= 1)
 
 bool lowBatteryAlertShown = false; // Flag to prevent multiple low battery alerts
 
-string batteryStatus = "";
+//String batteryStatus = "";
 
 // This function gets the battery VCC internally, you can checkout this link
 // if you want to know more about how:

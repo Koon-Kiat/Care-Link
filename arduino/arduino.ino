@@ -59,7 +59,7 @@ void loop()
 
      // Medication schedule update interval
 
-    processIncomingRequests();
+ //   processIncomingRequests();
     
 
     // Sensor reading
@@ -74,7 +74,6 @@ void loop()
         if (currentScreen == MEDICATION_SCREEN)
         {
             handleMedicationConfirmation();
-           // sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str());
         }
         else
         {

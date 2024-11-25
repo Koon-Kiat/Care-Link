@@ -5,7 +5,6 @@
 
 extern bool lowBatteryAlertShown;
 extern double alpha;
-extern string batteryStatus;
 
 float getVCC();
 float getBattVoltage();

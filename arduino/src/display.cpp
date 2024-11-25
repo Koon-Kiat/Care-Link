@@ -7,6 +7,8 @@ ScreenState previousScreen = HOME_SCREEN;
 String activityStatus = "RESTING";
 String medStatus = "NOT CONFIRMED";
 String panicStatus = "HELP: NOT REQUESTED";
+String batteryStatus = "";
+
 
 
 
