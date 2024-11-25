@@ -3,8 +3,6 @@
 #include "../include/config.h"
 #include "../include/status.h"
 #include "../include/panic_button.h"
-#include <Arduino.h>
-
 
 /**
  * @brief Handles user confirmation for medication intake.
@@ -13,7 +11,7 @@
  * whether the user has confirmed taking their medication or canceled the confirmation.
  * Based on the button pressed, it updates the display with the corresponding message,
  * sends the appropriate status to the server, and updates the activity status.
- * 
+ *
  */
 void handleMedicationConfirmation()
 {
@@ -27,7 +25,8 @@ void handleMedicationConfirmation()
 
     if (buttons & TSButtonLowerLeft)
     {
-        if (currentScreen == MEDICATION_SCREEN) {
+        if (currentScreen == MEDICATION_SCREEN)
+        {
             // Confirm medication taken
             sendMedicationStatus("MED_CONFIRM");
             medStatus = "MEDICATION CONFIRMED";
@@ -35,8 +34,8 @@ void handleMedicationConfirmation()
             display.setFont(liberationSansNarrow_10ptFontInfo);
 
             // Center "Confirmed!" message
-            const char* message = "Confirmed!";
-            int messageWidth = display.getPrintWidth(const_cast<char*>(message));
+            const char *message = "Confirmed!";
+            int messageWidth = display.getPrintWidth(const_cast<char *>(message));
             int messageX = (SCREEN_WIDTH - messageWidth) / 2;
             int messageY = (SCREEN_HEIGHT - display.getFontHeight()) / 2;
             display.setCursor(messageX, messageY);
@@ -46,8 +45,10 @@ void handleMedicationConfirmation()
             // Return to home screen
             currentScreen = HOME_SCREEN;
             alarmHandled = true;
-            currentMedication = ""; // Reset currentMedication
-        } else {
+            currentMedication = ""; 
+        }
+        else
+        {
             // If not on medication screen, act as a panic button
             panicButton();
         }
@@ -61,18 +62,18 @@ void handleMedicationConfirmation()
         display.setFont(liberationSansNarrow_10ptFontInfo);
 
         // Center "Not Taken!" message
-        const char* message = "Not Taken!";
-        int messageWidth = display.getPrintWidth(const_cast<char*>(message));
+        const char *message = "Not Taken!";
+        int messageWidth = display.getPrintWidth(const_cast<char *>(message));
         int messageX = (SCREEN_WIDTH - messageWidth) / 2;
         int messageY = (SCREEN_HEIGHT - display.getFontHeight()) / 2;
         display.setCursor(messageX, messageY);
         display.print(message);
 
-        delay(2000); // Display message for 2 seconds
+        delay(2000);
         // Return to home screen
         currentScreen = HOME_SCREEN;
         alarmHandled = true;
-        currentMedication = ""; // Reset currentMedication
+        currentMedication = "";
     }
 }
 
@@ -85,7 +86,7 @@ void handleMedicationConfirmation()
  */
 void checkMedicationAlarm()
 {
-    String currentTime = getCurrentTime(); // Gets time in "HH:MM" format
+    String currentTime = getCurrentTime();
 
     for (const auto &med : medicationSchedule)
     {
@@ -100,9 +101,11 @@ void checkMedicationAlarm()
     }
 }
 
-void printMedicationSchedule() {
+void printMedicationSchedule()
+{
     Serial.println("Current Medication Schedule:");
-    for (const auto& med : medicationSchedule) {
+    for (const auto &med : medicationSchedule)
+    {
         Serial.print("Medication: ");
         Serial.print(med.type);
         Serial.print(", Time: ");
