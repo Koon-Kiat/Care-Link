@@ -10,14 +10,13 @@ function getStatusColor(status, type) {
   if (!status) {
     return "gray";
   }
-  status = status.toLowerCase();
   switch (type) {
     case "fall":
       // Check for specific fall detections
       if (
-        status === "severe fall detected" ||
-        status === "moderate fall detected" ||
-        status === "minor fall detected"
+        status === "SEVERE FALL DETECTED" ||
+        status === "MODERATE FALL DETECTED" ||
+        status === "MINOR FALL DETECTED"
       ) {
         return "danger";
       }
@@ -27,6 +26,9 @@ function getStatusColor(status, type) {
         walking: "warning",
         running: "danger",
         resting: "safe",
+        "SEVERE FALL DETECTED!": "danger",
+        "MODERATE FALL DETECTED!": "danger",
+        "MINOR FALL DETECTED!": "danger",
         default: "safe",
       };
       return activityColors[status] || activityColors.default;
@@ -76,9 +78,9 @@ async function fetchData() {
     const fallIndicatorEl = document.getElementById("fallIndicator");
 
     const fallStatuses = [
-      "severe fall detected",
-      "moderate fall detected",
-      "minor fall detected",
+      "SEVERE FALL DETECTED",
+      "MODERATE FALL DETECTED",
+      "MINOR FALL DETECTED",
     ];
 
     if (fallStatuses.includes(data.fall_status.toLowerCase())) {
@@ -94,9 +96,9 @@ async function fetchData() {
       fallStatusEl.className = "value safe";
       fallIndicatorEl.className = "status-indicator bg-safe";
     } else {
-      fallStatusEl.textContent = "UNKNOWN STATUS";
-      fallStatusEl.className = "value warning";
-      fallIndicatorEl.className = "status-indicator bg-warning";
+      fallStatusEl.textContent = "FALL DETECTED";
+      fallStatusEl.className = "value danger";
+      fallIndicatorEl.className = "status-indicator bg-danger";
     }
 
     // Update Medication Status
@@ -218,8 +220,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Fetch data every 2 seconds
-setInterval(fetchData, 2000);
+// Fetch data every 1 seconds
+setInterval(fetchData, 1000);
 
 // Initial fetch when page loads
 window.onload = fetchData;
