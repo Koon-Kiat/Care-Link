@@ -49,7 +49,3 @@ For detailed installation instructions, please refer to the [Installation Guide]
 ## Usage
 
 After completing the installation, refer to the [Usage Guide](docs/USAGE.md) for detailed instructions on how to use the Tiny Circuit Project, including running the code, interacting with the Telegram bot, and troubleshooting common issues.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for more information.
