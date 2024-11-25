@@ -5,6 +5,9 @@
 ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN;
 String activityStatus = "RESTING";
+String medStatus = "NOT CONFIRMED";
+String panicStatus = "HELP: NOT REQUESTED";
+String batteryStatus = "";
 
 /**
  * @brief Displays the home screen on the TinyScreen.
@@ -18,7 +21,7 @@ void displayHomeScreen()
     display.clearScreen();
 
     // Set font for arrows
-    display.setFont(liberationSansNarrow_8ptFontInfo); // Use a smaller font
+    display.setFont(liberationSansNarrow_8ptFontInfo);
     display.fontColor(TS_8b_White, TS_8b_Black);
 
     // Define padding
@@ -29,26 +32,24 @@ void displayHomeScreen()
     char rightArrow[] = ">";
 
     // Get the actual width of the arrow characters
-    int arrowWidth = display.getPrintWidth(leftArrow); // Assuming both arrows have the same width
+    int arrowWidth = display.getPrintWidth(leftArrow);
 
     // Display navigation arrows with padding
     display.setCursor(arrowPadding, 0);
-    display.print(leftArrow); // Upper left arrow
+    display.print(leftArrow);
 
     display.setCursor(SCREEN_WIDTH - arrowWidth - arrowPadding, 0);
-    display.print(rightArrow); // Upper right arrow
+    display.print(rightArrow);
 
     // Adjust line height based on font size
     int lineHeight = display.getFontHeight() + 2;
-
-    // Display time in a slightly larger font for better visibility
     display.setFont(liberationSansNarrow_12ptFontInfo);
     display.fontColor(TS_8b_White, TS_8b_Black);
 
-    String timeStr = getCurrentTime(); // Format "HH:MM"
+    String timeStr = getCurrentTime();
 
     // Convert String to char array
-    char timeStrC[6]; // "HH:MM" + null terminator
+    char timeStrC[6];
     timeStr.toCharArray(timeStrC, sizeof(timeStrC));
 
     // Get the width of the time string
@@ -60,29 +61,28 @@ void displayHomeScreen()
     // Check if time fits within the available width
     if (timeWidth > availableWidth)
     {
-        // Handle overflow: truncate if necessary
-        timeStrC[5] = '\0'; // Ensure null termination
+        timeStrC[5] = '\0';
         timeWidth = display.getPrintWidth(timeStrC);
     }
 
     // Center the time between the arrows and align it vertically with the arrows
     int timeX = arrowPadding + arrowWidth + ((availableWidth - timeWidth) / 2);
-    int timeY = (display.getFontHeight() < 8) ? 2 : 1; // Adjust y-position to align with arrows
+    int timeY = (display.getFontHeight() < 8) ? 2 : 1;
     display.setCursor(timeX, timeY);
     display.print(timeStrC);
 
     // Reset font and color for the rest of the text
-    display.setFont(liberationSansNarrow_8ptFontInfo); // Use the same font for consistency
+    display.setFont(liberationSansNarrow_8ptFontInfo);
     display.fontColor(TS_8b_White, TS_8b_Black);
 
     // Update line height after font change
     lineHeight = display.getFontHeight() + 2;
-    int cursorY = display.getFontHeight() + 14; // Start below the time display
+    int cursorY = display.getFontHeight() + 14;
 
     // Helper lambda to center and print text
     auto centerPrint = [&](const String &text, int &y) -> void
     {
-        const int maxLength = 32; // Maximum expected length
+        const int maxLength = 32;
         char textC[maxLength];
         text.toCharArray(textC, sizeof(textC));
 
@@ -93,10 +93,10 @@ void displayHomeScreen()
         if (textWidth > SCREEN_WIDTH)
         {
             // Estimate maximum characters that can fit
-            int maxChars = SCREEN_WIDTH / 6; // Approximate: 6 pixels per character
+            int maxChars = SCREEN_WIDTH / 6;
             if (maxChars > 0 && maxChars < maxLength)
             {
-                textC[maxChars - 1] = '\0'; // Truncate and null-terminate
+                textC[maxChars - 1] = '\0';
                 textWidth = display.getPrintWidth(textC);
             }
         }
@@ -158,7 +158,7 @@ void displayBatteryScreen(double temperature)
  */
 void updateDisplay(double temperature, const char *activityStatusParam)
 {
-    static uint8_t previousButtons = 0; // Add static variable to track previous button states
+    static uint8_t previousButtons = 0;
     uint8_t buttons = display.getButtons();
 
     // Detect newly pressed buttons
@@ -210,7 +210,7 @@ void updateDisplay(double temperature, const char *activityStatusParam)
         }
     }
 
-    previousButtons = buttons; // Update previous button states
+    previousButtons = buttons;
 
     // Display the current screen
     if (currentScreen == HOME_SCREEN)
@@ -227,7 +227,7 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     }
     else if (currentScreen == MEDICATION_SCREEN)
     {
-        displayMedicationScreen(); // Display popup screen
+        displayMedicationScreen();
     }
     else if (currentScreen == BATTERY_SCREEN)
     {
@@ -331,7 +331,7 @@ void displayTemperatureAndFallStatus(const char *status, double temperature)
 
     // Determine if the status indicates a fall and its severity
     bool isFall = false;
-    uint8_t fallSeverity = 0; // 1: Minor, 2: Moderate, 3: Severe
+    uint8_t fallSeverity = 0;
 
     if (strcmp(status, "SEVERE FALL DETECTED!") == 0)
     {
@@ -470,7 +470,7 @@ void displayMedicationScreen()
 
     // Set font for instructions
     display.setFont(liberationSansNarrow_8ptFontInfo);
-    int cursorY = display.getFontHeight() + 24; // Adjust as needed
+    int cursorY = display.getFontHeight() + 24;
 
     // Display instructions centered
     const char *instruction = "< Yes        No >";
@@ -545,7 +545,7 @@ int requestScreenOn()
  */
 void sleepDisplay()
 {
-    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul))
+    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 600000ul))
     {
         if (displayOn)
         {

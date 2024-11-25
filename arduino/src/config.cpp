@@ -1,6 +1,4 @@
 #include "../include/config.h"
-
-#include <vector>
 #include "../include/medication.h"
 
 // Define the actual global variables

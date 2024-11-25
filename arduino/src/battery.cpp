@@ -3,7 +3,7 @@
 
 double alpha = 0.001; // Smoothing factor (0 < ALPHA <= 1)
 
-bool lowBatteryAlertShown = false; // Flag to prevent multiple low battery alerts
+bool lowBatteryAlertShown = false;
 
 // This function gets the battery VCC internally, you can checkout this link
 // if you want to know more about how:
@@ -72,11 +72,23 @@ void displayBattery()
     display.drawLine(x + length, y - 1, x + length, y + height + 1, 0xFF);         // Right border
     display.drawLine(x + length + 1, y + 2, x + length + 1, y + height - 2, 0xFF); // Right border
 
+    // Close to 100%
+    if (battVoltage >= 3.90)
+    {
+        red = 0;
+        green = 63;
+        batteryStatus = "FULLY CHARGED";
+        for (uint8_t i = 0; i < length; i++)
+        {
+            display.drawLine(x + i, y, x + i, y + height, red, green, 0);
+        }
+    }
     // 75% - 100%
     if (battVoltage >= 3.60)
     {
         red = 0;
         green = 63;
+        batteryStatus = "CHARGED";
         for (uint8_t i = 0; i < length; i++)
         {
             display.drawLine(x + i, y, x + i, y + height, red, green, 0);
@@ -87,6 +99,7 @@ void displayBattery()
     {
         red = 30;
         green = 63;
+        batteryStatus = "NORMAL";
         for (uint8_t i = 0; i < length * 0.75; i++)
         {
             display.drawLine(x + i, y, x + i, y + height, red, green, 0);
@@ -97,6 +110,7 @@ void displayBattery()
     {
         red = 63;
         green = 63;
+        batteryStatus = "NORMAL";
         for (uint8_t i = 0; i < length * 0.5; i++)
         {
             display.drawLine(x + i, y, x + i, y + height, red, green, 0);
@@ -107,6 +121,7 @@ void displayBattery()
     {
         red = 63;
         green = 0;
+        batteryStatus = "LOW";
         for (uint8_t i = 0; i < length * 0.25; i++)
         {
             display.drawLine(x + i, y, x + i, y + height, red, green, 0);
@@ -117,6 +132,7 @@ void displayBattery()
     {
         red = 63;
         green = 0;
+        batteryStatus = "EMPTY";
         for (uint8_t i = 0; i < 1; i++)
         {
             display.drawLine(x + i, y, x + i, y + height, red, green, 0);

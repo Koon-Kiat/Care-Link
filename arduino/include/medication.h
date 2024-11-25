@@ -18,5 +18,6 @@ extern String currentMedication;
 void showMedicationReminder(int cursorX, int cursorY);
 void handleMedicationConfirmation();
 void checkMedicationAlarm();
+void printMedicationSchedule();
 
 #endif
