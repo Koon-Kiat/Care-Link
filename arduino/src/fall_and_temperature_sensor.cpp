@@ -57,13 +57,13 @@ void checkFallDetectionAndTemperature()
     prevZ = z;
 
     // Define thresholds with consideration of rest magnitude (~33)
-    const double REST_MAGNITUDE = 33.0;                                  // Average magnitude at rest
-    const double FREE_FALL_DELTA = 10.0;                                  // Reduced drop from rest for sensitive detection
+    const double REST_MAGNITUDE = 31.0;                                  // Average magnitude at rest
+    const double FREE_FALL_DELTA = 5.0;                                  // Reduced drop from rest for sensitive detection
     const double FREE_FALL_THRESHOLD = REST_MAGNITUDE - FREE_FALL_DELTA; // 23.0
     const double IMPACT_THRESHOLD_MINOR = 25.0;                          // Increased for minor impacts
     const double IMPACT_THRESHOLD_MODERATE = 140.0;                      // Increased for moderate impacts
     const double IMPACT_THRESHOLD_SEVERE = 400.0;                        // Increased for severe impacts
-    const double JERK_THRESHOLD = 60.0;
+    const double JERK_THRESHOLD = 50.0;
 
     // Show serial debug information
     SerialMonitorInterface.print("Magnitude: ");
@@ -125,7 +125,7 @@ void checkFallDetectionAndTemperature()
         SerialMonitorInterface.println(deltaMagnitude);
 
         // Define thresholds for activity detection based on delta magnitude
-        const double RESTING_MAX_DELTA = 3.0;
+        const double RESTING_MAX_DELTA = 5.0;
         const double WALKING_MAX_DELTA = 25.0;
 
         if (deltaMagnitude < RESTING_MAX_DELTA)
