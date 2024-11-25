@@ -54,9 +54,7 @@ void loop()
 
     unsigned long currentMillis = millis();
 
-    // Medication schedule update interval
 
-    //   processIncomingRequests();
 
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
