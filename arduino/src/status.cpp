@@ -1,10 +1,46 @@
 #include "../include/status.h"
+#include "../include/wifi_module.h"
+#include "../include/wifi_config.h"
+#include "../include/config.h"
+#include <ArduinoJson.h>
 
 /**
  * @brief Sends the fall status to the server.
  *
  * @param status The fall status string (e.g., "SAFE", "SEVERE FALL DETECTED", "MODERATE FALL DETECTED", "MINOR FALL DETECTED").
  */
+
+void sendAllSensorData(const char *fallStatus, const char *activityStatus, double temperature, const char *timestamp, const char *medStatus, const char *panicStatus) {
+   
+    // Create a JSON object for the data
+    StaticJsonDocument<256> jsonDoc;
+
+    // Add the sensor data to the JSON object
+    jsonDoc["fall_status"] = fallStatus;
+    jsonDoc["activity_status"] = activityStatus;
+    jsonDoc["temperature"] = temperature;
+    jsonDoc["timestamp"] = timestamp;
+    jsonDoc["med_status"] = medStatus;
+    jsonDoc["panic_status"] = panicStatus;
+
+
+
+    // Serialize the JSON object to a string
+    String jsonData;
+    serializeJson(jsonDoc, jsonData);
+
+    // Debugging: Log the JSON payload
+    SerialMonitorInterface.println("Preparing to send the following JSON payload:");
+    SerialMonitorInterface.println(jsonData);
+
+    // Send the JSON payload to the server
+    sendSensorData(SERVER_ADDRESS, SERVER_PORT, jsonData);
+
+    // Debug output
+    SerialMonitorInterface.print("Sent to server: ");
+    SerialMonitorInterface.println(jsonData);
+}
+
 void sendFallStatus(const char *status)
 {
     String message;
@@ -99,10 +135,16 @@ void sendPanicStatus(const char *panicStatus)
  *
  * @param message The status message to be sent.
  */
-void sendStatus(const char *message)
-{
-    // Implement WIFI or other communication methods here
-    // Example implementation:
-    // wifiModule.sendMessage(message);
-    
+void sendStatus(const char *message) {
+    // Construct the JSON payload
+    String jsonData = "{";
+    jsonData += "\"status\": \"" + String(message) + "\"";
+    jsonData += "}";
+
+    // Send the JSON payload to the server
+    sendSensorData(SERVER_ADDRESS, SERVER_PORT, jsonData);
+
+    // Debug output
+    SerialMonitorInterface.print("Sent to server: ");
+    SerialMonitorInterface.println(jsonData);
 }

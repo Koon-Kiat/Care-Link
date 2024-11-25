@@ -16,5 +16,8 @@ extern double temp;
 
 void checkFallDetectionAndTemperature();
 void initiateFallDisplay();
+String getFallStatus();
+String getActivityStatus();
+float getTemperature();
 
 #endif

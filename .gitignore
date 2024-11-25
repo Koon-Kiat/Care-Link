@@ -23,3 +23,4 @@ server/Procfile
 .DS_Store
 
 # Other Ignored Files
+archive/*
