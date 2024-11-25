@@ -1,7 +1,15 @@
+/**
+ * Returns the color associated with a given status and type.
+ *
+ * @param {string} status - The status to evaluate.
+ * @param {string} type - The type of status (e.g., "fall", "activity", "medication", "panic").
+ * @returns {string} The color representing the status.
+ *
+ */
 function getStatusColor(status, type) {
-    if (!status) {
-      return "gray";
-    }
+  if (!status) {
+    return "gray";
+  }
   status = status.toLowerCase();
   switch (type) {
     case "fall":
@@ -43,10 +51,21 @@ function getStatusColor(status, type) {
   }
 }
 
+/**
+ * Determines the color code based on the given temperature.
+ *
+ * @param {number} temp - The temperature value to evaluate.
+ * @returns {string} - Returns "danger" if the temperature is 35 or higher,
+ *                     "5" if the temperature is between 35 and 39,
+ *                     and "safe" if the temperature is below 35.
+ */
 function getTemperatureColor(temp) {
   return temp >= 35 ? "danger" : temp >= 39 ? "5" : "safe";
 }
 
+/**
+ * Fetches the sensor data from the server and updates the UI.
+ */
 async function fetchData() {
   try {
     const response = await fetch("/api/sensordata");
@@ -137,6 +156,9 @@ async function fetchData() {
   }
 }
 
+/**
+ * Handles the form submission for setting a new medication reminder.
+ */
 function handleMedicationSubmit() {
   const medicationName = document.getElementById("medicationName").value;
   const medicationTime = document.getElementById("medicationTime").value;
@@ -156,6 +178,9 @@ function handleMedicationSubmit() {
   }
 }
 
+/**
+ * Shows a toast notification with the given message.
+ */
 function showToast(message) {
   const toast = document.createElement("div");
   toast.className = "toast";
@@ -173,6 +198,9 @@ function showToast(message) {
   }, 3000);
 }
 
+/**
+ * Toggles the dark mode on the page.
+ */
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
   const button = document.getElementById("darkModeToggle");

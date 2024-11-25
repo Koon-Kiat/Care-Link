@@ -29,6 +29,11 @@ latest_sensor_data = {
 
 @app.route('/api/sensordata', methods=['POST'])
 def receive_sensor_data():
+    """Receive sensor data from the Arduino and update the latest_sensor_data.
+
+    Returns:
+        JSON: A JSON response indicating the status of the request.
+    """
     global latest_sensor_data
     try:
         print(f"Raw request data: {request.data}")  # Log raw request data
@@ -55,21 +60,39 @@ def receive_sensor_data():
 
 @app.route('/api/sensordata', methods=['GET'])
 def get_sensor_data():
+    """Serve the latest sensor data to the frontend.
+
+    Returns:
+        JSON: A JSON response containing the latest sensor data.
+    """
     return jsonify(latest_sensor_data)
 
 @app.route('/')
 def home():
-    # Render the HTML page showing the latest sensor data
+    """Render the home page with the latest sensor data.
+
+    Returns:
+        HTML: The rendered HTML template
+    """
     return render_template('index.html', sensor_data=latest_sensor_data)
 
 @app.route('/api/medication', methods=['GET'])
 def get_medication_schedule():
-    """Serve the current medication schedule to the frontend."""
+    """Serve the current medication schedule to the frontend.
+
+    Returns:
+        JSON: A JSON response containing the medication schedule.    
+    """
     return jsonify(medication_schedule)
 
 
 @app.route('/api/medication', methods=['POST'])
 def update_medication_schedule():
+    """Update the medication schedule with the data received from the frontend.
+
+    Returns:
+        JSON: A JSON response indicating the status of the request.
+    """
     global medication_schedule  # Reference the global variable
 
     try:
@@ -90,6 +113,11 @@ def update_medication_schedule():
 
 @app.route('/api/send_medication', methods=['POST'])
 def send_medication_to_arduino():
+    """Send the updated medication schedule to the Arduino.
+
+    Returns:
+        JSON: A JSON response indicating the status of the request.
+    """
     global medication_schedule
 
     # Arduino details
@@ -115,6 +143,11 @@ def send_medication_to_arduino():
 
 @app.route('/update_medication', methods=['POST'])
 def update_medication():
+    """Update the medication schedule with the data received from the frontend.
+
+    Returns:
+        JSON: A JSON response indicating the status of the request.
+    """
     data = request.get_json()
     if not data:
         return jsonify({"status": "error", "message": "No data received"}), 400
