@@ -9,8 +9,8 @@ extern TinyScreen display;
 enum ScreenState
 {
     HOME_SCREEN,
-    FALL_AND_TEMP_SCREEN,   // Activity Status Screen
-    MEDICATION_INFO_SCREEN, // Add new screen state
+    FALL_AND_TEMP_SCREEN,   
+    MEDICATION_INFO_SCREEN,
     MEDICATION_SCREEN,
     BATTERY_SCREEN
 };

@@ -41,7 +41,9 @@ void handleMedicationConfirmation()
             display.setCursor(messageX, messageY);
             display.print(message);
 
-            delay(2000); // Display message for 2 seconds
+            // Display confirmation message for 2 seconds
+            delay(2000);
+
             // Return to home screen
             currentScreen = HOME_SCREEN;
             alarmHandled = true;
@@ -69,7 +71,9 @@ void handleMedicationConfirmation()
         display.setCursor(messageX, messageY);
         display.print(message);
 
+        // Display cancellation message for 2 seconds
         delay(2000);
+
         // Return to home screen
         currentScreen = HOME_SCREEN;
         alarmHandled = true;
@@ -78,11 +82,8 @@ void handleMedicationConfirmation()
 }
 
 /**
- * @brief Checks if it's time for medication and handles the alarm.
- *
- * This function compares the current time with the scheduled medication time.
- * If it's time for medication and the alarm hasn't been handled yet, it
- * updates the current screen to the medication screen.
+ * @brief Checks the current time against the medication schedule.
+ * 
  */
 void checkMedicationAlarm()
 {
@@ -101,6 +102,10 @@ void checkMedicationAlarm()
     }
 }
 
+/**
+ * @brief Prints the current medication schedule to the Serial Monitor.
+ * 
+ */
 void printMedicationSchedule()
 {
     Serial.println("Current Medication Schedule:");

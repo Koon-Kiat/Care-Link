@@ -1,7 +1,7 @@
 #include "../include/config.h"
 #include "../include/medication.h"
 
-// Define the actual global variables
+// Declare Bluetooth-related constants
 char receivedBuffer[MAX_RECEIVED_MESSAGE_SIZE];
 uint8_t receivedBufferLength = 0;
 bool ble_connection_state = false;
@@ -19,7 +19,7 @@ int x = 0, y = 0, z = 0;
 double temp = 0.0;
 
 // Define the RTC object
-RTCZero rtc; // create an rtc object
+RTCZero rtc;
 
 /* Change these values to set the current initial time */
 const byte hours = 22;
@@ -59,7 +59,7 @@ String currentMedication = "";
 // Define the panic button state
 bool isPanicOn = false;
 
-// Sleep and display variables
+// Define sleep and display variables
 unsigned long sleepTimer = 0;
 uint8_t displayOn = 0;
 uint8_t buttonReleased = 1;

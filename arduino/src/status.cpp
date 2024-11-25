@@ -5,11 +5,19 @@
 #include <ArduinoJson.h>
 
 /**
- * @brief Sends the fall status to the server.
- *
- * @param status The fall status string (e.g., "SAFE", "SEVERE FALL DETECTED", "MODERATE FALL DETECTED", "MINOR FALL DETECTED").
+ * @brief Sends all sensor data to the server in JSON format.
+ * 
+ * @param fallStatus The status of the fall sensor.
+ * @param activityStatus The status of the activity sensor.
+ * @param temperature The temperature reading.
+ * @param timestamp The timestamp of the sensor data.
+ * @param medStatus The status of the medication sensor.
+ * @param panicStatus The status of the panic sensor.
+ * 
+ * This function creates a JSON object containing the provided sensor data,
+ * serializes it to a string, and sends it to the server. It also logs the
+ * JSON payload to the serial monitor for debugging purposes.
  */
-
 void sendAllSensorData(const char *fallStatus, const char *activityStatus, double temperature, const char *timestamp, const char *medStatus, const char *panicStatus) {
    
     // Create a JSON object for the data
@@ -22,8 +30,6 @@ void sendAllSensorData(const char *fallStatus, const char *activityStatus, doubl
     jsonDoc["timestamp"] = timestamp;
     jsonDoc["med_status"] = medStatus;
     jsonDoc["panic_status"] = panicStatus;
-
-
 
     // Serialize the JSON object to a string
     String jsonData;
@@ -41,6 +47,12 @@ void sendAllSensorData(const char *fallStatus, const char *activityStatus, doubl
     SerialMonitorInterface.println(jsonData);
 }
 
+/**
+ * @brief Sends the fall status message to the server.
+ * 
+ * @param status The fall status message.
+ * 
+ */
 void sendFallStatus(const char *status)
 {
     String message;
@@ -68,9 +80,10 @@ void sendFallStatus(const char *status)
 }
 
 /**
- * @brief Sends the temperature status to the server.
- *
- * @param temperature The current temperature in Celsius.
+ * @brief Sends the temperature status message to the server.
+ * 
+ * @param temperature The temperature reading.
+ * 
  */
 void sendTemperatureStatus(double temperature)
 {
@@ -96,9 +109,9 @@ void sendTemperatureStatus(double temperature)
 }
 
 /**
- * @brief Sends the medication status to the server.
- *
- * @param medStatus The medication status string ("MED_CONFIRM" or "MED_CANCEL").
+ * @brief Sends the medication status message to the server.
+ * 
+ * @param medStatus The medication status string.
  */
 void sendMedicationStatus(const char *medStatus)
 {
@@ -119,9 +132,9 @@ void sendMedicationStatus(const char *medStatus)
 }
 
 /**
- * @brief Sends the panic button status message to the server.
- *
- * @param panicStatus The panic button status string.
+ * @brief Sends the panic status message to the server.
+ * 
+ * @param panicStatus The panic status message.
  */
 void sendPanicStatus(const char *panicStatus)
 {
@@ -132,8 +145,12 @@ void sendPanicStatus(const char *panicStatus)
 
 /**
  * @brief Sends the status message to the server.
- *
- * @param message The status message to be sent.
+ * 
+ * @param message The status message.
+ * 
+ * This function constructs a JSON payload with the provided status message
+ * and sends it to the server. It also logs the JSON payload to the serial
+ * monitor for debugging purposes.
  */
 void sendStatus(const char *message) {
     // Construct the JSON payload
