@@ -40,7 +40,11 @@ float getVCC()
     return vcc;
 }
 
-// Calculate the battery voltage
+/**
+ * @brief Get the Batt Voltage object
+ *
+ * @return float
+ */
 float getBattVoltage()
 {
     const int VBATTpin = A4;
@@ -56,6 +60,14 @@ float getBattVoltage()
     return battVoltage;
 }
 
+/**
+ * @brief Display the battery status on the screen.
+ *
+ * The battery status is displayed as a bar graph with different colors
+ * indicating the battery level. The battery status is also displayed as
+ * a text message.
+ *
+ */
 void displayBattery()
 {
     uint8_t x = 70;
@@ -140,6 +152,10 @@ void displayBattery()
     }
 }
 
+/**
+ * @brief Display the low battery alert on the screen.
+ * 
+ */
 void lowBatteryAlert()
 {
 
@@ -163,6 +179,11 @@ void lowBatteryAlert()
     }
 }
 
+/**
+ * @brief Get the Smoothed Batt Voltage object
+ * 
+ * @return float 
+ */
 float getSmoothedBattVoltage()
 {
     static float ema = 0;
