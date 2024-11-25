@@ -12,13 +12,11 @@ app = Flask(__name__,
             template_folder='templates',
             static_folder='static')
 
-
 # In-memory medication schedule
 medication_schedule = [
     {"name": "Aspirin", "time": "08:00"},
     {"name": "Vitamin D", "time": "12:00"}
 ]
-
 
 # In-memory storage for the latest data
 latest_sensor_data = {
@@ -53,7 +51,6 @@ def receive_sensor_data():
     except Exception as e:
         print(f"Error processing request: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
-
 
 
 @app.route('/api/sensordata', methods=['GET'])
@@ -93,11 +90,11 @@ def update_medication_schedule():
 
 @app.route('/api/send_medication', methods=['POST'])
 def send_medication_to_arduino():
-    global medication_schedule  # Reference the global variable
+    global medication_schedule
 
     # Arduino details
-    arduino_ip = "6.10.20.172"  # Replace with your Arduino's actual IP
-    arduino_port = 80  # Replace with your Arduino's port
+    arduino_ip = "6.10.20.172"
+    arduino_port = 80
     arduino_endpoint = f"http://{arduino_ip}:{arduino_port}/update_medication"
 
     try:
@@ -118,14 +115,10 @@ def send_medication_to_arduino():
 
 @app.route('/update_medication', methods=['POST'])
 def update_medication():
-    data = request.get_json()  # Parse the incoming JSON payload
+    data = request.get_json()
     if not data:
         return jsonify({"status": "error", "message": "No data received"}), 400
-
-    # Process the data (e.g., log it, send it to Arduino, etc.)
     print("Received data:", data)
-
-    # Respond with a success message
     return jsonify({"status": "success", "message": "Medication schedule updated successfully."}), 200
 
 if __name__ == '__main__':
