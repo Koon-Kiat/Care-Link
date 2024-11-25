@@ -30,6 +30,8 @@ void panicButton()
 
             // Optionally, you can add a visual cue for "panic mode" being active.
             sendPanicStatus("HELP: REQUESTED");
+            panicStatus = "HELP: CANCELLED";
+
         }
         else
         {
@@ -47,6 +49,8 @@ void panicButton()
             delay(5000);
 
             sendPanicStatus("HELP: CANCELLED");
+            panicStatus = "HELP: CANCELLED";
+
         }
 
         // Add a short delay to debounce the button press

@@ -6,7 +6,7 @@ ScreenState currentScreen = HOME_SCREEN;
 ScreenState previousScreen = HOME_SCREEN;
 String activityStatus = "RESTING";
 String medStatus = "NOT CONFIRMED";
-String panicStatus = "FALSE";
+String panicStatus = "HELP: NOT REQUESTED";
 
 
 
@@ -549,7 +549,7 @@ int requestScreenOn()
  */
 void sleepDisplay()
 {
-    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 1000ul))
+    if (millis() > sleepTimer + ((unsigned long)sleepTimeout * 600000ul))
     {
         if (displayOn)
         {
