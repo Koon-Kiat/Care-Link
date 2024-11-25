@@ -22,8 +22,10 @@ void setup()
     // Initialize serial communication
     SerialMonitorInterface.begin(9600);
     delay(2000);
-    initializeWiFi();
+    
+    //initializeWiFi();
 
+    /*
     if (WiFi.status() == WL_CONNECTED)
     {
         SerialMonitorInterface.println("WiFi connected successfully.");
@@ -32,6 +34,7 @@ void setup()
     {
         SerialMonitorInterface.println("WiFi connection failed.");
     }
+    */
 
     // Initialize the display
     Wire.begin();
@@ -63,7 +66,7 @@ void loop()
         checkFallDetectionAndTemperature();
 
         // Send sensor data to the server
-        sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str(), panicStatus.c_str());
+        // sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str(), panicStatus.c_str());
 
         if (currentScreen == MEDICATION_SCREEN)
         {
