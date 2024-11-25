@@ -14,7 +14,6 @@ extern BMA250 accel_sensor;
 extern int x, y, z;
 extern double temp;
 
-// Function declarations
 void checkFallDetectionAndTemperature();
 void initiateFallDisplay();
 String getFallStatus();
