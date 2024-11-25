@@ -1,5 +1,6 @@
 #include <SPI.h>
 #include <STBLE.h>
+#include <Arduino.h>
 #include <TinyScreen.h>
 #include <Wire.h>
 #include <WiFi101.h>
@@ -13,26 +14,22 @@
 #include "include/medication.h"                  // Include Medication module
 #include "include/battery.h"                     // Include Battery module
 #include "include/panic_button.h"                // Include Panic Button module
-#include <Arduino.h>
-#include "include/wifi_module.h"                  // Include Medication module
-#include "include/wifi_config.h"                  // Include Medication module
-
-
-// Global variables
-//String medStatus = "MED_CONFIRM"; // Initialize with a default status
+#include "include/wifi_module.h"                 // Include Medication module
+#include "include/wifi_config.h"                 // Include Medication module
 
 void setup()
 {
     // Initialize serial communication
     SerialMonitorInterface.begin(9600);
-    while (!SerialMonitorInterface);
-
-    SerialMonitorInterface.println("Serial monitor initialized!");
+    delay(2000);
     initializeWiFi();
 
-    if (WiFi.status() == WL_CONNECTED) {
+    if (WiFi.status() == WL_CONNECTED)
+    {
         SerialMonitorInterface.println("WiFi connected successfully.");
-    } else {
+    }
+    else
+    {
         SerialMonitorInterface.println("WiFi connection failed.");
     }
 
@@ -57,10 +54,9 @@ void loop()
 
     unsigned long currentMillis = millis();
 
-     // Medication schedule update interval
+    // Medication schedule update interval
 
- //   processIncomingRequests();
-    
+    //   processIncomingRequests();
 
     // Sensor reading
     if (currentMillis - previousLoopTime >= SENSOR_READ_INTERVAL)
@@ -68,7 +64,6 @@ void loop()
         previousLoopTime = currentMillis;
 
         checkFallDetectionAndTemperature();
-        
 
         sendAllSensorData(activityStatus.c_str(), activityStatus.c_str(), temp, getCurrentTime().c_str(), medStatus.c_str(), panicStatus.c_str());
         if (currentScreen == MEDICATION_SCREEN)
@@ -106,6 +101,4 @@ void loop()
     {
         handleSerialInput();
     }
-
-    
 }
