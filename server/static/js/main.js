@@ -33,17 +33,25 @@ function getStatusColor(status, type) {
       };
       return activityColors[status] || activityColors.default;
     case "medication":
-      return status === "MED_CONFIRM"
+      return status === "MEDICATION CONFIRMED"
         ? "safe"
-        : status === "MED_CANCEL"
+        : status === "MEDICATION CANCELLED"
         ? "danger"
+        : status === "NOT CONFIRMED"
+        ? "warning"
         : "warning";
     case "panic":
-      return status === "HELP: REQUESTED"
-        ? "danger"
-        : status === "false" || status === "HELP: CANCELLED"
-        ? "safe"
-        : "warning";
+      if (status === "HELP: REQUESTED") {
+        return "danger";
+      } else if (
+        status === "HELP: CANCELLED" ||
+        status === "HELP: NOT REQUESTED" || // Ensure both with and without exclamation
+        status === "false"
+      ) {
+        return "safe";
+      } else {
+        return "warning";
+      }
     default:
       return status === "safe"
         ? "safe"
@@ -54,15 +62,15 @@ function getStatusColor(status, type) {
 }
 
 /**
- * Determines the color code based on the given temperature.
+ * Determines the color code based on the temperature value.
  *
  * @param {number} temp - The temperature value to evaluate.
- * @returns {string} - Returns "danger" if the temperature is 35 or higher,
- *                     "5" if the temperature is between 35 and 39,
- *                     and "safe" if the temperature is below 35.
+ * @returns {string} - Returns "danger" if the temperature is above 35,
+ *                     "warning" if the temperature is between 30 and 35 (inclusive),
+ *                     and "safe" if the temperature is below 30.
  */
 function getTemperatureColor(temp) {
-  return temp >= 35 ? "danger" : temp >= 39 ? "5" : "safe";
+  return temp > 35 ? "danger" : temp >= 30 ? "warning" : "safe";
 }
 
 /**
@@ -103,7 +111,7 @@ async function fetchData() {
 
     // Update Medication Status
     const medStatusEl = document.getElementById("medStatus");
-    const medStatusClass = getStatusColor(data.med_status, "med confirmed");
+    const medStatusClass = getStatusColor(data.med_status, "medication");
     medStatusEl.textContent = data.med_status;
     medStatusEl.className = `value ${medStatusClass}`;
     document.getElementById(
@@ -112,7 +120,7 @@ async function fetchData() {
 
     // Update Panic Status
     const panicStatusEl = document.getElementById("panicStatus");
-    const panicStatusClass = getStatusColor(data.panic_status, "help");
+    const panicStatusClass = getStatusColor(data.panic_status, "panic");
     panicStatusEl.textContent = data.panic_status;
     panicStatusEl.className = `value ${panicStatusClass}`;
     document.getElementById(
