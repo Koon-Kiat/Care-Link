@@ -1,3 +1,12 @@
+---
+name: Feature request
+about: Suggest an idea for this project
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 # Insert Title
 <!-- Please provide a short, descriptive title for your enhancement request. -->
 
