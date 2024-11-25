@@ -27,8 +27,6 @@ void panicButton()
             display.print(header);
 
             delay(5000);
-
-            // Optionally, you can add a visual cue for "panic mode" being active.
             sendPanicStatus("HELP: REQUESTED");
             panicStatus = "HELP: REQUESTED";
 

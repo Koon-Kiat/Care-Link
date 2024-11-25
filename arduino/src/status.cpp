@@ -11,9 +11,11 @@
  */
 
 void sendAllSensorData(const char *fallStatus, const char *activityStatus, double temperature, const char *timestamp, const char *medStatus, const char *panicStatus) {
+   
     // Create a JSON object for the data
     StaticJsonDocument<256> jsonDoc;
 
+    // Add the sensor data to the JSON object
     jsonDoc["fall_status"] = fallStatus;
     jsonDoc["activity_status"] = activityStatus;
     jsonDoc["temperature"] = temperature;

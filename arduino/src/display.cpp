@@ -227,7 +227,7 @@ void updateDisplay(double temperature, const char *activityStatusParam)
     }
     else if (currentScreen == MEDICATION_SCREEN)
     {
-        displayMedicationScreen(); // Display popup screen
+        displayMedicationScreen();
     }
     else if (currentScreen == BATTERY_SCREEN)
     {
@@ -331,7 +331,7 @@ void displayTemperatureAndFallStatus(const char *status, double temperature)
 
     // Determine if the status indicates a fall and its severity
     bool isFall = false;
-    uint8_t fallSeverity = 0; // 1: Minor, 2: Moderate, 3: Severe
+    uint8_t fallSeverity = 0;
 
     if (strcmp(status, "SEVERE FALL DETECTED!") == 0)
     {
@@ -470,7 +470,7 @@ void displayMedicationScreen()
 
     // Set font for instructions
     display.setFont(liberationSansNarrow_8ptFontInfo);
-    int cursorY = display.getFontHeight() + 24; // Adjust as needed
+    int cursorY = display.getFontHeight() + 24;
 
     // Display instructions centered
     const char *instruction = "< Yes        No >";
