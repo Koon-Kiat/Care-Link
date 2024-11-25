@@ -29,10 +29,14 @@ latest_sensor_data = {
 
 @app.route('/api/sensordata', methods=['POST'])
 def receive_sensor_data():
-    """Receive sensor data from the Arduino and update the latest_sensor_data.
+    """
+    Receive and update sensor data.
+
+    Parses the incoming JSON payload and updates the latest_sensor_data with it.
+    Adds a timestamp to the sensor data.
 
     Returns:
-        JSON: A JSON response indicating the status of the request.
+        tuple: JSON response with status and HTTP status code.
     """
     global latest_sensor_data
     try:
@@ -60,40 +64,47 @@ def receive_sensor_data():
 
 @app.route('/api/sensordata', methods=['GET'])
 def get_sensor_data():
-    """Serve the latest sensor data to the frontend.
+    """
+    Retrieve the latest sensor data.
 
     Returns:
-        JSON: A JSON response containing the latest sensor data.
+        JSON: The latest sensor data.
     """
     return jsonify(latest_sensor_data)
 
 @app.route('/')
 def home():
-    """Render the home page with the latest sensor data.
+    """
+    Serve the homepage template.
 
     Returns:
-        HTML: The rendered HTML template
+        HTML: Rendered HTML template with sensor data.
     """
     return render_template('index.html', sensor_data=latest_sensor_data)
 
 @app.route('/api/medication', methods=['GET'])
 def get_medication_schedule():
-    """Serve the current medication schedule to the frontend.
+    """
+    Get the medication schedule.
 
     Returns:
-        JSON: A JSON response containing the medication schedule.    
+        JSON: Medication schedule.
     """
     return jsonify(medication_schedule)
 
 
 @app.route('/api/medication', methods=['POST'])
 def update_medication_schedule():
-    """Update the medication schedule with the data received from the frontend.
+    """
+    Update the medication schedule.
+
+    Parses the incoming JSON payload and updates the medication_schedule list.
+    Each medication entry must contain 'name' and 'time'.
 
     Returns:
-        JSON: A JSON response indicating the status of the request.
+        tuple: JSON response with status, message, and HTTP status code.
     """
-    global medication_schedule  # Reference the global variable
+    global medication_schedule
 
     try:
         # Parse JSON payload
@@ -109,50 +120,6 @@ def update_medication_schedule():
     except Exception as e:
         print(f"Error updating medication schedule: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
-
-
-@app.route('/api/send_medication', methods=['POST'])
-def send_medication_to_arduino():
-    """Send the updated medication schedule to the Arduino.
-
-    Returns:
-        JSON: A JSON response indicating the status of the request.
-    """
-    global medication_schedule
-
-    # Arduino details
-    arduino_ip = "6.10.20.172"
-    arduino_port = 80
-    arduino_endpoint = f"http://{arduino_ip}:{arduino_port}/update_medication"
-
-    try:
-        # Create JSON payload with the updated medication schedule
-        payload = {"schedule": medication_schedule}
-
-        # Send the schedule to the Arduino via HTTP
-        response = requests.post(arduino_endpoint, json=payload)
-
-        # Check Arduino response
-        if response.status_code == 200:
-            return jsonify({"status": "success", "message": "Medication schedule sent to Arduino."}), 200
-        else:
-            return jsonify({"status": "error", "message": f"Failed to send schedule. Arduino responded with status {response.status_code}"}), 500
-    except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-
-@app.route('/update_medication', methods=['POST'])
-def update_medication():
-    """Update the medication schedule with the data received from the frontend.
-
-    Returns:
-        JSON: A JSON response indicating the status of the request.
-    """
-    data = request.get_json()
-    if not data:
-        return jsonify({"status": "error", "message": "No data received"}), 400
-    print("Received data:", data)
-    return jsonify({"status": "success", "message": "Medication schedule updated successfully."}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
