@@ -48,7 +48,7 @@ This guide outlines the steps to set up your Care Link Project, including requir
    - Ensure both `arduino.path` and `arduino.commandPath` are empty or unset.
    - In the settings, add the following URL to `arduino.additionalUrls`:
 
-     ```
+     ```plaintext
      https://files.tinycircuits.com/ArduinoBoards/package_tinycircuits_index.json
      ```
 
@@ -191,6 +191,7 @@ Follow these steps to deploy your Flask application on PythonAnywhere:
    - Ensure that your app is functioning as expected.
 
 ## Troubleshooting
+
 - **ModuleNotFoundError**: Ensure your virtual environment is activated and all dependencies are installed.
 - **Incorrect Paths**: Double-check the file paths in your WSGI configuration file.
 - **App Not Loading**: Check the **Error log** in the **Web** tab for detailed error messages.

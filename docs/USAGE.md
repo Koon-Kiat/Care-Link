@@ -141,4 +141,3 @@ Since the Flask server is deployed on PythonAnywhere, you don't need to run it l
 - Monitor the serial output from the TinyZero for real-time debugging information.
 - Consult the [Installation Guide](docs/INSTALLATION.md) for reinstallation or setup steps if necessary.
 - Utilize PythonAnywhere's support resources and [Help Pages](https://help.pythonanywhere.com/) for additional assistance.
-
